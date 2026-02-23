@@ -10,72 +10,138 @@ class CreateAssetCubit extends Cubit<CreateAssetState> {
     emit(state.copyWith(activeTab: index));
   }
 
-  // ── Image ────────────────────────────────────────────
-  void setImage(String path) {
-    emit(state.copyWith(imagePath: path));
+  // ── Helper ──────────────────────────────────────────
+  void _updateAssetDetail(
+    AssetDetail Function(AssetDetail) updateFn, {
+    int? attachedIndex,
+  }) {
+    if (attachedIndex == null) {
+      emit(state.copyWith(mainAsset: updateFn(state.mainAsset)));
+    } else {
+      final newList = List<AttachedAsset>.from(state.attachedAssets);
+      if (attachedIndex < newList.length) {
+        newList[attachedIndex] = newList[attachedIndex].copyWith(
+          assetDetail: updateFn(newList[attachedIndex].assetDetail),
+        );
+        emit(state.copyWith(attachedAssets: newList));
+      }
+    }
   }
 
-  void removeImage() {
-    emit(state.copyWith(imagePath: null));
+  // ── Image ────────────────────────────────────────────
+  void setImage(String path, {int? attachedIndex}) {
+    _updateAssetDetail(
+      (d) => d.copyWith(imagePath: path),
+      attachedIndex: attachedIndex,
+    );
+  }
+
+  void removeImage({int? attachedIndex}) {
+    _updateAssetDetail(
+      (d) => d.copyWith(imagePath: null),
+      attachedIndex: attachedIndex,
+    );
   }
 
   // ── Text Fields ──────────────────────────────────────
-  void updateAssetName(String value) {
-    emit(state.copyWith(assetName: value));
+  void updateAssetName(String value, {int? attachedIndex}) {
+    _updateAssetDetail(
+      (d) => d.copyWith(assetName: value),
+      attachedIndex: attachedIndex,
+    );
   }
 
-  void updateAssetCode(String value) {
-    emit(state.copyWith(assetCode: value));
+  void updateAssetCode(String value, {int? attachedIndex}) {
+    _updateAssetDetail(
+      (d) => d.copyWith(assetCode: value),
+      attachedIndex: attachedIndex,
+    );
   }
 
-  void updateAssetType(String? value) {
-    emit(state.copyWith(assetType: value));
+  void updateAssetType(String? value, {int? attachedIndex}) {
+    _updateAssetDetail(
+      (d) => d.copyWith(assetType: value),
+      attachedIndex: attachedIndex,
+    );
   }
 
-  void updateUnit(String value) {
-    emit(state.copyWith(unit: value));
+  void updateUnit(String value, {int? attachedIndex}) {
+    _updateAssetDetail(
+      (d) => d.copyWith(unit: value),
+      attachedIndex: attachedIndex,
+    );
   }
 
-  void updateSerial(String value) {
-    emit(state.copyWith(serial: value));
+  void updateSerial(String value, {int? attachedIndex}) {
+    _updateAssetDetail(
+      (d) => d.copyWith(serial: value),
+      attachedIndex: attachedIndex,
+    );
   }
 
-  void updateModel(String value) {
-    emit(state.copyWith(model: value));
+  void updateModel(String value, {int? attachedIndex}) {
+    _updateAssetDetail(
+      (d) => d.copyWith(model: value),
+      attachedIndex: attachedIndex,
+    );
   }
 
-  void updateOrigin(String value) {
-    emit(state.copyWith(origin: value));
+  void updateOrigin(String value, {int? attachedIndex}) {
+    _updateAssetDetail(
+      (d) => d.copyWith(origin: value),
+      attachedIndex: attachedIndex,
+    );
   }
 
-  void updateManufacturer(String value) {
-    emit(state.copyWith(manufacturer: value));
+  void updateManufacturer(String value, {int? attachedIndex}) {
+    _updateAssetDetail(
+      (d) => d.copyWith(manufacturer: value),
+      attachedIndex: attachedIndex,
+    );
   }
 
-  void updateOriginalPrice(String value) {
-    emit(state.copyWith(originalPrice: value));
+  void updateOriginalPrice(String value, {int? attachedIndex}) {
+    _updateAssetDetail(
+      (d) => d.copyWith(originalPrice: value),
+      attachedIndex: attachedIndex,
+    );
   }
 
-  void updateDepreciationDuration(String value) {
-    emit(state.copyWith(depreciationDuration: value));
+  void updateDepreciationDuration(String value, {int? attachedIndex}) {
+    _updateAssetDetail(
+      (d) => d.copyWith(depreciationDuration: value),
+      attachedIndex: attachedIndex,
+    );
   }
 
   // ── Date Pickers ─────────────────────────────────────
-  void updateManufacturingDate(String value) {
-    emit(state.copyWith(manufacturingDate: value));
+  void updateManufacturingDate(String value, {int? attachedIndex}) {
+    _updateAssetDetail(
+      (d) => d.copyWith(manufacturingDate: value),
+      attachedIndex: attachedIndex,
+    );
   }
 
-  void updateUsageStartDate(String value) {
-    emit(state.copyWith(usageStartDate: value));
+  void updateUsageStartDate(String value, {int? attachedIndex}) {
+    _updateAssetDetail(
+      (d) => d.copyWith(usageStartDate: value),
+      attachedIndex: attachedIndex,
+    );
   }
 
   // ── Depreciation ─────────────────────────────────────
-  void setDepreciationMethod(DepreciationMethod method) {
-    emit(state.copyWith(depreciationMethod: method));
+  void setDepreciationMethod(DepreciationMethod method, {int? attachedIndex}) {
+    _updateAssetDetail(
+      (d) => d.copyWith(depreciationMethod: method),
+      attachedIndex: attachedIndex,
+    );
   }
 
-  void setDepreciationPeriod(DepreciationPeriod period) {
-    emit(state.copyWith(depreciationPeriod: period));
+  void setDepreciationPeriod(DepreciationPeriod period, {int? attachedIndex}) {
+    _updateAssetDetail(
+      (d) => d.copyWith(depreciationPeriod: period),
+      attachedIndex: attachedIndex,
+    );
   }
 
   // ── Submit ───────────────────────────────────────────
@@ -87,5 +153,73 @@ class CreateAssetCubit extends Cubit<CreateAssetState> {
     await Future.delayed(const Duration(seconds: 1));
 
     emit(state.copyWith(isSubmitting: false));
+  }
+
+  // ── Attached Assets ──────────────────────────────────
+  void addAttachedAsset() {
+    final newList = List<AttachedAsset>.from(state.attachedAssets);
+    newList.add(const AttachedAsset());
+    emit(
+      state.copyWith(
+        attachedAssets: newList,
+        currentAttachedAssetIndex: newList.length - 1,
+      ),
+    );
+  }
+
+  void removeAttachedAsset() {
+    if (state.attachedAssets.isEmpty) return;
+    final newList = List<AttachedAsset>.from(state.attachedAssets);
+    newList.removeAt(state.currentAttachedAssetIndex);
+
+    int newIndex = state.currentAttachedAssetIndex;
+    if (newIndex >= newList.length && newList.isNotEmpty) {
+      newIndex = newList.length - 1;
+    } else if (newList.isEmpty) {
+      newIndex = 0;
+    }
+
+    emit(
+      state.copyWith(
+        attachedAssets: newList,
+        currentAttachedAssetIndex: newIndex,
+      ),
+    );
+  }
+
+  void nextAttachedAsset() {
+    if (state.currentAttachedAssetIndex < state.attachedAssets.length - 1) {
+      emit(
+        state.copyWith(
+          currentAttachedAssetIndex: state.currentAttachedAssetIndex + 1,
+        ),
+      );
+    }
+  }
+
+  void previousAttachedAsset() {
+    if (state.currentAttachedAssetIndex > 0) {
+      emit(
+        state.copyWith(
+          currentAttachedAssetIndex: state.currentAttachedAssetIndex - 1,
+        ),
+      );
+    }
+  }
+
+  void updateAttachedAssetAction(AttachedAssetAction action) {
+    if (state.attachedAssets.isEmpty) return;
+    final newList = List<AttachedAsset>.from(state.attachedAssets);
+    newList[state.currentAttachedAssetIndex] =
+        newList[state.currentAttachedAssetIndex].copyWith(action: action);
+    emit(state.copyWith(attachedAssets: newList));
+  }
+
+  void updateAttachedAssetId(String? id) {
+    if (state.attachedAssets.isEmpty) return;
+    final newList = List<AttachedAsset>.from(state.attachedAssets);
+    newList[state.currentAttachedAssetIndex] =
+        newList[state.currentAttachedAssetIndex].copyWith(selectedAssetId: id);
+    emit(state.copyWith(attachedAssets: newList));
   }
 }

@@ -8,12 +8,12 @@ enum DepreciationMethod { byTime, byUsage }
 /// Chu kỳ khấu hao (khi chọn "Theo thời gian")
 enum DepreciationPeriod { yearly, monthly, daily }
 
-@freezed
-abstract class CreateAssetState with _$CreateAssetState {
-  const factory CreateAssetState({
-    // Tab hiện tại: 0 = Hồ sơ tài sản, 1 = Tài sản đi kèm
-    @Default(0) int activeTab,
+/// Loại hành động cho tài sản đi kèm
+enum AttachedAssetAction { selectAvailable, createNew }
 
+@freezed
+abstract class AssetDetail with _$AssetDetail {
+  const factory AssetDetail({
     // Ảnh tài sản
     @Default(null) String? imagePath,
 
@@ -38,6 +38,30 @@ abstract class CreateAssetState with _$CreateAssetState {
     // Nguyên giá & thời gian tính khấu hao
     @Default('') String originalPrice,
     @Default('') String depreciationDuration,
+  }) = _AssetDetail;
+}
+
+@freezed
+abstract class AttachedAsset with _$AttachedAsset {
+  const factory AttachedAsset({
+    @Default(AttachedAssetAction.selectAvailable) AttachedAssetAction action,
+    @Default(null) String? selectedAssetId,
+    @Default(AssetDetail()) AssetDetail assetDetail,
+  }) = _AttachedAsset;
+}
+
+@freezed
+abstract class CreateAssetState with _$CreateAssetState {
+  const factory CreateAssetState({
+    // Tab hiện tại: 0 = Hồ sơ tài sản, 1 = Tài sản đi kèm
+    @Default(0) int activeTab,
+
+    // Thông tin tài sản chính
+    @Default(AssetDetail()) AssetDetail mainAsset,
+
+    // Danh sách tài sản đi kèm
+    @Default([]) List<AttachedAsset> attachedAssets,
+    @Default(0) int currentAttachedAssetIndex,
 
     // Trạng thái form
     @Default(false) bool isSubmitting,

@@ -2,18 +2,14 @@ import 'package:auto_route/auto_route.dart';
 import 'package:bpg_retail/core/configs/app_style/init_app_style.dart';
 import 'package:bpg_retail/core/constants/typography.dart';
 import 'package:bpg_retail/core/extension/spacing_extension.dart';
-import 'package:bpg_retail/core/utilities/converts.dart';
 import 'package:bpg_retail/core/widgets/base/appbar.dart';
 import 'package:bpg_retail/core/widgets/textfield/input_column.dart';
-import 'package:bpg_retail/core/widgets/two_button_box.dart';
-import 'package:bpg_retail/core/widgets/datetime_picker.dart';
 import 'package:bpg_retail/features/asset_category/data/bloc/create_asset_cubit.dart';
 import 'package:bpg_retail/features/asset_category/data/bloc/create_asset_state.dart';
-import 'package:bpg_retail/features/asset_category/presentation/widgets/asset_image_picker_widget.dart';
-import 'package:bpg_retail/features/asset_category/presentation/widgets/depreciation_method_widget.dart';
+import 'package:bpg_retail/features/asset_category/presentation/widgets/asset_profile_form.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:dotted_border/dotted_border.dart';
 
 @RoutePage()
 class CreateAssetPage extends StatefulWidget {
@@ -103,17 +99,68 @@ class _CreateAssetPageState extends State<CreateAssetPage>
               ),
             ),
 
-            // ── Bottom Buttons ──
-            TwoButtonBox(
-              leftTitle: 'Hủy bỏ',
-              rightTitle: 'Lưu lại',
-              leftOnTap: () => Navigator.pop(context),
-              rightOnTap: () {
-                if (_formKey.currentState?.validate() ?? false) {
-                  _cubit.submit();
-                }
-              },
-              isDisable: false,
+            // ── Bottom Buttons matching screenshot ──
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: AppColors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 10,
+                    offset: const Offset(0, -4),
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                      child: Container(
+                        height: 48,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFF2F2F3),
+                          borderRadius: BorderRadius.circular(24),
+                        ),
+                        child: Text(
+                          'Hủy bỏ',
+                          style: AppTypography.p4.copyWith(
+                            color: AppColors.text_primary,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  12.width,
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        if (_formKey.currentState?.validate() ?? false) {
+                          _cubit.submit();
+                        }
+                      },
+                      child: Container(
+                        height: 48,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF2B2B2B),
+                          borderRadius: BorderRadius.circular(24),
+                        ),
+                        child: Text(
+                          'Lưu lại',
+                          style: AppTypography.p4.copyWith(
+                            color: AppColors.white,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -149,221 +196,9 @@ class _CreateAssetPageState extends State<CreateAssetPage>
           child: SingleChildScrollView(
             controller: _scrollController,
             padding: const EdgeInsets.only(bottom: 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                // ── Image Picker ──
-                AssetImagePickerWidget(
-                  imagePath: state.imagePath,
-                  onImagePicked: _cubit.setImage,
-                  onImageRemoved: _cubit.removeImage,
-                ),
-                Divider(height: 1, color: AppColors.border_tertiary),
-                16.height,
-
-                // ── Tên tài sản * ──
-                InputColumn(
-                  label: 'Tên tài sản',
-                  isRequired: true,
-                  hintText: 'Nhập tên thiết bị',
-                  onChanged: _cubit.updateAssetName,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                ),
-                12.height,
-
-                // ── Mã tài sản ──
-                InputColumn(
-                  label: 'Mã tài sản',
-                  hintText: 'Nhập mã thiết bị',
-                  onChanged: _cubit.updateAssetCode,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                ),
-                12.height,
-
-                // ── Loại tài sản (Dropdown) ──
-                InputColumn(
-                  label: 'Loại tài sản',
-                  hintText: 'Chọn',
-                  readOnly: true,
-                  onTap: () {
-                    // TODO: Mở bottom sheet chọn loại tài sản
-                  },
-                  suffixIcon: const Icon(
-                    Icons.keyboard_arrow_down,
-                    color: AppColors.grey80,
-                  ),
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                ),
-                12.height,
-
-                // ── Đơn vị tính & Seri ──
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: InputColumn(
-                          label: 'Đơn vị tính',
-                          hintText: 'Nhập',
-                          onChanged: _cubit.updateUnit,
-                          padding: EdgeInsets.zero,
-                        ),
-                      ),
-                      12.width,
-                      Expanded(
-                        child: InputColumn(
-                          label: 'Seri',
-                          hintText: 'Nhập',
-                          onChanged: _cubit.updateSerial,
-                          padding: EdgeInsets.zero,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                12.height,
-
-                // ── Model & Nước sản xuất ──
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: InputColumn(
-                          label: 'Model',
-                          hintText: 'Nhập',
-                          onChanged: _cubit.updateModel,
-                          padding: EdgeInsets.zero,
-                        ),
-                      ),
-                      12.width,
-                      Expanded(
-                        child: InputColumn(
-                          label: 'Nước sản xuất',
-                          hintText: 'Nhập',
-                          onChanged: _cubit.updateOrigin,
-                          padding: EdgeInsets.zero,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                12.height,
-
-                // ── Hãng sản xuất & Ngày sản xuất ──
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: InputColumn(
-                          label: 'Hãng sản xuất',
-                          hintText: 'Nhập',
-                          onChanged: _cubit.updateManufacturer,
-                          padding: EdgeInsets.zero,
-                        ),
-                      ),
-                      12.width,
-                      Expanded(
-                        child: _buildDateField(
-                          label: 'Ngày sản xuất',
-                          value: state.manufacturingDate,
-                          onConfirm: (date) {
-                            _cubit.updateManufacturingDate(
-                              convertDateYYYYMMDD(date),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                24.height,
-
-                // ── Depreciation Method ──
-                DepreciationMethodWidget(
-                  method: state.depreciationMethod,
-                  period: state.depreciationPeriod,
-                  onMethodChanged: _cubit.setDepreciationMethod,
-                  onPeriodChanged: _cubit.setDepreciationPeriod,
-                ),
-                24.height,
-
-                // ── Nguyên giá ──
-                InputColumn2(
-                  textSuffix: 'đ',
-                  label: 'Nguyên giá',
-                  hintText: 'Nhập',
-                  textInputType: TextInputType.number,
-                  onChanged: _cubit.updateOriginalPrice,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                ),
-                12.height,
-
-                // ── Ngày bắt đầu sử dụng ──
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: _buildDateField(
-                    label: 'Ngày bắt đầu sử dụng',
-                    value: state.usageStartDate,
-                    onConfirm: (date) {
-                      _cubit.updateUsageStartDate(convertDateYYYYMMDD(date));
-                    },
-                  ),
-                ),
-                12.height,
-
-                // ── Thời gian tính khấu hao ──
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: InputColumn2(
-                          textSuffix: 'Năm',
-                          label: 'Thời gian tính khấu hao',
-                          hintText: 'Nhập',
-                          textInputType: TextInputType.number,
-                          onChanged: _cubit.updateDepreciationDuration,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                          ],
-                          padding: EdgeInsets.zero,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                32.height,
-
-                // ── Scroll to top ──
-                Center(
-                  child: GestureDetector(
-                    onTap: _scrollToTop,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(
-                          Icons.arrow_upward,
-                          color: AppColors.main,
-                          size: 16,
-                        ),
-                        4.width,
-                        Text(
-                          'Lên đầu trang',
-                          style: AppTypography.p5.copyWith(
-                            color: AppColors.main,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                16.height,
-              ],
+            child: AssetProfileForm(
+              asset: state.mainAsset,
+              onScrollToTop: _scrollToTop,
             ),
           ),
         );
@@ -372,55 +207,273 @@ class _CreateAssetPageState extends State<CreateAssetPage>
   }
 
   // ────────────────────────────────────────────────────────────
-  // Tab 2: Tài sản đi kèm (placeholder)
+  // Tab 2: Tài sản đi kèm
   // ────────────────────────────────────────────────────────────
   Widget _buildAttachedAssetTab() {
+    return BlocBuilder<CreateAssetCubit, CreateAssetState>(
+      builder: (context, state) {
+        return SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(vertical: 24),
+          child: Column(
+            children: [
+              // ── Nút Thêm tài sản ──
+              _buildAddAttachedAssetButton(),
+              24.height,
+
+              if (state.attachedAssets.isNotEmpty) ...[
+                // ── Thanh điều hướng (Tài sản đi kèm X) ──
+                _buildNavigationHeader(state),
+                24.height,
+
+                // ── Nút Xóa tài sản ──
+                _buildDeleteAssetButton(),
+                24.height,
+
+                // ── Radio Options ──
+                _buildAttachedAssetActionOptions(state),
+                24.height,
+
+                // ── Content area ──
+                _buildAttachedAssetContent(state),
+              ],
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildAttachedAssetContent(CreateAssetState state) {
+    final currentAsset = state.attachedAssets[state.currentAttachedAssetIndex];
+
+    if (currentAsset.action == AttachedAssetAction.selectAvailable) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: _buildAssetSelectionField(state),
+      );
+    } else {
+      return AssetProfileForm(
+        asset: currentAsset.assetDetail,
+        attachedIndex: state.currentAttachedAssetIndex,
+      );
+    }
+  }
+
+  Widget _buildAddAttachedAssetButton() {
     return Center(
-      child: Column(
+      child: GestureDetector(
+        onTap: _cubit.addAttachedAsset,
+        child: DottedBorder(
+          color: AppColors.grey30,
+          strokeWidth: 1.2,
+          dashPattern: const [4, 4],
+          borderType: BorderType.RRect,
+          radius: const Radius.circular(8),
+          child: Container(
+            width: 140,
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+            alignment: Alignment.center,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Thêm tài sản',
+                  style: AppTypography.p5.copyWith(
+                    color: AppColors.text_secondary,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                6.width,
+                const Icon(
+                  Icons.add,
+                  size: 18,
+                  color: AppColors.text_secondary,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNavigationHeader(CreateAssetState state) {
+    final isFirst = state.currentAttachedAssetIndex == 0;
+    final isLast =
+        state.currentAttachedAssetIndex == state.attachedAssets.length - 1;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            Icons.inventory_2_outlined,
-            size: 48,
-            color: AppColors.grey80.withValues(alpha: 0.5),
+          _buildNavButton(
+            icon: Icons.chevron_left,
+            enabled: !isFirst,
+            onTap: _cubit.previousAttachedAsset,
           ),
-          16.height,
-          Text(
-            'Chưa có tài sản đi kèm',
-            style: AppTypography.p5.copyWith(color: AppColors.grey80),
+          SizedBox(
+            width: 180,
+            child: Text(
+              'Tài sản đi kèm ${state.currentAttachedAssetIndex + 1}',
+              textAlign: TextAlign.center,
+              style: AppTypography.p4.copyWith(
+                color: AppColors.text_primary,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+          _buildNavButton(
+            icon: Icons.chevron_right,
+            enabled: !isLast,
+            onTap: _cubit.nextAttachedAsset,
           ),
         ],
       ),
     );
   }
 
-  // ────────────────────────────────────────────────────────────
-  // Helper: Date field with label
-  // ────────────────────────────────────────────────────────────
-  Widget _buildDateField({
-    required String label,
-    String? value,
-    required Function(DateTime) onConfirm,
+  Widget _buildNavButton({
+    required IconData icon,
+    required bool enabled,
+    required VoidCallback onTap,
   }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        RichText(
-          text: TextSpan(
-            text: label,
+    return GestureDetector(
+      onTap: enabled ? onTap : null,
+      child: Container(
+        width: 36,
+        height: 36,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: enabled ? const Color(0xFFF2F2F3) : const Color(0xFFF8F8F8),
+        ),
+        child: Icon(
+          icon,
+          size: 20,
+          color: enabled ? AppColors.text_primary : AppColors.text_disable,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDeleteAssetButton() {
+    return Center(
+      child: GestureDetector(
+        onTap: _cubit.removeAttachedAsset,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          decoration: BoxDecoration(
+            color: const Color(0xFFFFEAEA),
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: Text(
+            'Xóa tài sản',
             style: AppTypography.p5.copyWith(
-              color: AppColors.black,
+              color: const Color(0xFFFF4D4D),
               fontWeight: FontWeight.w500,
             ),
           ),
         ),
-        8.height,
-        DatetimePicker(
-          defaultValue: value,
-          hintText: 'Chọn',
-          onConfirm: onConfirm,
+      ),
+    );
+  }
+
+  Widget _buildAttachedAssetActionOptions(CreateAssetState state) {
+    final currentAsset = state.attachedAssets[state.currentAttachedAssetIndex];
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Row(
+        children: [
+          Expanded(
+            child: _buildRadioButton(
+              label: 'Chọn tài sản có sẵn',
+              isSelected:
+                  currentAsset.action == AttachedAssetAction.selectAvailable,
+              onTap:
+                  () => _cubit.updateAttachedAssetAction(
+                    AttachedAssetAction.selectAvailable,
+                  ),
+            ),
+          ),
+          12.width,
+          Expanded(
+            child: _buildRadioButton(
+              label: 'Tạo mới tài sản',
+              isSelected: currentAsset.action == AttachedAssetAction.createNew,
+              onTap:
+                  () => _cubit.updateAttachedAssetAction(
+                    AttachedAssetAction.createNew,
+                  ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRadioButton({
+    required String label,
+    required bool isSelected,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _radioIcon(isSelected, size: 18),
+          8.width,
+          Text(
+            label,
+            style: AppTypography.p6.copyWith(
+              color: AppColors.text_primary,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _radioIcon(bool isSelected, {double size = 18}) {
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(
+          color: isSelected ? AppColors.main : AppColors.grey30,
+          width: 1.5,
         ),
-      ],
+      ),
+      child: Center(
+        child: Container(
+          width: size * 0.5,
+          height: size * 0.5,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: isSelected ? AppColors.main : Colors.transparent,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAssetSelectionField(CreateAssetState state) {
+    return InputColumn(
+      label: 'Chọn tài sản',
+      hintText: 'Chọn',
+      readOnly: true,
+      onTap: () {
+        // TODO: Mở bottom sheet chọn tài sản
+      },
+      suffixIcon: const Icon(
+        Icons.keyboard_arrow_down,
+        color: AppColors.grey80,
+      ),
+      padding: EdgeInsets.zero,
     );
   }
 }
