@@ -53,5 +53,9 @@ class AppRouter extends $AppRouter {
       page: DashboardRoute.page,
       transitionsBuilder: TransitionsBuilders.noTransition,
     ),
+    CustomRoute(
+      page: CreateAssetRoute.page,
+      transitionsBuilder: TransitionsBuilders.noTransition,
+    ),
   ];
 }

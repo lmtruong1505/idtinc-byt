@@ -138,3 +138,13 @@ flutter:
           weight: 500
         - asset: assets/fonts/Roboto-Thin.ttf
           weight: 300
+    - family: FontAwesome
+      fonts:
+        - asset: assets/fonts/icon_fonts/fa-thin-100.ttf
+          weight: 100
+        - asset: assets/fonts/icon_fonts/fa-light-300.ttf
+          weight: 300
+        - asset: assets/fonts/icon_fonts/fa-regular-400.ttf
+          weight: 400
+        - asset: assets/fonts/icon_fonts/fa-solid-900.ttf
+          weight: 900

@@ -15,7 +15,7 @@ class HospitalFilter extends StatelessWidget {
         Assets.images.logo.image(height: 60, width: 60),
         16.height,
         Text(
-          "Bệnh viện đa khoa huyện Quốc Oai\nOai",
+          "Bệnh viện đa khoa huyện Quốc Oai",
           textAlign: TextAlign.center,
           style: AppTypography.h5.copyWith(color: AppColors.text_primary),
         ),

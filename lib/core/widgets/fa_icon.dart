@@ -43,4 +43,6 @@ abstract class ArrowFaIcon {
 
 abstract class CommonFaIcon {
   static Widget wallet = FaIcon(iconCode: 'f555');
+  static Widget upload = FaIcon(iconCode: 'f093');
+  static Widget camera = FaIcon(iconCode: 'f030');
 }

@@ -192,9 +192,6 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_history.svg
   SvgGenImage get icHistory => const SvgGenImage('assets/icons/ic_history.svg');
 
-  /// File path: assets/icons/ic_home.svg
-  SvgGenImage get icHome => const SvgGenImage('assets/icons/ic_home.svg');
-
   /// File path: assets/icons/ic_home_active.svg
   SvgGenImage get icHomeActive =>
       const SvgGenImage('assets/icons/ic_home_active.svg');
@@ -548,7 +545,6 @@ class $AssetsIconsGen {
         icGroup,
         icGroupActive,
         icHistory,
-        icHome,
         icHomeActive,
         icHososuckhoe,
         icIncreaseBox,

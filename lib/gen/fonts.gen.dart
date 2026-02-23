@@ -10,6 +10,9 @@
 class FontFamily {
   FontFamily._();
 
+  /// Font family: FontAwesome
+  static const String fontAwesome = 'FontAwesome';
+
   /// Font family: Helvetica Neu
   static const String helveticaNeu = 'Helvetica Neu';
 }

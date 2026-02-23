@@ -16,7 +16,7 @@ class CommonButton extends StatelessWidget {
     required this.title,
     this.buttonColor,
     this.titleColor,
-    this.radius = 8,
+    this.radius = 999,
     this.padding,
     required this.onTap,
   });
@@ -28,7 +28,7 @@ class CommonButton extends StatelessWidget {
         onTap?.call();
       },
       child: Container(
-        padding: padding ?? Spacing.a16,
+        padding: padding ?? Spacing.a8,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(radius),
           color: buttonColor ?? AppColors.main,

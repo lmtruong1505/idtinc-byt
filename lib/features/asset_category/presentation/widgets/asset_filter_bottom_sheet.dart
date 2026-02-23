@@ -31,152 +31,166 @@ class AssetFilterBottomSheet extends StatelessWidget {
     return BlocBuilder<AssetFilterCubit, AssetFilterState>(
       bloc: cubit,
       builder: (context, state) {
-        return BaseContainer(
-          borderRadius: 16,
-          color: AppColors.white,
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).padding.bottom,
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Handle bar
-              Center(
-                child: BaseContainer(
-                  margin: 8.padingVer,
-                  width: 40,
-                  height: 4,
-                  color: AppColors.grey_2,
-                  borderRadius: 2,
-                  child: Container(),
+        return SizedBox(
+          height: MediaQuery.of(context).size.height * 0.9,
+          child: BaseContainer(
+            borderRadius: 16,
+            color: AppColors.white,
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).padding.bottom,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Handle bar
+                Center(
+                  child: BaseContainer(
+                    margin: 8.padingVer,
+                    width: 40,
+                    height: 4,
+                    color: AppColors.grey_2,
+                    borderRadius: 2,
+                    child: Container(),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: 16.padingHor,
-                child: Text(
-                  "Bộ lọc",
-                  style: AppTypography.h3.copyWith(color: AppColors.black),
+                Padding(
+                  padding: 16.padingHor,
+                  child: Text(
+                    "Bộ lọc",
+                    style: AppTypography.h3.copyWith(color: AppColors.black),
+                  ),
                 ),
-              ),
-              16.height,
-              const Divider(height: 1, color: AppColors.border_2),
+                16.height,
+                const Divider(height: 1, color: AppColors.border_2),
 
-              // Content
-              Flexible(
-                child: SingleChildScrollView(
+                // Content
+                Expanded(
+                  child: SingleChildScrollView(
+                    padding: 16.pading,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Khoa phòng
+                        _buildSectionTitle("Khoa phòng"),
+                        8.height,
+                        CustomDropdownButton(
+                          value: state.selectedDepartment,
+                          hintText: "Toàn viện",
+                          items: [
+                            DropdownButtonModel(
+                              label: "Toàn viện",
+                              value: "all",
+                            ),
+                            DropdownButtonModel(
+                              label: "Khoa Nội",
+                              value: "noi",
+                            ),
+                            DropdownButtonModel(
+                              label: "Khoa Ngoại",
+                              value: "ngoai",
+                            ),
+                          ],
+                          onChanged: (value) {
+                            cubit.selectDepartment(value?.value);
+                          },
+                        ),
+                        16.height,
+
+                        // Trạng thái tài sản
+                        _buildSectionTitle("Trạng thái tài sản"),
+                        8.height,
+                        Wrap(
+                          spacing: 1,
+                          runSpacing: 1,
+                          children:
+                              _statuses.map((status) {
+                                final isSelected =
+                                    state.selectedStatus == status;
+                                return chipCustomBadge(
+                                  padding: 8.pading,
+                                  title: status,
+                                  color:
+                                      isSelected
+                                          ? AppColors.main
+                                          : AppColors.grey79,
+                                  onTap: () {
+                                    cubit.selectStatus(status);
+                                  },
+                                );
+                              }).toList(),
+                        ),
+                        16.height,
+
+                        // Loại thiết bị
+                        _buildSectionTitle("Loại thiết bị"),
+                        8.height,
+                        CustomDropdownButton(
+                          value: state.selectedDeviceType,
+                          hintText: "Công nghệ thông tin",
+                          items: [
+                            DropdownButtonModel(
+                              label: "Công nghệ thông tin",
+                              value: "it",
+                            ),
+                            DropdownButtonModel(
+                              label: "Y tế",
+                              value: "medical",
+                            ),
+                          ],
+                          onChanged: (value) {
+                            cubit.selectDeviceType(value?.value);
+                          },
+                        ),
+                        24.height,
+
+                        // Xóa bộ lọc
+                        CommonButton(
+                          title: "Xóa bộ lọc",
+                          onTap: () {
+                            cubit.clearFilter();
+                          },
+                          buttonColor: AppColors.red_1.withValues(alpha: 0.1),
+                          titleColor: AppColors.red_1,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+                const Divider(height: 1, color: AppColors.border_2),
+
+                // Bottom Buttons
+                Padding(
                   padding: 16.pading,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Row(
                     children: [
-                      // Khoa phòng
-                      _buildSectionTitle("Khoa phòng"),
-                      8.height,
-                      CustomDropdownButton(
-                        value: state.selectedDepartment,
-                        hintText: "Toàn viện",
-                        items: [
-                          DropdownButtonModel(label: "Toàn viện", value: "all"),
-                          DropdownButtonModel(label: "Khoa Nội", value: "noi"),
-                          DropdownButtonModel(
-                            label: "Khoa Ngoại",
-                            value: "ngoai",
-                          ),
-                        ],
-                        onChanged: (value) {
-                          cubit.selectDepartment(value?.value);
-                        },
+                      Expanded(
+                        child: CommonButton(
+                          title: "Hủy bỏ",
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          buttonColor: AppColors.bg_2,
+                          titleColor: AppColors.black,
+                        ),
                       ),
-                      16.height,
-
-                      // Trạng thái tài sản
-                      _buildSectionTitle("Trạng thái tài sản"),
-                      8.height,
-                      Wrap(
-                        spacing: 8,
-                        runSpacing: 8,
-                        children:
-                            _statuses.map((status) {
-                              final isSelected = state.selectedStatus == status;
-                              return chipCustomBadge(
-                                title: status,
-                                color:
-                                    isSelected
-                                        ? AppColors.main
-                                        : AppColors.grey79,
-                                onTap: () {
-                                  cubit.selectStatus(status);
-                                },
-                              );
-                            }).toList(),
-                      ),
-                      16.height,
-
-                      // Loại thiết bị
-                      _buildSectionTitle("Loại thiết bị"),
-                      8.height,
-                      CustomDropdownButton(
-                        value: state.selectedDeviceType,
-                        hintText: "Công nghệ thông tin",
-                        items: [
-                          DropdownButtonModel(
-                            label: "Công nghệ thông tin",
-                            value: "it",
-                          ),
-                          DropdownButtonModel(label: "Y tế", value: "medical"),
-                        ],
-                        onChanged: (value) {
-                          cubit.selectDeviceType(value?.value);
-                        },
-                      ),
-                      24.height,
-
-                      // Xóa bộ lọc
-                      CommonButton(
-                        title: "Xóa bộ lọc",
-                        onTap: () {
-                          cubit.clearFilter();
-                        },
-                        buttonColor: AppColors.red_1.withValues(alpha: 0.1),
-                        titleColor: AppColors.red_1,
+                      12.width,
+                      Expanded(
+                        child: CommonButton(
+                          title: "Lọc danh sách",
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          buttonColor: AppColors.black,
+                          titleColor: AppColors.white,
+                        ),
                       ),
                     ],
                   ),
                 ),
-              ),
-
-              const Divider(height: 1, color: AppColors.border_2),
-
-              // Bottom Buttons
-              Padding(
-                padding: 16.pading,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: CommonButton(
-                        title: "Hủy bỏ",
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        buttonColor: AppColors.bg_2,
-                        titleColor: AppColors.black,
-                      ),
-                    ),
-                    12.width,
-                    Expanded(
-                      child: CommonButton(
-                        title: "Lọc danh sách",
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        buttonColor: AppColors.black,
-                        titleColor: AppColors.white,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },

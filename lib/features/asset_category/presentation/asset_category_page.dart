@@ -1,3 +1,5 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:bpg_retail/app/routes/router.gr.dart';
 import 'package:bpg_retail/core/configs/app_style/init_app_style.dart';
 import 'package:bpg_retail/core/constants/typography.dart';
 import 'package:bpg_retail/core/extension/spacing_extension.dart';
@@ -34,7 +36,7 @@ class AssetCategoryPage extends StatelessWidget {
               padding: const EdgeInsets.only(right: 16),
               child: GestureDetector(
                 onTap: () {
-                  // TODO: Handle create new asset
+                  context.router.push(const CreateAssetRoute());
                 },
                 child: const Icon(Icons.add, color: AppColors.black),
               ),
