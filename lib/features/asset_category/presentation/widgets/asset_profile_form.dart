@@ -3,7 +3,7 @@ import 'package:bpg_retail/core/constants/typography.dart';
 import 'package:bpg_retail/core/extension/spacing_extension.dart';
 import 'package:bpg_retail/core/utilities/converts.dart';
 import 'package:bpg_retail/core/widgets/textfield/input_column.dart';
-import 'package:bpg_retail/core/widgets/datetime_picker.dart';
+import 'package:bpg_retail/core/widgets/common_date_picker.dart';
 import 'package:bpg_retail/features/asset_category/data/bloc/create_asset_cubit.dart';
 import 'package:bpg_retail/features/asset_category/data/bloc/create_asset_state.dart';
 import 'package:bpg_retail/features/asset_category/presentation/widgets/asset_image_picker_widget.dart';
@@ -164,9 +164,9 @@ class AssetProfileForm extends StatelessWidget {
               ),
               12.width,
               Expanded(
-                child: _buildDateField(
+                child: CommonDatePicker(
                   label: 'Ngày sản xuất',
-                  value: asset.manufacturingDate,
+                  initialValue: asset.manufacturingDate,
                   onConfirm: (date) {
                     cubit.updateManufacturingDate(
                       convertDateYYYYMMDD(date),
@@ -210,9 +210,9 @@ class AssetProfileForm extends StatelessWidget {
         // ── Ngày bắt đầu sử dụng ──
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: _buildDateField(
+          child: CommonDatePicker(
             label: 'Ngày bắt đầu sử dụng',
-            value: asset.usageStartDate,
+            initialValue: asset.usageStartDate,
             onConfirm: (date) {
               cubit.updateUsageStartDate(
                 convertDateYYYYMMDD(date),
@@ -275,33 +275,6 @@ class AssetProfileForm extends StatelessWidget {
               ),
             ),
           ),
-      ],
-    );
-  }
-
-  Widget _buildDateField({
-    required String label,
-    String? value,
-    required Function(DateTime) onConfirm,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        RichText(
-          text: TextSpan(
-            text: label,
-            style: AppTypography.p5.copyWith(
-              color: AppColors.black,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ),
-        8.height,
-        DatetimePicker(
-          defaultValue: value,
-          hintText: 'Chọn',
-          onConfirm: onConfirm,
-        ),
       ],
     );
   }
