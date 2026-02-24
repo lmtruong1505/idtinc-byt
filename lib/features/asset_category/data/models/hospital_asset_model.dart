@@ -2,6 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'asset_status_model.dart';
 import 'asset_type_model.dart';
 import 'asset_location_model.dart';
+import 'asset_user_model.dart';
 
 part 'hospital_asset_model.g.dart';
 
@@ -32,6 +33,36 @@ class HospitalAssetModel {
   @JsonKey(name: 'order_parent')
   final int? orderParent;
 
+  // Additional fields from detailed JSON
+  @JsonKey(name: 'ma_seri')
+  final String? maSeri;
+  @JsonKey(name: 'ma_model')
+  final String? maModel;
+  @JsonKey(name: 'hang_san_xuat')
+  final String? hangSanXuat;
+  @JsonKey(name: 'nuoc_san_xuat')
+  final String? nuocSanXuat;
+  @JsonKey(name: 'thoi_gian_san_xuat')
+  final String? thoiGianSanXuat;
+  @JsonKey(name: 'don_vi_tinh')
+  final String? donViTinh;
+  @JsonKey(name: 'gia_tri_khau_hao')
+  final String? giaTriKhauHao;
+  @JsonKey(name: 'khau_hao_con_lai')
+  final String? khauHaoConLai;
+  @JsonKey(name: 'to_chuc')
+  final int? toChuc;
+  @JsonKey(name: 'created_by')
+  final AssetUserModel? createdBy;
+  @JsonKey(name: 'updated_by')
+  final AssetUserModel? updatedBy;
+  @JsonKey(name: 'bo_tai_san')
+  final List<HospitalAssetModel>? boTaiSan;
+  @JsonKey(name: 'created_at')
+  final String? createdAt;
+  @JsonKey(name: 'updated_at')
+  final String? updatedAt;
+
   HospitalAssetModel({
     this.id,
     this.tenTaiSan,
@@ -46,6 +77,20 @@ class HospitalAssetModel {
     this.hasBoTaiSan,
     this.parent,
     this.orderParent,
+    this.maSeri,
+    this.maModel,
+    this.hangSanXuat,
+    this.nuocSanXuat,
+    this.thoiGianSanXuat,
+    this.donViTinh,
+    this.giaTriKhauHao,
+    this.khauHaoConLai,
+    this.toChuc,
+    this.createdBy,
+    this.updatedBy,
+    this.boTaiSan,
+    this.createdAt,
+    this.updatedAt,
   });
 
   factory HospitalAssetModel.fromJson(Map<String, dynamic> json) =>
@@ -62,8 +107,37 @@ class HospitalAssetModel {
           ? originalPriceValue / depreciationYearsValue
           : 0;
 
-  double get remainingValue => originalPriceValue - annualDepreciation;
+  double get remainingValue => originalPriceValue - accumulatedDepreciation;
 
   double get depreciationRatio =>
-      originalPriceValue > 0 ? (annualDepreciation / originalPriceValue) : 0;
+      originalPriceValue > 0
+          ? (annualDepreciation / originalPriceValue) * 100
+          : 0;
+
+  double get usageYears {
+    if (ngayBatDauSuDung == null) return 0;
+    try {
+      final startDate = DateTime.parse(ngayBatDauSuDung!);
+      final now = DateTime.now();
+
+      // Calculate years as currentYear - startYear
+      double years = (now.year - startDate.year).toDouble();
+      if (years < 0) years = 0;
+
+      // Cap by total depreciation period
+      if (depreciationYearsValue > 0 && years > depreciationYearsValue) {
+        years = depreciationYearsValue;
+      }
+      return years;
+    } catch (e) {
+      return 0;
+    }
+  }
+
+  double get accumulatedDepreciation => annualDepreciation * usageYears;
+
+  double get accumulatedDepreciationRatio =>
+      originalPriceValue > 0
+          ? (accumulatedDepreciation / originalPriceValue) * 100
+          : 0;
 }

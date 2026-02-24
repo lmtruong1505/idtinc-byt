@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:bpg_retail/core/configs/app_style/init_app_style.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -67,9 +68,34 @@ String formatMinute(int seconds) {
   return '$minutesStr:$secondsStr';
 }
 
-String formatCurrency(num? amount) {
+String formatCurrency(num? amount, {int? decimalDigits}) {
   amount ??= 0;
-  final formatter = NumberFormat.currency(locale: 'vi_VN', symbol: '₫');
+
+  // If decimalDigits is null, use smart formatting
+  if (decimalDigits == null) {
+    final formatter = NumberFormat.currency(
+      locale: 'vi_VN',
+      symbol: '₫',
+      decimalDigits: 2,
+    );
+    String formatted = formatter.format(amount);
+
+    // Hide ,00
+    formatted = formatted.replaceAll(RegExp(r',00(?=\s|$)'), '');
+    // Replace ,X0 with ,X
+    formatted = formatted.replaceAllMapped(
+      RegExp(r',([0-9])0(?=\s|$)'),
+      (match) => ',${match.group(1)}',
+    );
+
+    return formatted;
+  }
+
+  final formatter = NumberFormat.currency(
+    locale: 'vi_VN',
+    symbol: '₫',
+    decimalDigits: decimalDigits,
+  );
   return formatter.format(amount);
 }
 
@@ -97,14 +123,8 @@ String removeVietnameseTones(String str) {
   str = str.replaceAll(RegExp(r'[ÙÚỤỦŨƯỪỨỰỬỮ]'), 'U');
   str = str.replaceAll(RegExp(r'[ỲÝỴỶỸ]'), 'Y');
   str = str.replaceAll(RegExp(r'Đ'), 'D');
-  str = str.replaceAll(
-    RegExp(r'\u0300|\u0301|\u0303|\u0309|\u0323'),
-    '',
-  );
-  str = str.replaceAll(
-    RegExp(r'\u02C6|\u0306|\u031B'),
-    '',
-  );
+  str = str.replaceAll(RegExp(r'\u0300|\u0301|\u0303|\u0309|\u0323'), '');
+  str = str.replaceAll(RegExp(r'\u02C6|\u0306|\u031B'), '');
   str = str.replaceAll(RegExp(r'\s+'), ' ');
   str = str.trim();
   str = str.replaceAll(RegExp(r'[^a-zA-Z0-9\s]'), ' ');
@@ -128,12 +148,13 @@ RemoteMessage stringToRemoteMessage(String payload) {
     final Map<String, dynamic> data = jsonDecode(payload);
 
     // Create a RemoteNotification object if available
-    final notification = data['notification'] != null
-        ? RemoteNotification(
-            title: data['notification']['title'],
-            body: data['notification']['body'],
-          )
-        : null;
+    final notification =
+        data['notification'] != null
+            ? RemoteNotification(
+              title: data['notification']['title'],
+              body: data['notification']['body'],
+            )
+            : null;
 
     // Return a RemoteMessage object with data and notification
     return RemoteMessage(
@@ -151,7 +172,9 @@ RemoteMessage stringToRemoteMessage(String payload) {
 String formatNumberWithSpaces(String input) {
   final String reversed = input.split('').reversed.join();
   final String spaced = reversed.replaceAllMapped(
-      RegExp(r'.{1,4}'), (match) => '${match.group(0)} ');
+    RegExp(r'.{1,4}'),
+    (match) => '${match.group(0)} ',
+  );
   return spaced.split('').reversed.join().trim();
 }
 
@@ -178,6 +201,19 @@ int decodeGender(String? gender) {
       return 3;
     default:
       return 1;
+  }
+}
+
+Color getAssetStatusColor(String? statusValue) {
+  switch (statusValue) {
+    case "NHAN_ROI":
+      return AppColors.green50;
+    case "DANG_SU_DUNG":
+      return AppColors.blue50;
+    case "CHO_THANH_LY":
+      return AppColors.orange50;
+    default:
+      return AppColors.grey50;
   }
 }
 

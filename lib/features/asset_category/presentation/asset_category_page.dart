@@ -173,24 +173,29 @@ class _AssetCategoryPageState extends State<AssetCategoryPage> {
             ),
           ),
           24.height,
-          BaseContainer(
-            isDotted: true,
-            borderColor: AppColors.grey80,
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-            borderRadius: 24,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  "Tạo mới tài sản",
-                  style: AppTypography.p5.copyWith(
-                    color: AppColors.grey80,
-                    fontWeight: FontWeight.w500,
+          GestureDetector(
+            onTap: () {
+              context.router.push(const CreateAssetRoute());
+            },
+            child: BaseContainer(
+              isDotted: true,
+              borderColor: AppColors.grey80,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              borderRadius: 24,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "Tạo mới tài sản",
+                    style: AppTypography.p5.copyWith(
+                      color: AppColors.grey80,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
-                8.width,
-                const Icon(Icons.add, color: AppColors.grey80, size: 20),
-              ],
+                  8.width,
+                  const Icon(Icons.add, color: AppColors.grey80, size: 20),
+                ],
+              ),
             ),
           ),
         ],

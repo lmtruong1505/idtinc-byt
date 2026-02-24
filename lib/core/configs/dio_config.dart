@@ -21,7 +21,8 @@ class BaseDio {
     _instance = _createDioInstance();
     return _instance!;
   }
-  final isLog = false;
+
+  final isLog = kDebugMode;
   final preferences = getIt.get<Preferences>();
   final navigator = getIt.get<AppNavigator>();
   final appCubit = getIt.get<AppCubit>();
@@ -56,40 +57,37 @@ class BaseDio {
 
     dio.interceptors.clear();
 
-    dio.interceptors.addAll(
-      [
-        InterceptorsWrapper(
-          onRequest: (options, handler) {
-            return handler.next(options);
-          },
-          onResponse: (response, handler) async {
+    dio.interceptors.addAll([
+      InterceptorsWrapper(
+        onRequest: (options, handler) {
+          return handler.next(options);
+        },
+        onResponse: (response, handler) async {
+          if (response.data is Map) {
             final statusCode = response.data['status'];
             if (statusCode == 401 || statusCode == 403) {
               await appCubit.onForceLogout(isMessage: false);
             }
-            return handler.next(response);
-          },
-          onError: (error, handler) async {
-       
-            final statusCode = error.response?.statusCode;
-            if (statusCode == 401 || statusCode == 403) {
-              await appCubit.onForceLogout(isMessage: false);
-              handler.next(error);
-            } else {
-              handler.next(error);
-            }
-          },
-        ),
-        PrettyDioLogger(
-          requestBody: isLog,
-          responseBody: isLog,
-          requestHeader: isLog,
-        ),
-        CurlLoggerDioInterceptor(
-          printOnSuccess: true,
-        ),
-      ],
-    );
+          }
+          return handler.next(response);
+        },
+        onError: (error, handler) async {
+          final statusCode = error.response?.statusCode;
+          if (statusCode == 401 || statusCode == 403) {
+            await appCubit.onForceLogout(isMessage: false);
+          }
+          return handler.next(error);
+        },
+      ),
+      PrettyDioLogger(
+        requestBody: isLog,
+        responseBody: isLog,
+        requestHeader: isLog,
+        error: true,
+        maxWidth: 90,
+      ),
+      CurlLoggerDioInterceptor(printOnSuccess: true),
+    ]);
     return dio;
   }
 
@@ -98,47 +96,19 @@ class BaseDio {
     Map<String, dynamic>? data,
     Options? options,
   }) async {
-    return _dio().get(
-      path,
-      queryParameters: data,
-      options: options,
-    );
+    return _dio().get(path, queryParameters: data, options: options);
   }
 
-  Future<Response> post(
-    String path, {
-    Object? data,
-    Options? options,
-  }) async {
-    return _dio().post(
-      path,
-      data: data,
-      options: options,
-    );
+  Future<Response> post(String path, {Object? data, Options? options}) async {
+    return _dio().post(path, data: data, options: options);
   }
 
-  Future<Response> put(
-    String path, {
-    Object? data,
-    Options? options,
-  }) async {
-    return _dio().put(
-      path,
-      data: data,
-      options: options,
-    );
+  Future<Response> put(String path, {Object? data, Options? options}) async {
+    return _dio().put(path, data: data, options: options);
   }
 
-  Future<Response> delete(
-    String path, {
-    Object? data,
-    Options? options,
-  }) async {
-    return _dio().delete(
-      path,
-      data: data,
-      options: options,
-    );
+  Future<Response> delete(String path, {Object? data, Options? options}) async {
+    return _dio().delete(path, data: data, options: options);
   }
 
   Future<String?> download(String path) async {
@@ -176,9 +146,7 @@ class BaseDio {
         for (final note in be.data['details']['notes']) {
           notes.add(note);
         }
-        notes.removeWhere(
-          (element) => element.nullOrEmpty,
-        );
+        notes.removeWhere((element) => element.nullOrEmpty);
       }
     } catch (e) {}
     return notes;

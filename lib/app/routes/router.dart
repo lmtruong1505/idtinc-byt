@@ -57,5 +57,9 @@ class AppRouter extends $AppRouter {
       page: CreateAssetRoute.page,
       transitionsBuilder: TransitionsBuilders.noTransition,
     ),
+    CustomRoute(
+      page: AssetDetailRoute.page,
+      transitionsBuilder: TransitionsBuilders.noTransition,
+    ),
   ];
 }
