@@ -2,13 +2,16 @@ import 'package:bpg_retail/core/configs/app_style/init_app_style.dart';
 import 'package:bpg_retail/core/constants/typography.dart';
 import 'package:bpg_retail/core/core.dart' hide AppColors;
 import 'package:bpg_retail/core/extension/spacing_extension.dart';
+import 'package:bpg_retail/core/utilities/converts.dart';
 import 'package:bpg_retail/core/widgets/base_container.dart';
 import 'package:bpg_retail/core/widgets/base_progress_bar.dart';
 import 'package:bpg_retail/core/widgets/chip_custom.dart';
+import 'package:bpg_retail/features/asset_category/data/models/hospital_asset_model.dart';
 import 'package:flutter/material.dart';
 
 class AssetItemWidget extends StatelessWidget {
-  const AssetItemWidget({super.key});
+  final HospitalAssetModel asset;
+  const AssetItemWidget({super.key, required this.asset});
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +30,22 @@ class AssetItemWidget extends StatelessWidget {
                 width: 80,
                 height: 80,
                 borderRadius: 8,
-                color: AppColors.grey20, // Placeholder color
-                // TODO: Replace with actual image when API ready
-                child: const Icon(Icons.image, color: AppColors.text_tertiary),
+                color: AppColors.grey20,
+                child:
+                    asset.hinhAnh != null
+                        ? Image.network(
+                          asset.hinhAnh!,
+                          fit: BoxFit.cover,
+                          errorBuilder:
+                              (context, error, stackTrace) => const Icon(
+                                Icons.image,
+                                color: AppColors.text_tertiary,
+                              ),
+                        )
+                        : const Icon(
+                          Icons.image,
+                          color: AppColors.text_tertiary,
+                        ),
               ),
               12.width,
               // Asset Info
@@ -41,17 +57,23 @@ class AssetItemWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "BDNKQKTC2025",
+                          asset.maTaiSan ?? 'N/A',
                           style: AppTypography.p5.copyWith(
                             color: AppColors.text_tertiary,
                           ),
                         ),
                         // Status Badge
                         chipCustomBadge(
-                          color: AppColors.blue50,
-                          title: "Đang sử dụng",
+                          color:
+                              asset.trangThai?.value == "DANG_SU_DUNG"
+                                  ? AppColors.blue50
+                                  : AppColors.orange50,
+                          title: asset.trangThai?.label ?? "Chưa xác định",
                           titleStyle: AppTypography.p7.copyWith(
-                            color: AppColors.blue50,
+                            color:
+                                asset.trangThai?.value == "DANG_SU_DUNG"
+                                    ? AppColors.blue50
+                                    : AppColors.orange50,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -59,7 +81,7 @@ class AssetItemWidget extends StatelessWidget {
                     ),
                     4.height,
                     Text(
-                      "Bộ đặt nội khí quản đèn LED",
+                      asset.tenTaiSan ?? "N/A",
                       style: AppTypography.p4.copyWith(
                         fontWeight: FontWeight.w600,
                         color: AppColors.text_primary,
@@ -69,7 +91,7 @@ class AssetItemWidget extends StatelessWidget {
                     ),
                     4.height,
                     Text(
-                      "22.494.000 đ (8 năm, từ 01/01/2025)",
+                      "${formatCurrency(double.tryParse(asset.nguyenGia ?? '0'))} (${asset.thoiGianTinhKhauHao ?? '0'} năm, từ ${convertDateFormat(asset.ngayBatDauSuDung ?? '')})",
                       style: AppTypography.p6.copyWith(
                         color: AppColors.text_tertiary,
                       ),
@@ -81,20 +103,20 @@ class AssetItemWidget extends StatelessWidget {
           ),
           12.height,
           // Progress Bar
-          const BaseProgressBar(value: 19),
+          BaseProgressBar(value: asset.depreciationRatio * 100),
           8.height,
           // Depreciation Info
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Đã hao mòn: 4.012.234 đ",
+                "Đã hao mòn: ${formatCurrency(asset.annualDepreciation)}",
                 style: AppTypography.p6.copyWith(
                   color: AppColors.text_tertiary,
                 ),
               ),
               Text(
-                "Còn 19.682.250 đ",
+                "Còn ${formatCurrency(asset.remainingValue)}",
                 style: AppTypography.p6.copyWith(
                   color: AppColors.text_primary,
                   fontWeight: FontWeight.w600,
@@ -116,7 +138,7 @@ class AssetItemWidget extends StatelessWidget {
                 ),
                 6.width,
                 Text(
-                  "Đi kèm 4 tài sản",
+                  asset.hasBoTaiSan == true ? "Bộ tài sản" : "Tài sản đơn lẻ",
                   style: AppTypography.p6.copyWith(
                     color: AppColors.text_tertiary,
                   ),

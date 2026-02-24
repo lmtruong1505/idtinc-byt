@@ -146,4 +146,5 @@ class Api {
   static String getWarehouses = '$baseURLV2/api/v1/warehouse';
   static String getUser = '$baseURLV2/api/v1/auth/profile';
   static String logOut = '$baseURLV2/api/v1/auth/logout';
+  static String getAssetList = '$baseURLV2/api/v1/tai-san/danh-sach-tai-san';
 }

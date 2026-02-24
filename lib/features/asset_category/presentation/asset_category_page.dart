@@ -3,8 +3,11 @@ import 'package:bpg_retail/app/routes/router.gr.dart';
 import 'package:bpg_retail/core/configs/app_style/init_app_style.dart';
 import 'package:bpg_retail/core/constants/typography.dart';
 import 'package:bpg_retail/core/extension/spacing_extension.dart';
+import 'package:bpg_retail/core/injection/injection.dart';
 import 'package:bpg_retail/core/widgets/base/appbar.dart';
 import 'package:bpg_retail/core/widgets/base_container.dart';
+import 'package:bpg_retail/features/asset_category/data/bloc/asset_category_cubit.dart';
+import 'package:bpg_retail/features/asset_category/data/bloc/asset_category_state.dart';
 import 'package:bpg_retail/features/asset_category/data/bloc/asset_filter_cubit.dart';
 import 'package:bpg_retail/features/asset_category/presentation/widgets/asset_filter_bottom_sheet.dart';
 import 'package:bpg_retail/features/asset_category/presentation/widgets/asset_filter_widget.dart';
@@ -12,43 +15,80 @@ import 'package:bpg_retail/features/asset_category/presentation/widgets/asset_it
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AssetCategoryPage extends StatelessWidget {
-  AssetCategoryPage({super.key});
+class AssetCategoryPage extends StatefulWidget {
+  const AssetCategoryPage({super.key});
 
+  @override
+  State<AssetCategoryPage> createState() => _AssetCategoryPageState();
+}
+
+class _AssetCategoryPageState extends State<AssetCategoryPage> {
   final AssetFilterCubit _filterCubit = AssetFilterCubit();
+  final AssetCategoryCubit _categoryCubit = getIt.get<AssetCategoryCubit>();
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _categoryCubit.getAssets(refresh: true);
+    _scrollController.addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 200) {
+      _categoryCubit.loadMore();
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Connect with Bloc state to toggle this
-    bool hasData = true;
-
-    return BlocProvider.value(
-      value: _filterCubit,
-      child: Scaffold(
-        backgroundColor: AppColors.white,
-        appBar: BaseAppBar(
-          title: "Danh mục tài sản (999)",
-          centerTitle: false,
-          hasLeading: false,
-          textStyle: AppTypography.h3.copyWith(color: AppColors.black),
-          trailingIcons: [
-            Padding(
-              padding: const EdgeInsets.only(right: 16),
-              child: GestureDetector(
-                onTap: () {
-                  context.router.push(const CreateAssetRoute());
-                },
-                child: const Icon(Icons.add, color: AppColors.black),
-              ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider.value(value: _filterCubit),
+        BlocProvider.value(value: _categoryCubit),
+      ],
+      child: BlocBuilder<AssetCategoryCubit, AssetCategoryState>(
+        builder: (context, state) {
+          final int count = state.pagination?.count ?? 0;
+          return Scaffold(
+            backgroundColor: AppColors.white,
+            appBar: BaseAppBar(
+              title: "Danh mục tài sản ($count)",
+              centerTitle: false,
+              hasLeading: false,
+              textStyle: AppTypography.h3.copyWith(color: AppColors.black),
+              trailingIcons: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 16),
+                  child: GestureDetector(
+                    onTap: () {
+                      context.router.push(const CreateAssetRoute());
+                    },
+                    child: const Icon(Icons.add, color: AppColors.black),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-        body: hasData ? _buildListState(context) : _buildEmptyState(),
+            body:
+                state.status == AssetLoadStatus.loading && state.assets.isEmpty
+                    ? const Center(child: CircularProgressIndicator())
+                    : state.assets.isNotEmpty
+                    ? _buildListState(context, state)
+                    : _buildEmptyState(),
+          );
+        },
       ),
     );
   }
 
-  Widget _buildListState(BuildContext context) {
+  Widget _buildListState(BuildContext context, AssetCategoryState state) {
     return Column(
       children: [
         AssetFilterWidget(
@@ -56,13 +96,27 @@ class AssetCategoryPage extends StatelessWidget {
           onSearchChanged: (value) => _filterCubit.updateSearchKeyword(value),
         ),
         Expanded(
-          child: ListView.separated(
-            padding: const EdgeInsets.only(bottom: 24),
-            itemCount: 10, // Mock 10 items
-            separatorBuilder: (context, index) => 8.height,
-            itemBuilder: (context, index) {
-              return const AssetItemWidget();
-            },
+          child: RefreshIndicator(
+            onRefresh: () => _categoryCubit.getAssets(refresh: true),
+            child: ListView.separated(
+              controller: _scrollController,
+              padding: const EdgeInsets.only(bottom: 24),
+              itemCount:
+                  state.assets.length +
+                  (state.status == AssetLoadStatus.loadingMore ? 1 : 0),
+              separatorBuilder: (context, index) => 8.height,
+              itemBuilder: (context, index) {
+                if (index < state.assets.length) {
+                  return AssetItemWidget(asset: state.assets[index]);
+                }
+                return const Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              },
+            ),
           ),
         ),
       ],
