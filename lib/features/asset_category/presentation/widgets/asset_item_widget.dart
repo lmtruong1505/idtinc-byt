@@ -8,8 +8,10 @@ import 'package:bpg_retail/core/utilities/converts.dart';
 import 'package:bpg_retail/core/widgets/base_container.dart';
 import 'package:bpg_retail/core/widgets/base_progress_bar.dart';
 import 'package:bpg_retail/core/widgets/chip_custom.dart';
+import 'package:bpg_retail/features/asset_category/data/bloc/asset_category_cubit.dart';
 import 'package:bpg_retail/features/asset_category/data/models/hospital_asset_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AssetItemWidget extends StatelessWidget {
   final HospitalAssetModel asset;
@@ -18,8 +20,11 @@ class AssetItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        context.router.push(AssetDetailRoute(asset: asset));
+      onTap: () async {
+        await context.router.push(AssetDetailRoute(asset: asset));
+        if (context.mounted) {
+          context.read<AssetCategoryCubit>().getAssets(refresh: true);
+        }
       },
       child: BaseContainer(
         margin: 8.padingVer + 8.padingHor,

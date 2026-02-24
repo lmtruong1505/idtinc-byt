@@ -13,6 +13,8 @@ import 'package:bpg_retail/features/asset_category/data/bloc/asset_detail_state.
 import 'package:bpg_retail/features/asset_category/data/models/hospital_asset_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'widgets/asset_depreciation_bottom_sheet.dart';
+import 'widgets/asset_technical_specs_bottom_sheet.dart';
 
 @RoutePage()
 class AssetDetailPage extends StatefulWidget {
@@ -323,9 +325,14 @@ class _AssetDetailPageState extends State<AssetDetailPage>
             "Truy vết khấu hao",
             Icons.visibility_outlined,
             isFilled: true,
+            onTap: () => _showDepreciationTrace(asset),
           ),
           16.height,
-          _buildWideAction("Xem thông số kỹ thuật", Icons.visibility_outlined),
+          _buildWideAction(
+            "Xem thông số kỹ thuật",
+            Icons.visibility_outlined,
+            onTap: () => _showTechnicalSpecs(asset),
+          ),
           24.height,
         ],
       ),
@@ -399,33 +406,55 @@ class _AssetDetailPageState extends State<AssetDetailPage>
     String label,
     IconData icon, {
     bool isFilled = false,
+    VoidCallback? onTap,
   }) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 12),
-      decoration: BoxDecoration(
-        color: isFilled ? AppColors.blueAlpha10 : Colors.transparent,
-        border: isFilled ? null : Border.all(color: AppColors.grey30),
-        borderRadius: BorderRadius.circular(4),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            label,
-            style: AppTypography.p5.copyWith(
-              color: isFilled ? AppColors.blue60 : AppColors.text_tertiary,
-              fontWeight: FontWeight.bold,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        decoration: BoxDecoration(
+          color: isFilled ? AppColors.blueAlpha10 : Colors.transparent,
+          border: isFilled ? null : Border.all(color: AppColors.grey30),
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              label,
+              style: AppTypography.p5.copyWith(
+                color: isFilled ? AppColors.blue60 : AppColors.text_tertiary,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          8.width,
-          Icon(
-            icon,
-            size: 20,
-            color: isFilled ? AppColors.blue60 : AppColors.text_tertiary,
-          ),
-        ],
+            8.width,
+            Icon(
+              icon,
+              size: 20,
+              color: isFilled ? AppColors.blue60 : AppColors.text_tertiary,
+            ),
+          ],
+        ),
       ),
+    );
+  }
+
+  void _showDepreciationTrace(HospitalAssetModel asset) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => AssetDepreciationBottomSheet(asset: asset),
+    );
+  }
+
+  void _showTechnicalSpecs(HospitalAssetModel asset) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => AssetTechnicalSpecsBottomSheet(asset: asset),
     );
   }
 
