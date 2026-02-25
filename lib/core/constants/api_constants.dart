@@ -63,4 +63,5 @@ class Api {
       '$baseURLV2/api/v1/tai-san/$id/cap-nhat-tai-san';
   static String getAssetTypes =
       '$baseURLV2/api/v1/du-lieu-he-thong/combobox-du-lieu-he-thong';
+  static String createAsset = '$baseURLV2/api/v1/tai-san/tao-tai-san';
 }

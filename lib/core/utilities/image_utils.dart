@@ -20,18 +20,49 @@ class ImageUtils {
     final picker = ImagePicker();
     final XFile? photo = await picker.pickImage(source: source);
     if (photo != null) {
-      if (!isCrop) return photo.path;
-      final cropData = await cropImage(path: photo.path, cropStyle: cropStyle);
-      return cropData?.path;
+      String? finalPath = photo.path;
+      if (isCrop) {
+        final cropData = await cropImage(
+          path: photo.path,
+          cropStyle: cropStyle,
+        );
+        finalPath = cropData?.path;
+      }
+
+      if (finalPath != null) {
+        // Luôn nén để đảm bảo dưới 1MB
+        return await compressImageSize(finalPath);
+      }
     }
     return null;
   }
 
+  static Future<String?> compressImageSize(
+    String path, {
+    int maxSizeInBytes = 1 * 1024 * 1024, // 1MB
+  }) async {
+    File file = File(path);
+    int size = await file.length();
+    if (size <= maxSizeInBytes) return path;
+
+    // Nếu quá lớn, dùng thư viện image để nén
+    final image = img.decodeImage(await file.readAsBytes());
+    if (image == null) return path;
+
+    int quality = 80;
+    while (size > maxSizeInBytes && quality > 10) {
+      final compressedBytes = img.encodeJpg(image, quality: quality);
+      await file.writeAsBytes(compressedBytes);
+      size = await file.length();
+      quality -= 10;
+    }
+
+    return file.path;
+  }
+
   static Future<String?> pickerSingleVideo(ImageSource source) async {
     final picker = ImagePicker();
-    final XFile? photo = await picker.pickVideo(
-      source: source,
-    );
+    final XFile? photo = await picker.pickVideo(source: source);
     return photo?.path;
   }
 
@@ -43,10 +74,11 @@ class ImageUtils {
       sourcePath: path,
       // cropStyle removed from here as it is not a valid named parameter
       compressFormat: ImageCompressFormat.jpg,
-      compressQuality: 100,
-      aspectRatio: cropStyle == CropStyle.circle
-          ? null
-          : const CropAspectRatio(ratioX: 16, ratioY: 9),
+      compressQuality: 80,
+      aspectRatio:
+          cropStyle == CropStyle.circle
+              ? null
+              : const CropAspectRatio(ratioX: 16, ratioY: 9),
       uiSettings: [
         AndroidUiSettings(
           toolbarTitle: 'Chỉnh sửa',
@@ -109,6 +141,7 @@ class ImageUtils {
     try {
       print(url);
       // 1. Yêu cầu quyền lưu trữ
+      if (!context.mounted) return false;
       PermissionStatus? status;
       if (Platform.isAndroid) {
         final androidInfo = await DeviceInfoPlugin().androidInfo;

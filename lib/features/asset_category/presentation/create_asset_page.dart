@@ -1,10 +1,15 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:bpg_retail/app/data/bloc/app_cubit.dart';
 import 'package:bpg_retail/core/configs/app_style/init_app_style.dart';
 import 'package:bpg_retail/core/constants/typography.dart';
 import 'package:bpg_retail/core/extension/spacing_extension.dart';
+import 'package:bpg_retail/core/injection/injection.dart';
+import 'package:bpg_retail/core/navigation/navigator.dart';
+import 'package:bpg_retail/core/preferences/preferences.dart';
 import 'package:bpg_retail/core/widgets/base/appbar.dart';
 import 'package:bpg_retail/features/asset_category/data/bloc/create_asset_cubit.dart';
 import 'package:bpg_retail/features/asset_category/data/bloc/create_asset_state.dart';
+import 'package:bpg_retail/features/asset_category/data/repositories/asset_repository.dart';
 import 'package:bpg_retail/features/asset_category/presentation/widgets/asset_profile_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,7 +33,12 @@ class _CreateAssetPageState extends State<CreateAssetPage>
   @override
   void initState() {
     super.initState();
-    _cubit = CreateAssetCubit();
+    _cubit =
+        CreateAssetCubit(getIt.get<AssetRepository>())
+          ..navigator = getIt.get<AppNavigator>()
+          ..appCubit = getIt.get<AppCubit>()
+          ..preferences = getIt.get<Preferences>();
+
     _cubit.loadAvailableAssets();
     _cubit.loadAssetTypes();
     _tabController = TabController(length: 2, vsync: this);
@@ -137,27 +147,45 @@ class _CreateAssetPageState extends State<CreateAssetPage>
                   ),
                   12.width,
                   Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        if (_formKey.currentState?.validate() ?? false) {
-                          _cubit.submit();
-                        }
-                      },
-                      child: Container(
-                        height: 48,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF2B2B2B),
-                          borderRadius: BorderRadius.circular(24),
-                        ),
-                        child: Text(
-                          'Lưu lại',
-                          style: AppTypography.p4.copyWith(
-                            color: AppColors.white,
-                            fontWeight: FontWeight.w600,
+                    child: BlocBuilder<CreateAssetCubit, CreateAssetState>(
+                      builder: (context, state) {
+                        return GestureDetector(
+                          onTap:
+                              state.isSubmitting
+                                  ? null
+                                  : () {
+                                    if (_formKey.currentState?.validate() ??
+                                        false) {
+                                      _cubit.submit();
+                                    }
+                                  },
+                          child: Container(
+                            height: 48,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF2B2B2B),
+                              borderRadius: BorderRadius.circular(24),
+                            ),
+                            child:
+                                state.isSubmitting
+                                    ? const SizedBox(
+                                      width: 20,
+                                      height: 20,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                        color: Colors.white,
+                                      ),
+                                    )
+                                    : Text(
+                                      'Lưu lại',
+                                      style: AppTypography.p4.copyWith(
+                                        color: AppColors.white,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
                           ),
-                        ),
-                      ),
+                        );
+                      },
                     ),
                   ),
                 ],

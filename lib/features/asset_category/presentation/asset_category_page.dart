@@ -78,8 +78,13 @@ class _AssetCategoryPageState extends State<AssetCategoryPage> {
             Padding(
               padding: const EdgeInsets.only(right: 16),
               child: GestureDetector(
-                onTap: () {
-                  context.router.push(const CreateAssetRoute());
+                onTap: () async {
+                  final result = await context.router.push(
+                    const CreateAssetRoute(),
+                  );
+                  if (result == true && context.mounted) {
+                    _categoryCubit.getAssets(refresh: true);
+                  }
                 },
                 child: const Icon(Icons.add, color: AppColors.black),
               ),
@@ -209,8 +214,13 @@ class _AssetCategoryPageState extends State<AssetCategoryPage> {
           ),
           24.height,
           GestureDetector(
-            onTap: () {
-              context.router.push(const CreateAssetRoute());
+            onTap: () async {
+              final result = await context.router.push(
+                const CreateAssetRoute(),
+              );
+              if (result == true && context.mounted) {
+                _categoryCubit.getAssets(refresh: true);
+              }
             },
             child: BaseContainer(
               isDotted: true,

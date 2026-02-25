@@ -1,5 +1,6 @@
 import 'package:bpg_retail/core/configs/dio_config.dart';
 import 'package:dio/dio.dart';
+import 'dart:io';
 import 'package:bpg_retail/core/constants/api_constants.dart';
 import 'package:bpg_retail/core/data/models/common_response.dart';
 import 'package:bpg_retail/features/asset_category/data/models/asset_status_count_model.dart';
@@ -156,6 +157,42 @@ class AssetRepository {
       return CommonResponse<dynamic>.fromJson(response.data, (json) => json);
     } catch (e) {
       return CommonResponse<dynamic>(success: false, message: e.toString());
+    }
+  }
+
+  Future<CommonResponse<dynamic>> createAsset(Map<String, dynamic> data) async {
+    try {
+      final formData = FormData.fromMap(data);
+
+      // Handle all image file uploads (hinh_anh and hinh_anh_0, hinh_anh_1...)
+      for (final entry in data.entries) {
+        if (entry.key.startsWith('hinh_anh') &&
+            entry.value is String &&
+            (entry.value as String).isNotEmpty) {
+          final path = entry.value as String;
+          final file = File(path);
+          if (await file.exists()) {
+            formData.files.add(
+              MapEntry(
+                entry.key,
+                await MultipartFile.fromFile(
+                  path,
+                  filename: path.split('/').last,
+                ),
+              ),
+            );
+          }
+        }
+      }
+
+      final response = await _baseDio.post(Api.createAsset, data: formData);
+
+      return CommonResponse<dynamic>.fromJson(response.data, (json) => json);
+    } catch (e) {
+      return CommonResponse<dynamic>(
+        success: false,
+        message: 'Lỗi khi tạo tài sản: ${e.toString()}',
+      );
     }
   }
 
