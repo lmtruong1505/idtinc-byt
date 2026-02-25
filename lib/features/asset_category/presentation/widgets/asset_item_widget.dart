@@ -142,7 +142,9 @@ class AssetItemWidget extends StatelessWidget {
                   ),
                   6.width,
                   Text(
-                    asset.hasBoTaiSan == true ? "Bộ tài sản" : "Tài sản đơn lẻ",
+                    asset.hasBoTaiSan == true
+                        ? "Đã có tài sản đi kèm"
+                        : "Chưa có tài sản đi kèm",
                     style: AppTypography.p6.copyWith(
                       color: AppColors.text_tertiary,
                     ),

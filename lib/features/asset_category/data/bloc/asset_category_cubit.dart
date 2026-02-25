@@ -10,13 +10,25 @@ class AssetCategoryCubit extends Cubit<AssetCategoryState> {
 
   AssetCategoryCubit(this._assetRepository) : super(const AssetCategoryState());
 
-  Future<void> getAssets({bool refresh = false}) async {
+  Future<void> getAssets({
+    bool refresh = false,
+    String? search,
+    String? khoa,
+    String? trangThai,
+  }) async {
+    final searchParam = search ?? state.search;
+    final khoaParam = khoa ?? state.khoa;
+    final trangThaiParam = trangThai ?? state.trangThai;
+
     if (refresh) {
       emit(
         state.copyWith(
           status: AssetLoadStatus.loading,
           currentPage: 1,
           assets: [],
+          search: searchParam,
+          khoa: khoaParam,
+          trangThai: trangThaiParam,
         ),
       );
     } else {
@@ -39,6 +51,9 @@ class AssetCategoryCubit extends Cubit<AssetCategoryState> {
               : (state.status == AssetLoadStatus.loadingMore
                   ? state.currentPage + 1
                   : 1),
+      search: searchParam,
+      khoa: khoaParam,
+      trangThai: trangThaiParam,
     );
 
     if (response.success == true) {

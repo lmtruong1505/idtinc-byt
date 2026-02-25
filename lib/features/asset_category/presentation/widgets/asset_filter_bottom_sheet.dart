@@ -11,20 +11,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AssetFilterBottomSheet extends StatelessWidget {
-  const AssetFilterBottomSheet({super.key, required this.cubit});
+  const AssetFilterBottomSheet({super.key, required this.cubit, this.onApply});
 
   final AssetFilterCubit cubit;
-
-  static const List<String> _statuses = [
-    'Tất cả',
-    'Chưa nhập',
-    'Nhận rồi',
-    'Đang sử dụng',
-    'Đang sửa chữa',
-    'Đang bảo dưỡng',
-    'Chờ thanh lý',
-    'Đã thanh lý',
-  ];
+  final VoidCallback? onApply;
 
   @override
   Widget build(BuildContext context) {
@@ -74,52 +64,62 @@ class AssetFilterBottomSheet extends StatelessWidget {
                         // Khoa phòng
                         _buildSectionTitle("Khoa phòng"),
                         8.height,
-                        CustomDropdownButton(
-                          value: state.selectedDepartment,
-                          hintText: "Toàn viện",
-                          items: [
-                            DropdownButtonModel(
-                              label: "Toàn viện",
-                              value: "all",
+                        state.isLoadingDepartments
+                            ? const Center(child: CircularProgressIndicator())
+                            : CustomDropdownButton(
+                              value: state.selectedDepartment,
+                              hintText: "Toàn viện",
+                              items: [
+                                DropdownButtonModel(
+                                  label: "Toàn viện",
+                                  value: "all",
+                                ),
+                                ...state.departments.map(
+                                  (dept) => DropdownButtonModel(
+                                    label: dept.tenKhoa ?? "N/A",
+                                    value: dept.id.toString(),
+                                  ),
+                                ),
+                              ],
+                              onChanged: (value) {
+                                cubit.selectDepartment(value?.value);
+                              },
                             ),
-                            DropdownButtonModel(
-                              label: "Khoa Nội",
-                              value: "noi",
-                            ),
-                            DropdownButtonModel(
-                              label: "Khoa Ngoại",
-                              value: "ngoai",
-                            ),
-                          ],
-                          onChanged: (value) {
-                            cubit.selectDepartment(value?.value);
-                          },
-                        ),
                         16.height,
 
                         // Trạng thái tài sản
                         _buildSectionTitle("Trạng thái tài sản"),
                         8.height,
-                        Wrap(
-                          spacing: 1,
-                          runSpacing: 1,
-                          children:
-                              _statuses.map((status) {
-                                final isSelected =
-                                    state.selectedStatus == status;
-                                return chipCustomBadge(
-                                  padding: 8.pading,
-                                  title: status,
-                                  color:
-                                      isSelected
-                                          ? AppColors.main
-                                          : AppColors.grey79,
-                                  onTap: () {
-                                    cubit.selectStatus(status);
-                                  },
-                                );
-                              }).toList(),
-                        ),
+                        state.isLoadingStatistics
+                            ? const Center(child: CircularProgressIndicator())
+                            : Wrap(
+                              spacing: 2,
+                              runSpacing: 2,
+                              children:
+                                  state.statistics.map((stat) {
+                                    final label =
+                                        "${stat.label} (${stat.count ?? 0})";
+                                    final isSelected =
+                                        state.selectedStatus ==
+                                        (stat.value ?? "Tất cả");
+                                    return chipCustomBadge(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 12,
+                                        vertical: 8,
+                                      ),
+                                      title: label,
+                                      color:
+                                          isSelected
+                                              ? AppColors.main
+                                              : AppColors.grey79,
+                                      onTap: () {
+                                        cubit.selectStatus(
+                                          stat.value ?? "Tất cả",
+                                        );
+                                      },
+                                    );
+                                  }).toList(),
+                            ),
                         16.height,
 
                         // Loại thiết bị
@@ -181,6 +181,7 @@ class AssetFilterBottomSheet extends StatelessWidget {
                           title: "Lọc danh sách",
                           onTap: () {
                             Navigator.pop(context);
+                            onApply?.call();
                           },
                           buttonColor: AppColors.black,
                           titleColor: AppColors.white,

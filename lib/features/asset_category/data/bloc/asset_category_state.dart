@@ -14,5 +14,8 @@ class AssetCategoryState with _$AssetCategoryState {
     PaginationModel? pagination,
     String? errorMessage,
     @Default(1) int currentPage,
+    @Default('') String search,
+    String? khoa,
+    String? trangThai,
   }) = _AssetCategoryState;
 }

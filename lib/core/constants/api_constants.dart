@@ -51,6 +51,10 @@ class Api {
   static String getWarehouses = '$baseURLV2/api/v1/warehouse';
   static String logOut = '$baseURLV2/api/v1/auth/logout';
   static String getAssetList = '$baseURLV2/api/v1/tai-san/danh-sach-tai-san';
+  static String getAssetStatistics =
+      '$baseURLV2/api/v1/tai-san/thong-ke-tai-san';
+  static String getDepartments =
+      '$baseURLV2/api/v1/to-chuc/danh-muc-khoa-kho-cua-toi';
   static String getAssetDetail(int id) =>
       '$baseURLV2/api/v1/tai-san/$id/chi-tiet-tai-san';
   static String toggleStatusActive(int id) =>

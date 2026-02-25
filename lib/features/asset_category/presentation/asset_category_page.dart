@@ -4,6 +4,7 @@ import 'package:bpg_retail/core/configs/app_style/init_app_style.dart';
 import 'package:bpg_retail/core/constants/typography.dart';
 import 'package:bpg_retail/core/extension/spacing_extension.dart';
 import 'package:bpg_retail/core/injection/injection.dart';
+import 'package:bpg_retail/core/utilities/debouncer.dart';
 import 'package:bpg_retail/core/widgets/base/appbar.dart';
 import 'package:bpg_retail/core/widgets/base_container.dart';
 import 'package:bpg_retail/features/asset_category/data/bloc/asset_category_cubit.dart';
@@ -23,15 +24,25 @@ class AssetCategoryPage extends StatefulWidget {
 }
 
 class _AssetCategoryPageState extends State<AssetCategoryPage> {
-  final AssetFilterCubit _filterCubit = AssetFilterCubit();
+  final AssetFilterCubit _filterCubit = getIt.get<AssetFilterCubit>();
   final AssetCategoryCubit _categoryCubit = getIt.get<AssetCategoryCubit>();
   final ScrollController _scrollController = ScrollController();
+  final Debouncer _searchDebouncer = Debouncer(
+    delay: const Duration(milliseconds: 500),
+  );
 
   @override
   void initState() {
     super.initState();
     _categoryCubit.getAssets(refresh: true);
     _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    _searchDebouncer.dispose();
+    super.dispose();
   }
 
   void _onScroll() {
@@ -42,93 +53,117 @@ class _AssetCategoryPageState extends State<AssetCategoryPage> {
   }
 
   @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider.value(value: _filterCubit),
         BlocProvider.value(value: _categoryCubit),
       ],
-      child: BlocBuilder<AssetCategoryCubit, AssetCategoryState>(
-        builder: (context, state) {
-          final int count = state.pagination?.count ?? 0;
-          return Scaffold(
-            backgroundColor: AppColors.white,
-            appBar: BaseAppBar(
-              title: "Danh mục tài sản ($count)",
-              centerTitle: false,
-              hasLeading: false,
-              textStyle: AppTypography.h3.copyWith(color: AppColors.black),
-              trailingIcons: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 16),
-                  child: GestureDetector(
-                    onTap: () {
-                      context.router.push(const CreateAssetRoute());
-                    },
-                    child: const Icon(Icons.add, color: AppColors.black),
-                  ),
-                ),
-              ],
+      child: Scaffold(
+        backgroundColor: AppColors.white,
+        appBar: BaseAppBar(
+          titleWidget: BlocBuilder<AssetCategoryCubit, AssetCategoryState>(
+            bloc: _categoryCubit,
+            builder: (context, state) {
+              final int count = state.pagination?.count ?? 0;
+              return Text(
+                "Danh mục tài sản ($count)",
+                style: AppTypography.h3.copyWith(color: AppColors.black),
+              );
+            },
+          ),
+          centerTitle: false,
+          hasLeading: false,
+          trailingIcons: [
+            Padding(
+              padding: const EdgeInsets.only(right: 16),
+              child: GestureDetector(
+                onTap: () {
+                  context.router.push(const CreateAssetRoute());
+                },
+                child: const Icon(Icons.add, color: AppColors.black),
+              ),
             ),
-            body:
-                state.status == AssetLoadStatus.loading && state.assets.isEmpty
-                    ? const Center(child: CircularProgressIndicator())
-                    : state.assets.isNotEmpty
-                    ? _buildListState(context, state)
-                    : _buildEmptyState(),
+          ],
+        ),
+        body: Column(
+          children: [
+            AssetFilterWidget(
+              onFilterTap: () => _showFilterBottomSheet(context),
+              onSearchChanged: (value) {
+                _searchDebouncer.run(() {
+                  _categoryCubit.getAssets(refresh: true, search: value);
+                  _filterCubit.updateSearchKeyword(value);
+                });
+              },
+            ),
+            Expanded(
+              child: BlocBuilder<AssetCategoryCubit, AssetCategoryState>(
+                bloc: _categoryCubit,
+                builder: (context, state) {
+                  if (state.status == AssetLoadStatus.loading &&
+                      state.assets.isEmpty) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+
+                  if (state.assets.isEmpty) {
+                    return _buildEmptyState();
+                  }
+
+                  return _buildListState(context, state);
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildListState(BuildContext context, AssetCategoryState state) {
+    return RefreshIndicator(
+      onRefresh: () => _categoryCubit.getAssets(refresh: true),
+      child: ListView.separated(
+        controller: _scrollController,
+        padding: const EdgeInsets.only(bottom: 24),
+        itemCount:
+            state.assets.length +
+            (state.status == AssetLoadStatus.loadingMore ? 1 : 0),
+        separatorBuilder: (context, index) => 8.height,
+        itemBuilder: (context, index) {
+          if (index < state.assets.length) {
+            return AssetItemWidget(asset: state.assets[index]);
+          }
+          return const Center(
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: CircularProgressIndicator(),
+            ),
           );
         },
       ),
     );
   }
 
-  Widget _buildListState(BuildContext context, AssetCategoryState state) {
-    return Column(
-      children: [
-        AssetFilterWidget(
-          onFilterTap: () => _showFilterBottomSheet(context),
-          onSearchChanged: (value) => _filterCubit.updateSearchKeyword(value),
-        ),
-        Expanded(
-          child: RefreshIndicator(
-            onRefresh: () => _categoryCubit.getAssets(refresh: true),
-            child: ListView.separated(
-              controller: _scrollController,
-              padding: const EdgeInsets.only(bottom: 24),
-              itemCount:
-                  state.assets.length +
-                  (state.status == AssetLoadStatus.loadingMore ? 1 : 0),
-              separatorBuilder: (context, index) => 8.height,
-              itemBuilder: (context, index) {
-                if (index < state.assets.length) {
-                  return AssetItemWidget(asset: state.assets[index]);
-                }
-                return const Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: CircularProgressIndicator(),
-                  ),
-                );
-              },
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
   void _showFilterBottomSheet(BuildContext context) {
+    _filterCubit.getStatistics();
+    _filterCubit.getDepartments();
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (_) => AssetFilterBottomSheet(cubit: _filterCubit),
+      builder:
+          (_) => AssetFilterBottomSheet(
+            cubit: _filterCubit,
+            onApply: () {
+              final filterState = _filterCubit.state;
+              _categoryCubit.getAssets(
+                refresh: true,
+                khoa: filterState.selectedDepartment,
+                trangThai: filterState.selectedStatus,
+              );
+            },
+          ),
     );
   }
 

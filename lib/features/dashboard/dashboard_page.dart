@@ -47,6 +47,7 @@ class _DashboardPageState extends State<DashboardPage> {
             Expanded(
               child: Container(
                 width: double.infinity,
+                clipBehavior: Clip.antiAlias,
                 decoration: const BoxDecoration(
                   color: AppColors.bg_secondary_subtle,
                   borderRadius: BorderRadius.only(
