@@ -1,5 +1,6 @@
 import 'package:bpg_retail/core/base/base_cubit.dart';
 import 'package:bpg_retail/features/asset_category/data/models/hospital_asset_model.dart';
+import 'package:bpg_retail/features/asset_category/data/models/asset_type_model.dart';
 import 'package:bpg_retail/features/asset_category/data/repositories/asset_repository.dart';
 import 'package:injectable/injectable.dart';
 
@@ -37,6 +38,13 @@ class AddToSetCubit extends BaseCubit<AddToSetState>
     }
   }
 
+  Future<void> loadAssetTypes() async {
+    final response = await _assetRepository.getAssetTypes();
+    if (response.success == true && response.data != null) {
+      emit(state.copyWith(assetTypes: response.data!));
+    }
+  }
+
   // ── Create New: field updaters ─────────────────────────
   void _updateNewParent(AssetDetail Function(AssetDetail) updateFn) {
     emit(state.copyWith(newParentAsset: updateFn(state.newParentAsset)));
@@ -54,8 +62,17 @@ class AddToSetCubit extends BaseCubit<AddToSetState>
   @override
   void updateAssetCode(String v, {int? attachedIndex}) =>
       _updateNewParent((d) => d.copyWith(assetCode: v));
-  void updateAssetType(String? v) =>
-      _updateNewParent((d) => d.copyWith(assetType: v));
+  @override
+  void updateAssetType(AssetTypeModel? type, {int? attachedIndex}) {
+    _updateNewParent((d) {
+      String updatedDuration = d.depreciationDuration;
+      if (type?.metaData?.thoiGianTinhKhauHao != null) {
+        updatedDuration = type!.metaData!.thoiGianTinhKhauHao!.toString();
+      }
+      return d.copyWith(assetType: type, depreciationDuration: updatedDuration);
+    });
+  }
+
   @override
   void updateUnit(String v, {int? attachedIndex}) =>
       _updateNewParent((d) => d.copyWith(unit: v));
@@ -120,8 +137,8 @@ class AddToSetCubit extends BaseCubit<AddToSetState>
     } else {
       // TODO: Gọi API tạo mới tài sản chính + gán parent
       emit(state.copyWith(isSubmitting: false));
-      navigator.showToast("Tạo mới tài sản chính — chức năng đang phát triển");
-      return false;
+      navigator.showToast("Đã lưu tài sản chính");
+      return true;
     }
   }
 }

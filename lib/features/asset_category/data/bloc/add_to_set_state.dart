@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:bpg_retail/features/asset_category/data/models/asset_type_model.dart';
 import 'create_asset_state.dart';
 
 part 'add_to_set_state.freezed.dart';
@@ -18,6 +19,7 @@ abstract class AddToSetState with _$AddToSetState {
     @Default(AssetDetail()) AssetDetail newParentAsset,
 
     // Trạng thái form
+    @Default([]) List<AssetTypeModel> assetTypes,
     @Default(false) bool isSubmitting,
   }) = _AddToSetState;
 }

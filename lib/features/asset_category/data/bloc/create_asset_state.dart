@@ -1,3 +1,4 @@
+import 'package:bpg_retail/features/asset_category/data/models/asset_type_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'create_asset_state.freezed.dart';
@@ -9,7 +10,7 @@ enum DepreciationMethod { byTime, byUsage }
 enum DepreciationPeriod { yearly, monthly, daily }
 
 /// Loại hành động cho tài sản đi kèm
-enum AttachedAssetAction { selectAvailable, createNew,selectExisting }
+enum AttachedAssetAction { selectAvailable, createNew, selectExisting }
 
 @freezed
 abstract class AssetDetail with _$AssetDetail {
@@ -20,7 +21,7 @@ abstract class AssetDetail with _$AssetDetail {
     // Thông tin cơ bản
     @Default('') String assetName,
     @Default('') String assetCode,
-    @Default(null) String? assetType,
+    @Default(null) AssetTypeModel? assetType,
     @Default('') String unit,
     @Default('') String serial,
     @Default('') String model,
@@ -62,6 +63,9 @@ abstract class CreateAssetState with _$CreateAssetState {
     // Danh sách tài sản đi kèm
     @Default([]) List<AttachedAsset> attachedAssets,
     @Default(0) int currentAttachedAssetIndex,
+
+    // Danh sách loại tài sản để chọn
+    @Default([]) List<AssetTypeModel> assetTypes,
 
     // Trạng thái form
     @Default(false) bool isSubmitting,

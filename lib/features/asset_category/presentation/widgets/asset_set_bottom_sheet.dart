@@ -26,6 +26,11 @@ class AssetSetBottomSheet extends StatelessWidget {
     final List<HospitalAssetModel> childrenAssets =
         setAssets.where((a) => a.isParent == false).toList();
 
+    // Check if the current asset is a parent in the set
+    final isCurrentAssetParent = setAssets.any(
+      (a) => a.id == mainAsset.id && a.isParent == true,
+    );
+
     return BaseContainer(
       width: double.infinity,
       color: AppColors.white,
@@ -92,7 +97,7 @@ class AssetSetBottomSheet extends StatelessWidget {
           ),
 
           // Bottom Actions
-          _buildBottomActions(context),
+          _buildBottomActions(context, isCurrentAssetParent),
         ],
       ),
     );
@@ -114,7 +119,7 @@ class AssetSetBottomSheet extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomActions(BuildContext context) {
+  Widget _buildBottomActions(BuildContext context, bool canSeparate) {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
       decoration: BoxDecoration(
@@ -151,10 +156,10 @@ class AssetSetBottomSheet extends StatelessWidget {
           12.width,
           Expanded(
             child: Opacity(
-              opacity: mainAsset.isParent == true ? 1.0 : 0.4,
+              opacity: canSeparate ? 1.0 : 0.4,
               child: GestureDetector(
                 onTap:
-                    mainAsset.isParent == true
+                    canSeparate
                         ? () {
                           DialogUtils.showActionConfirmDialog(
                             context,

@@ -1,5 +1,6 @@
 import 'package:bpg_retail/core/base/base_cubit.dart';
 import 'package:bpg_retail/features/asset_category/data/models/hospital_asset_model.dart';
+import 'package:bpg_retail/features/asset_category/data/models/asset_type_model.dart';
 import 'package:bpg_retail/features/asset_category/data/repositories/asset_repository.dart';
 import 'package:injectable/injectable.dart';
 
@@ -23,6 +24,13 @@ class AddAccompanyingCubit extends BaseCubit<AddAccompanyingState>
     final response = await _assetRepository.getAssetList();
     if (response.success == true && response.data != null) {
       availableAssets = response.data!;
+    }
+  }
+
+  Future<void> loadAssetTypes() async {
+    final response = await _assetRepository.getAssetTypes();
+    if (response.success == true && response.data != null) {
+      emit(state.copyWith(assetTypes: response.data!));
     }
   }
 
@@ -106,8 +114,17 @@ class AddAccompanyingCubit extends BaseCubit<AddAccompanyingState>
   @override
   void updateAssetCode(String v, {int? attachedIndex}) =>
       _updateCurrentAssetDetail((d) => d.copyWith(assetCode: v));
-  void updateAssetType(String? v) =>
-      _updateCurrentAssetDetail((d) => d.copyWith(assetType: v));
+  @override
+  void updateAssetType(AssetTypeModel? type, {int? attachedIndex}) {
+    _updateCurrentAssetDetail((d) {
+      String updatedDuration = d.depreciationDuration;
+      if (type?.metaData?.thoiGianTinhKhauHao != null) {
+        updatedDuration = type!.metaData!.thoiGianTinhKhauHao!.toString();
+      }
+      return d.copyWith(assetType: type, depreciationDuration: updatedDuration);
+    });
+  }
+
   @override
   void updateUnit(String v, {int? attachedIndex}) =>
       _updateCurrentAssetDetail((d) => d.copyWith(unit: v));

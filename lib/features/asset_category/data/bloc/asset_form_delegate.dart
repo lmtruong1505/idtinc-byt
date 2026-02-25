@@ -1,3 +1,4 @@
+import 'package:bpg_retail/features/asset_category/data/models/asset_type_model.dart';
 import 'create_asset_state.dart';
 
 /// Shared interface for cubits that provide form field updates
@@ -8,6 +9,7 @@ abstract class AssetFormDelegate {
   void removeImage({int? attachedIndex});
   void updateAssetName(String v, {int? attachedIndex});
   void updateAssetCode(String v, {int? attachedIndex});
+  void updateAssetType(AssetTypeModel? type, {int? attachedIndex});
   void updateUnit(String v, {int? attachedIndex});
   void updateSerial(String v, {int? attachedIndex});
   void updateModel(String v, {int? attachedIndex});

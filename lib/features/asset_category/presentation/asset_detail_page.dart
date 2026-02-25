@@ -20,6 +20,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'widgets/asset_depreciation_bottom_sheet.dart';
 import 'widgets/asset_technical_specs_bottom_sheet.dart';
 import 'widgets/asset_set_bottom_sheet.dart';
+import 'widgets/maintenance_history_tab.dart';
 
 @RoutePage()
 class AssetDetailPage extends StatefulWidget {
@@ -43,7 +44,7 @@ class _AssetDetailPageState extends State<AssetDetailPage>
       ..appCubit = getIt.get<AppCubit>()
       ..preferences = getIt.get<Preferences>();
 
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
     if (widget.asset.id != null) {
       _detailCubit.getAssetDetail(widget.asset.id!);
     }
@@ -92,6 +93,11 @@ class _AssetDetailPageState extends State<AssetDetailPage>
             children: [
               _buildAssetHistory(asset),
               const Center(child: Text("Lịch sử điều chuyển")),
+              MaintenanceHistoryTab(
+                onCreateNew: () {
+                  // TODO: Navigate to create maintenance record
+                },
+              ),
             ],
           ),
         ),
@@ -136,10 +142,46 @@ class _AssetDetailPageState extends State<AssetDetailPage>
         indicatorSize: TabBarIndicatorSize.tab,
         labelStyle: AppTypography.p5.copyWith(fontWeight: FontWeight.bold),
         unselectedLabelStyle: AppTypography.p5,
-        tabs: const [
-          Tab(text: "Lý lịch tài sản"),
-          Tab(text: "Lịch sử điều chuyển và thanh lý tài sản"),
+        tabs: [
+          const Tab(text: "Lý lịch tài sản"),
+          Tab(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text("Lịch sử điều chuyển và thanh lý tài sản"),
+                6.width,
+                _buildTabBadge('10'),
+              ],
+            ),
+          ),
+          Tab(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text("Lịch sử bảo dưỡng"),
+                6.width,
+                _buildTabBadge('10'),
+              ],
+            ),
+          ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildTabBadge(String count) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+      decoration: BoxDecoration(
+        color: AppColors.grey10,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Text(
+        count,
+        style: AppTypography.p7.copyWith(
+          color: AppColors.text_tertiary,
+          fontWeight: FontWeight.w600,
+        ),
       ),
     );
   }

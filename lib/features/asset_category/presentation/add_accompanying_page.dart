@@ -38,7 +38,8 @@ class _AddAccompanyingPageState extends State<AddAccompanyingPage> {
           ..navigator = getIt.get<AppNavigator>()
           ..appCubit = getIt.get<AppCubit>()
           ..preferences = getIt.get<Preferences>()
-          ..loadAvailableAssets();
+          ..loadAvailableAssets()
+          ..loadAssetTypes();
   }
 
   @override
@@ -356,6 +357,7 @@ class _AddAccompanyingPageState extends State<AddAccompanyingPage> {
       return AssetProfileForm(
         asset: currentAsset.assetDetail,
         delegate: _cubit,
+        assetTypes: state.assetTypes,
         attachedIndex: state.currentIndex,
         onScrollToTop: _scrollToTop,
       );

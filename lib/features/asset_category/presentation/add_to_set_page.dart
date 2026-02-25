@@ -37,7 +37,8 @@ class _AddToSetPageState extends State<AddToSetPage> {
           ..navigator = getIt.get<AppNavigator>()
           ..appCubit = getIt.get<AppCubit>()
           ..preferences = getIt.get<Preferences>()
-          ..loadAvailableAssets(widget.asset.id!);
+          ..loadAvailableAssets(widget.asset.id!)
+          ..loadAssetTypes();
   }
 
   @override
@@ -112,6 +113,7 @@ class _AddToSetPageState extends State<AddToSetPage> {
                           AssetProfileForm(
                             asset: state.newParentAsset,
                             delegate: _cubit,
+                            assetTypes: state.assetTypes,
                             onScrollToTop: _scrollToTop,
                           ),
                       ],

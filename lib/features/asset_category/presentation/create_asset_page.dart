@@ -30,6 +30,7 @@ class _CreateAssetPageState extends State<CreateAssetPage>
     super.initState();
     _cubit = CreateAssetCubit();
     _cubit.loadAvailableAssets();
+    _cubit.loadAssetTypes();
     _tabController = TabController(length: 2, vsync: this);
     _tabController.addListener(() {
       if (!_tabController.indexIsChanging) {
@@ -199,6 +200,7 @@ class _CreateAssetPageState extends State<CreateAssetPage>
             child: AssetProfileForm(
               asset: state.mainAsset,
               delegate: _cubit,
+              assetTypes: state.assetTypes,
               onScrollToTop: _scrollToTop,
             ),
           ),
@@ -256,6 +258,7 @@ class _CreateAssetPageState extends State<CreateAssetPage>
       return AssetProfileForm(
         asset: currentAsset.assetDetail,
         delegate: _cubit,
+        assetTypes: state.assetTypes,
         attachedIndex: state.currentAttachedAssetIndex,
       );
     }

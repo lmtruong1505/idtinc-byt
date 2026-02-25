@@ -4,6 +4,8 @@ import 'package:bpg_retail/core/extension/spacing_extension.dart';
 import 'package:bpg_retail/core/utilities/converts.dart';
 import 'package:bpg_retail/core/widgets/textfield/input_column.dart';
 import 'package:bpg_retail/core/widgets/common_date_picker.dart';
+import 'package:bpg_retail/core/widgets/dropdown_buttom_widget.dart';
+import 'package:bpg_retail/features/asset_category/data/models/asset_type_model.dart';
 import 'package:bpg_retail/features/asset_category/data/bloc/asset_form_delegate.dart';
 import 'package:bpg_retail/features/asset_category/data/bloc/create_asset_state.dart';
 import 'package:bpg_retail/features/asset_category/presentation/widgets/asset_image_picker_widget.dart';
@@ -16,11 +18,13 @@ class AssetProfileForm extends StatelessWidget {
   final int? attachedIndex;
   final VoidCallback? onScrollToTop;
   final AssetFormDelegate delegate;
+  final List<AssetTypeModel> assetTypes;
 
   const AssetProfileForm({
     super.key,
     required this.asset,
     required this.delegate,
+    this.assetTypes = const [],
     this.attachedIndex,
     this.onScrollToTop,
   });
@@ -66,19 +70,29 @@ class AssetProfileForm extends StatelessWidget {
         12.height,
 
         // ── Loại tài sản (Dropdown) ──
-        InputColumn(
+        InputColumnButon(
           label: 'Loại tài sản',
-          hintText: 'Chọn',
-          readOnly: true,
-          onTap: () {
-            // TODO: Mở bottom sheet chọn loại tài sản
-          },
-          suffixIcon: const Icon(
-            Icons.keyboard_arrow_down,
-            color: AppColors.grey80,
-          ),
           padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: DropdownButtonWidget<AssetTypeModel>(
+            hintText: 'Chọn',
+            text: asset.assetType?.tenDanhMuc,
+            value: asset.assetType,
+            items:
+                assetTypes.map((type) {
+                  return DropdownMenuItem<AssetTypeModel>(
+                    value: type,
+                    child: Text(
+                      type.tenDanhMuc ?? '',
+                      style: AppTypography.p5.copyWith(color: AppColors.black),
+                    ),
+                  );
+                }).toList(),
+            onChanged: (type) {
+              delegate.updateAssetType(type, attachedIndex: attachedIndex);
+            },
+          ),
         ),
+
         12.height,
 
         // ── Đơn vị tính & Seri ──

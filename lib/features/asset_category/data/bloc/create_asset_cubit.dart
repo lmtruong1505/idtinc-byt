@@ -1,3 +1,4 @@
+import 'package:bpg_retail/features/asset_category/data/models/asset_type_model.dart';
 import 'package:bpg_retail/features/asset_category/data/models/hospital_asset_model.dart';
 import 'package:bpg_retail/features/asset_category/data/repositories/asset_repository.dart';
 import 'package:bpg_retail/core/injection/injection.dart';
@@ -76,11 +77,21 @@ class CreateAssetCubit extends Cubit<CreateAssetState>
     );
   }
 
-  void updateAssetType(String? value, {int? attachedIndex}) {
-    _updateAssetDetail(
-      (d) => d.copyWith(assetType: value),
-      attachedIndex: attachedIndex,
-    );
+  Future<void> loadAssetTypes() async {
+    final response = await _assetRepository.getAssetTypes();
+    if (response.success == true && response.data != null) {
+      emit(state.copyWith(assetTypes: response.data!));
+    }
+  }
+
+  void updateAssetType(AssetTypeModel? type, {int? attachedIndex}) {
+    _updateAssetDetail((d) {
+      String updatedDuration = d.depreciationDuration;
+      if (type?.metaData?.thoiGianTinhKhauHao != null) {
+        updatedDuration = type!.metaData!.thoiGianTinhKhauHao!.toString();
+      }
+      return d.copyWith(assetType: type, depreciationDuration: updatedDuration);
+    }, attachedIndex: attachedIndex);
   }
 
   void updateUnit(String value, {int? attachedIndex}) {

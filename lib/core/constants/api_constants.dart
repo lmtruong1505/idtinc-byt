@@ -61,4 +61,6 @@ class Api {
       '$baseURLV2/api/v1/tai-san/$id/toggle-status-active-tai-san';
   static String updateAsset(int id) =>
       '$baseURLV2/api/v1/tai-san/$id/cap-nhat-tai-san';
+  static String getAssetTypes =
+      '$baseURLV2/api/v1/du-lieu-he-thong/combobox-du-lieu-he-thong';
 }
