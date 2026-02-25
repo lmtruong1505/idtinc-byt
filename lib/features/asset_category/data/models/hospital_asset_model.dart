@@ -32,6 +32,8 @@ class HospitalAssetModel {
   final dynamic parent;
   @JsonKey(name: 'order_parent')
   final int? orderParent;
+  @JsonKey(name: 'is_parent')
+  final bool? isParent;
 
   // Additional fields from detailed JSON
   @JsonKey(name: 'ma_seri')
@@ -91,6 +93,7 @@ class HospitalAssetModel {
     this.boTaiSan,
     this.createdAt,
     this.updatedAt,
+    this.isParent,
   });
 
   factory HospitalAssetModel.fromJson(Map<String, dynamic> json) =>

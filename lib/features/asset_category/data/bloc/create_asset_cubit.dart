@@ -1,9 +1,27 @@
+import 'package:bpg_retail/features/asset_category/data/models/hospital_asset_model.dart';
+import 'package:bpg_retail/features/asset_category/data/repositories/asset_repository.dart';
+import 'package:bpg_retail/core/injection/injection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'asset_form_delegate.dart';
 import 'create_asset_state.dart';
 
-class CreateAssetCubit extends Cubit<CreateAssetState> {
+class CreateAssetCubit extends Cubit<CreateAssetState>
+    implements AssetFormDelegate {
+  final AssetRepository _assetRepository = getIt.get<AssetRepository>();
+
+  /// Danh sách tài sản có sẵn để chọn
+  List<HospitalAssetModel> availableAssets = [];
+
   CreateAssetCubit() : super(const CreateAssetState());
+
+  // ── Load available assets ──────────────────────────────
+  Future<void> loadAvailableAssets() async {
+    final response = await _assetRepository.getAssetList();
+    if (response.success == true && response.data != null) {
+      availableAssets = response.data!;
+    }
+  }
 
   // ── Tab ──────────────────────────────────────────────
   void switchTab(int index) {

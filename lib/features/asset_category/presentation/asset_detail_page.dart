@@ -1,8 +1,12 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:bpg_retail/app/routes/router.gr.dart';
 import 'package:bpg_retail/core/configs/app_style/init_app_style.dart';
 import 'package:bpg_retail/core/constants/typography.dart';
 import 'package:bpg_retail/core/extension/init_ext.dart';
 import 'package:bpg_retail/core/extension/spacing_extension.dart';
+import 'package:bpg_retail/app/data/bloc/app_cubit.dart';
+import 'package:bpg_retail/core/navigation/navigator.dart';
+import 'package:bpg_retail/core/preferences/preferences.dart';
 import 'package:bpg_retail/core/injection/injection.dart';
 import 'package:bpg_retail/core/utilities/converts.dart';
 import 'package:bpg_retail/core/widgets/base/appbar.dart';
@@ -15,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'widgets/asset_depreciation_bottom_sheet.dart';
 import 'widgets/asset_technical_specs_bottom_sheet.dart';
+import 'widgets/asset_set_bottom_sheet.dart';
 
 @RoutePage()
 class AssetDetailPage extends StatefulWidget {
@@ -33,6 +38,11 @@ class _AssetDetailPageState extends State<AssetDetailPage>
   @override
   void initState() {
     super.initState();
+    _detailCubit
+      ..navigator = getIt.get<AppNavigator>()
+      ..appCubit = getIt.get<AppCubit>()
+      ..preferences = getIt.get<Preferences>();
+
     _tabController = TabController(length: 2, vsync: this);
     if (widget.asset.id != null) {
       _detailCubit.getAssetDetail(widget.asset.id!);
@@ -277,11 +287,45 @@ class _AssetDetailPageState extends State<AssetDetailPage>
   }
 
   Widget _buildDetailedInfo(HospitalAssetModel asset) {
+    final bool hasBoTaiSan = asset.hasBoTaiSan ?? false;
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
-          _buildInfoAction("Xem bộ tài sản", Icons.visibility_outlined),
+          if (hasBoTaiSan)
+            _buildInfoAction(
+              "Xem bộ tài sản",
+              Icons.visibility_outlined,
+              onTap: () => _showAssetSet(asset),
+            )
+          else ...[
+            _buildInfoAction(
+              "Thêm vào bộ tài sản",
+              Icons.add,
+              onTap: () async {
+                final result = await context.router.push(
+                  AddToSetRoute(asset: asset),
+                );
+                if (result == true && asset.id != null) {
+                  _detailCubit.getAssetDetail(asset.id!);
+                }
+              },
+            ),
+            12.height,
+            _buildInfoAction(
+              "Thêm tài sản đi kèm",
+              Icons.add,
+              onTap: () async {
+                final result = await context.router.push(
+                  AddAccompanyingRoute(asset: asset),
+                );
+                if (result == true && asset.id != null) {
+                  _detailCubit.getAssetDetail(asset.id!);
+                }
+              },
+            ),
+          ],
           16.height,
           _buildDetailRow("Tên tài sản", asset.tenTaiSan ?? "N/A"),
           _buildDetailRow(
@@ -381,23 +425,29 @@ class _AssetDetailPageState extends State<AssetDetailPage>
     );
   }
 
-  Widget _buildInfoAction(String label, IconData icon) {
-    return BaseContainer(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      isDotted: true,
-      borderColor: AppColors.grey30,
-      borderRadius: 4,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            label,
-            style: AppTypography.p6.copyWith(color: AppColors.text_tertiary),
-          ),
-          8.width,
-          Icon(icon, size: 16, color: AppColors.text_tertiary),
-        ],
+  Widget _buildInfoAction(String label, IconData icon, {VoidCallback? onTap}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: BaseContainer(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        isDotted: true,
+        borderColor: AppColors.grey30,
+        borderRadius: 4,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              label,
+              style: AppTypography.p6.copyWith(
+                color: AppColors.text_tertiary,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            8.width,
+            Icon(icon, size: 16, color: AppColors.text_tertiary),
+          ],
+        ),
       ),
     );
   }
@@ -455,6 +505,19 @@ class _AssetDetailPageState extends State<AssetDetailPage>
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) => AssetTechnicalSpecsBottomSheet(asset: asset),
+    );
+  }
+
+  void _showAssetSet(HospitalAssetModel asset) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder:
+          (_) => BlocProvider.value(
+            value: _detailCubit,
+            child: AssetSetBottomSheet(mainAsset: asset),
+          ),
     );
   }
 

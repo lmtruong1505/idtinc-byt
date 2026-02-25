@@ -21,18 +21,17 @@ class Toast {
   late Widget trailing;
 
   // ignore: type_annotate_public_apis, always_declare_return_types
-  static showToast(
-    text,
+  static void showToast(
+    String text,
     BuildContext context, {
-    toastDuration,
-    toastPosition,
-    backgroundColor = const Color(0xAA000000),
-    textStyle = const TextStyle(fontSize: 15, color: Colors.white),
-    toastBorderRadius = 20.0,
-    border,
-    trailing,
+    int? toastDuration,
+    ToastPosition? toastPosition,
+    Color backgroundColor = const Color(0xAA000000),
+    TextStyle textStyle = const TextStyle(fontSize: 15, color: Colors.white),
+    double toastBorderRadius = 20.0,
+    Border? border,
+    Widget? trailing,
   }) {
-    assert(text != null);
     ToastView.dismiss();
     ToastView.createView(
       text,
@@ -83,30 +82,26 @@ class ToastView {
           border: border,
         ),
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-        child: trailing == null
-            ? Text(text, softWrap: true, style: textStyle)
-            : Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  trailing,
-                  const SizedBox(
-                    width: 6,
-                  ),
-                  Expanded(
-                    child: Text(text, style: textStyle),
-                  ),
-                ],
-              ),
+        child:
+            trailing == null
+                ? Text(text, softWrap: true, style: textStyle)
+                : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    trailing,
+                    const SizedBox(width: 6),
+                    Expanded(child: Text(text, style: textStyle)),
+                  ],
+                ),
       ),
       Duration(seconds: toastDuration ?? 2),
       fadeDuration: 500,
     );
 
     _overlayEntry = OverlayEntry(
-      builder: (BuildContext context) => _showWidgetBasedOnPosition(
-        toastChild,
-        toastPosition,
-      ),
+      builder:
+          (BuildContext context) =>
+              _showWidgetBasedOnPosition(toastChild, toastPosition),
     );
 
     _isVisible = true;
@@ -238,10 +233,7 @@ class ToastStateFulState extends State<ToastCard>
     return FadeTransition(
       opacity: _fadeAnimation as Animation<double>,
       child: Center(
-        child: Material(
-          color: Colors.transparent,
-          child: widget.child,
-        ),
+        child: Material(color: Colors.transparent, child: widget.child),
       ),
     );
   }

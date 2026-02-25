@@ -9,7 +9,7 @@ enum DepreciationMethod { byTime, byUsage }
 enum DepreciationPeriod { yearly, monthly, daily }
 
 /// Loại hành động cho tài sản đi kèm
-enum AttachedAssetAction { selectAvailable, createNew }
+enum AttachedAssetAction { selectAvailable, createNew,selectExisting }
 
 @freezed
 abstract class AssetDetail with _$AssetDetail {

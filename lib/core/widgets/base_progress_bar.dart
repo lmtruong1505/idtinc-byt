@@ -5,12 +5,14 @@ class BaseProgressBar extends StatelessWidget {
   final double value; // 0.0 to 100.0
   final double height;
   final Color? backgroundColor;
+  final Color? progressColor;
 
   const BaseProgressBar({
     super.key,
     required this.value,
     this.height = 6,
     this.backgroundColor = AppColors.greyE2,
+    this.progressColor,
   });
 
   Color _getColor(double value) {
@@ -35,7 +37,9 @@ class BaseProgressBar extends StatelessWidget {
       child: LinearProgressIndicator(
         value: clampedValue / 100,
         backgroundColor: backgroundColor,
-        valueColor: AlwaysStoppedAnimation<Color>(_getColor(clampedValue)),
+        valueColor: AlwaysStoppedAnimation<Color>(
+          progressColor ?? _getColor(clampedValue),
+        ),
         minHeight: height,
       ),
     );

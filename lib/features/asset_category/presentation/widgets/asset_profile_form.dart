@@ -4,29 +4,30 @@ import 'package:bpg_retail/core/extension/spacing_extension.dart';
 import 'package:bpg_retail/core/utilities/converts.dart';
 import 'package:bpg_retail/core/widgets/textfield/input_column.dart';
 import 'package:bpg_retail/core/widgets/common_date_picker.dart';
-import 'package:bpg_retail/features/asset_category/data/bloc/create_asset_cubit.dart';
+import 'package:bpg_retail/features/asset_category/data/bloc/asset_form_delegate.dart';
 import 'package:bpg_retail/features/asset_category/data/bloc/create_asset_state.dart';
 import 'package:bpg_retail/features/asset_category/presentation/widgets/asset_image_picker_widget.dart';
 import 'package:bpg_retail/features/asset_category/presentation/widgets/depreciation_method_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AssetProfileForm extends StatelessWidget {
   final AssetDetail asset;
   final int? attachedIndex;
   final VoidCallback? onScrollToTop;
+  final AssetFormDelegate delegate;
 
   const AssetProfileForm({
     super.key,
     required this.asset,
+    required this.delegate,
     this.attachedIndex,
     this.onScrollToTop,
   });
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<CreateAssetCubit>();
+    final cubit = delegate;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,

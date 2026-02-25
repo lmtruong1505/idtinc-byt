@@ -23,9 +23,7 @@ abstract class AppNavigator {
 
   Future<T?> replace<T extends Object?>(PageRouteInfo routeInfo);
 
-  void back<T extends Object?>({
-    T? result,
-  });
+  void back<T extends Object?>({T? result});
 
   Future<void> replaceAll(List<PageRouteInfo> listAppRoute);
 
@@ -76,13 +74,13 @@ abstract class AppNavigator {
   });
 
   void showToast(
-    dynamic text, {
-    dynamic toastBorderRadius,
-    dynamic backgroundColor,
-    dynamic border,
-    dynamic textStyle,
-    dynamic toastDuration,
-    dynamic trailing,
+    String text, {
+    double? toastBorderRadius,
+    Color? backgroundColor,
+    Border? border,
+    TextStyle? textStyle,
+    int? toastDuration,
+    Widget? trailing,
   });
 
   FutureOr showSuccessDialog({

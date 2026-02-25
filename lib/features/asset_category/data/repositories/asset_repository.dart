@@ -1,4 +1,5 @@
 import 'package:bpg_retail/core/configs/dio_config.dart';
+import 'package:dio/dio.dart';
 import 'package:bpg_retail/core/constants/api_constants.dart';
 import 'package:bpg_retail/core/data/models/common_response.dart';
 import 'package:bpg_retail/features/asset_category/data/models/asset_status_count_model.dart';
@@ -19,6 +20,7 @@ class AssetRepository {
     String? khoa,
     String? trangThai,
     String? toChuc = '5',
+    int? timTaiSanChinhId,
   }) async {
     try {
       final queryParameters = {
@@ -28,6 +30,7 @@ class AssetRepository {
         'page': page,
         if (khoa != null && khoa != 'all') 'khoa': khoa,
         if (trangThai != null && trangThai != 'Tất cả') 'trang_thai': trangThai,
+        if (timTaiSanChinhId != null) 'tim_tai_san_chinh_id': timTaiSanChinhId,
       };
 
       final response = await _baseDio.get(
@@ -136,6 +139,22 @@ class AssetRepository {
         success: false,
         message: e.toString(),
       );
+    }
+  }
+
+  Future<CommonResponse<dynamic>> updateAsset(
+    int id,
+    Map<String, dynamic> data,
+  ) async {
+    try {
+      final response = await _baseDio.put(
+        Api.updateAsset(id),
+        data: FormData.fromMap(data),
+      );
+
+      return CommonResponse<dynamic>.fromJson(response.data, (json) => json);
+    } catch (e) {
+      return CommonResponse<dynamic>(success: false, message: e.toString());
     }
   }
 }

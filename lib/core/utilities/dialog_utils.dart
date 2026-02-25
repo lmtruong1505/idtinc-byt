@@ -41,10 +41,7 @@ class DialogUtils {
               children: [
                 SizedBox(
                   width: 80,
-                  child: icon ??
-                      Assets.icon(
-                        assetName: 'ic_success_new.svg',
-                      ),
+                  child: icon ?? Assets.icon(assetName: 'ic_success_new.svg'),
                 ),
                 const SizedBox(height: 12),
                 Text(title ?? 'Thông báo', style: AppTypography.h3),
@@ -57,35 +54,35 @@ class DialogUtils {
                 const SizedBox(height: 24),
                 hasButton
                     ? Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          if (hasButtonBack)
-                            Expanded(
-                              child: ExtraButton(
-                                title: extraTitle ?? 'Quay lại',
-                                onTap: () {
-                                  extraAccept != null
-                                      ? extraAccept.call()
-                                      : Navigator.of(context).pop();
-                                },
-                                borderColor: AppColors.border_4,
-                                largeButton: false,
-                                icon: null,
-                              ),
-                            ),
-                          if (hasButtonBack) const SizedBox(width: 12),
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        if (hasButtonBack)
                           Expanded(
-                            child: MainButton(
-                              title: mainTitle ?? 'Xác nhận',
+                            child: ExtraButton(
+                              title: extraTitle ?? 'Quay lại',
                               onTap: () {
-                                accept?.call();
+                                extraAccept != null
+                                    ? extraAccept.call()
+                                    : Navigator.of(context).pop();
                               },
+                              borderColor: AppColors.border_4,
                               largeButton: false,
                               icon: null,
                             ),
                           ),
-                        ],
-                      )
+                        if (hasButtonBack) const SizedBox(width: 12),
+                        Expanded(
+                          child: MainButton(
+                            title: mainTitle ?? 'Xác nhận',
+                            onTap: () {
+                              accept?.call();
+                            },
+                            largeButton: false,
+                            icon: null,
+                          ),
+                        ),
+                      ],
+                    )
                     : const SizedBox.shrink(),
               ],
             ),
@@ -105,10 +102,7 @@ class DialogUtils {
         return Dialog(
           insetPadding: const EdgeInsets.symmetric(horizontal: 32),
           child: Container(
-            padding: const EdgeInsets.symmetric(
-              vertical: 24,
-              horizontal: 16,
-            ),
+            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
             decoration: BoxDecoration(
               color: AppColors.white,
               borderRadius: BorderRadius.circular(8),
@@ -159,10 +153,7 @@ class DialogUtils {
         return Dialog(
           insetPadding: const EdgeInsets.symmetric(horizontal: 32),
           child: Container(
-            padding: const EdgeInsets.symmetric(
-              vertical: 24,
-              horizontal: 16,
-            ),
+            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
             decoration: BoxDecoration(
               color: AppColors.white,
               borderRadius: BorderRadius.circular(8),
@@ -225,10 +216,7 @@ class DialogUtils {
       builder: (context) {
         return Dialog(
           child: Container(
-            padding: const EdgeInsets.symmetric(
-              vertical: 24,
-              horizontal: 16,
-            ),
+            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
             decoration: BoxDecoration(
               color: AppColors.white,
               borderRadius: BorderRadius.circular(8),
@@ -243,9 +231,7 @@ class DialogUtils {
                 const SizedBox(height: 12),
                 Text(
                   message,
-                  style: AppTypography.p6.copyWith(
-                    color: AppColors.grey_1,
-                  ),
+                  style: AppTypography.p6.copyWith(color: AppColors.grey_1),
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -273,10 +259,7 @@ class DialogUtils {
         return Dialog(
           insetPadding: const EdgeInsets.symmetric(horizontal: 16),
           child: Container(
-            padding: const EdgeInsets.symmetric(
-              vertical: 24,
-              horizontal: 16,
-            ),
+            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
             decoration: BoxDecoration(
               color: AppColors.white,
               borderRadius: BorderRadius.circular(16),
@@ -352,6 +335,126 @@ class DialogUtils {
                 //     ),
                 //   ),
                 // ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  static FutureOr showActionConfirmDialog(
+    BuildContext context, {
+    required String description,
+    String? title,
+    String? rightTitle,
+    String? leftTitle,
+    VoidCallback? onConfirm,
+  }) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          insetPadding: const EdgeInsets.symmetric(horizontal: 32),
+          child: Container(
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            width: max(widthDevice(context) - 64, 300),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Icon with ripple circle
+                Container(
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    color: AppColors.red_1.withOpacity(0.05),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Center(
+                    child: Container(
+                      width: 44,
+                      height: 44,
+                      decoration: BoxDecoration(
+                        color: AppColors.red_1.withOpacity(0.1),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Center(
+                        child: Icon(
+                          Icons.close,
+                          color: AppColors.red_1,
+                          size: 24,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 24),
+                Text(
+                  title ?? 'Thông báo',
+                  style: AppTypography.h3.copyWith(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  description,
+                  style: AppTypography.p6.copyWith(color: AppColors.blackish),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 32),
+                Row(
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () => Navigator.pop(context),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          decoration: BoxDecoration(
+                            color: AppColors.grey_2,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: Center(
+                            child: Text(
+                              leftTitle ?? 'Quay lại',
+                              style: AppTypography.p5.copyWith(
+                                color: AppColors.blackish,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                          onConfirm?.call();
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF222222),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: Center(
+                            child: Text(
+                              rightTitle ?? 'Xác nhận',
+                              style: AppTypography.p5.copyWith(
+                                color: AppColors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),

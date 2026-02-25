@@ -59,4 +59,6 @@ class Api {
       '$baseURLV2/api/v1/tai-san/$id/chi-tiet-tai-san';
   static String toggleStatusActive(int id) =>
       '$baseURLV2/api/v1/tai-san/$id/toggle-status-active-tai-san';
+  static String updateAsset(int id) =>
+      '$baseURLV2/api/v1/tai-san/$id/cap-nhat-tai-san';
 }

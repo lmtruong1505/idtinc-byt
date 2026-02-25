@@ -3,7 +3,6 @@ import 'package:bpg_retail/core/configs/app_style/init_app_style.dart';
 import 'package:bpg_retail/core/constants/typography.dart';
 import 'package:bpg_retail/core/extension/spacing_extension.dart';
 import 'package:bpg_retail/core/widgets/base/appbar.dart';
-import 'package:bpg_retail/core/widgets/textfield/input_column.dart';
 import 'package:bpg_retail/features/asset_category/data/bloc/create_asset_cubit.dart';
 import 'package:bpg_retail/features/asset_category/data/bloc/create_asset_state.dart';
 import 'package:bpg_retail/features/asset_category/presentation/widgets/asset_profile_form.dart';
@@ -30,6 +29,7 @@ class _CreateAssetPageState extends State<CreateAssetPage>
   void initState() {
     super.initState();
     _cubit = CreateAssetCubit();
+    _cubit.loadAvailableAssets();
     _tabController = TabController(length: 2, vsync: this);
     _tabController.addListener(() {
       if (!_tabController.indexIsChanging) {
@@ -198,6 +198,7 @@ class _CreateAssetPageState extends State<CreateAssetPage>
             padding: const EdgeInsets.only(bottom: 24),
             child: AssetProfileForm(
               asset: state.mainAsset,
+              delegate: _cubit,
               onScrollToTop: _scrollToTop,
             ),
           ),
@@ -254,6 +255,7 @@ class _CreateAssetPageState extends State<CreateAssetPage>
     } else {
       return AssetProfileForm(
         asset: currentAsset.assetDetail,
+        delegate: _cubit,
         attachedIndex: state.currentAttachedAssetIndex,
       );
     }
@@ -462,18 +464,128 @@ class _CreateAssetPageState extends State<CreateAssetPage>
   }
 
   Widget _buildAssetSelectionField(CreateAssetState state) {
-    return InputColumn(
-      label: 'Chọn tài sản',
-      hintText: 'Chọn',
-      readOnly: true,
-      onTap: () {
-        // TODO: Mở bottom sheet chọn tài sản
-      },
-      suffixIcon: const Icon(
-        Icons.keyboard_arrow_down,
-        color: AppColors.grey80,
+    final currentAsset = state.attachedAssets[state.currentAttachedAssetIndex];
+    final selectedId = currentAsset.selectedAssetId;
+    String? displayText;
+    if (selectedId != null) {
+      final match = _cubit.availableAssets.where(
+        (a) => a.id.toString() == selectedId,
+      );
+      if (match.isNotEmpty) {
+        displayText = match.first.tenTaiSan;
+      }
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Chọn tài sản',
+          style: AppTypography.p6.copyWith(
+            color: AppColors.text_primary,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        8.height,
+        GestureDetector(
+          onTap: () => _showAssetPicker(),
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+            decoration: BoxDecoration(
+              border: Border.all(color: AppColors.grey30),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    displayText ?? 'Chọn',
+                    style: AppTypography.p5.copyWith(
+                      color:
+                          displayText != null
+                              ? AppColors.text_primary
+                              : AppColors.text_disable,
+                    ),
+                  ),
+                ),
+                const Icon(Icons.keyboard_arrow_down, color: AppColors.grey80),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  void _showAssetPicker() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
-      padding: EdgeInsets.zero,
+      builder: (_) {
+        return Container(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * 0.6,
+          ),
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Container(
+                  width: 40,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: AppColors.grey30,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+              ),
+              16.height,
+              Text(
+                'Chọn tài sản',
+                style: AppTypography.h3.copyWith(fontWeight: FontWeight.bold),
+              ),
+              16.height,
+              Expanded(
+                child: ListView.separated(
+                  itemCount: _cubit.availableAssets.length,
+                  separatorBuilder:
+                      (_, __) =>
+                          const Divider(height: 1, color: AppColors.grey20),
+                  itemBuilder: (ctx, index) {
+                    final asset = _cubit.availableAssets[index];
+                    return ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      title: Text(
+                        asset.tenTaiSan ?? 'N/A',
+                        style: AppTypography.p5.copyWith(
+                          color: AppColors.text_primary,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      subtitle: Text(
+                        asset.maTaiSan ?? '',
+                        style: AppTypography.p7.copyWith(
+                          color: AppColors.text_tertiary,
+                        ),
+                      ),
+                      onTap: () {
+                        _cubit.updateAttachedAssetId(asset.id.toString());
+                        Navigator.pop(ctx);
+                      },
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

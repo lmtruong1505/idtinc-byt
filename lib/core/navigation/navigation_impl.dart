@@ -51,7 +51,8 @@ class AppNavigatorImpl extends AppNavigator {
   bool get canPopSelfOrChildren => _appRouter.canPop();
 
   @override
-  String getCurrentRouteName({bool useRootNavigator = false}) => AutoRouter.of(
+  String getCurrentRouteName({bool useRootNavigator = false}) =>
+      AutoRouter.of(
         useRootNavigator ? _rootRouterContext : _currentTabContextOrRootContext,
       ).current.name;
 
@@ -136,14 +137,11 @@ class AppNavigatorImpl extends AppNavigator {
       );
     }
     return useRootNavigator
-        ? _appRouter.popAndPush<T, R>(
-            pageRouteInfo,
-            result: result,
-          )
+        ? _appRouter.popAndPush<T, R>(pageRouteInfo, result: result)
         : _currentTabRouterOrRootRouter.popAndPush<T, R>(
-            pageRouteInfo,
-            result: result,
-          );
+          pageRouteInfo,
+          result: result,
+        );
   }
 
   @override
@@ -204,9 +202,7 @@ class AppNavigatorImpl extends AppNavigator {
   }
 
   @override
-  void back<T extends Object?>({
-    T? result,
-  }) {
+  void back<T extends Object?>({T? result}) {
     m.Navigator.of(_rootRouterContext).pop(result);
   }
 
@@ -230,11 +226,7 @@ class AppNavigatorImpl extends AppNavigator {
 
   @override
   void showAppTopSnackBar(String message, {String? type}) {
-    SnackBarUtils.showApTopSnackBar(
-      _rootRouterContext,
-      message,
-      type: type,
-    );
+    SnackBarUtils.showApTopSnackBar(_rootRouterContext, message, type: type);
   }
 
   @override
@@ -249,21 +241,22 @@ class AppNavigatorImpl extends AppNavigator {
 
   @override
   void showToast(
-    dynamic text, {
-    dynamic toastBorderRadius,
-    dynamic backgroundColor,
-    dynamic border,
-    dynamic textStyle,
-    dynamic toastDuration,
-    dynamic trailing,
+    String text, {
+    double? toastBorderRadius,
+    Color? backgroundColor,
+    Border? border,
+    TextStyle? textStyle,
+    int? toastDuration,
+    Widget? trailing,
   }) {
     Toast.showToast(
       text,
       _rootRouterContext,
-      toastBorderRadius: toastBorderRadius,
-      backgroundColor: backgroundColor,
+      toastBorderRadius: toastBorderRadius ?? 20.0,
+      backgroundColor: backgroundColor ?? const Color(0xAA000000),
       border: border,
-      textStyle: textStyle,
+      textStyle:
+          textStyle ?? const TextStyle(fontSize: 15, color: Colors.white),
       toastDuration: toastDuration,
       trailing: trailing,
     );
@@ -271,18 +264,12 @@ class AppNavigatorImpl extends AppNavigator {
 
   @override
   FutureOr showErrorDialog(String message, {Duration? duration}) {
-    return DialogUtils.showErrorDialog(
-      _rootRouterContext,
-      content: message,
-    );
+    return DialogUtils.showErrorDialog(_rootRouterContext, content: message);
   }
 
   @override
   FutureOr showLoadingDialog(String message) {
-    return DialogUtils.showLoadingDialog(
-      _rootRouterContext,
-      message: message,
-    );
+    return DialogUtils.showLoadingDialog(_rootRouterContext, message: message);
   }
 
   @override
@@ -322,12 +309,13 @@ class AppNavigatorImpl extends AppNavigator {
       enableDrag: enableDrag,
       isScrollControlled: true,
       backgroundColor: backgroundColor ?? AppColors.white,
-      builder: (context) => Padding(
-        padding: EdgeInsets.only(
-          bottom: MediaQuery.of(_rootRouterContext).viewInsets.bottom,
-        ),
-        child: child,
-      ),
+      builder:
+          (context) => Padding(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(_rootRouterContext).viewInsets.bottom,
+            ),
+            child: child,
+          ),
     );
   }
 
