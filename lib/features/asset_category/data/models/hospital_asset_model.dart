@@ -34,7 +34,8 @@ class HospitalAssetModel {
   final int? orderParent;
   @JsonKey(name: 'is_parent')
   final bool? isParent;
-
+  @JsonKey(name: 'so_luong_bo_tai_san')
+  final int? soLuongBoTaiSan;
   // Additional fields from detailed JSON
   @JsonKey(name: 'ma_seri')
   final String? maSeri;
@@ -94,6 +95,7 @@ class HospitalAssetModel {
     this.createdAt,
     this.updatedAt,
     this.isParent,
+    this.soLuongBoTaiSan,
   });
 
   factory HospitalAssetModel.fromJson(Map<String, dynamic> json) =>

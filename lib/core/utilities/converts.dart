@@ -212,6 +212,8 @@ Color getAssetStatusColor(String? statusValue) {
       return AppColors.blue50;
     case "CHO_THANH_LY":
       return AppColors.orange50;
+    case "DA_THANH_LY":
+      return AppColors.red50;
     default:
       return AppColors.grey50;
   }

@@ -5,6 +5,7 @@ import 'package:bpg_retail/core/constants/api_constants.dart';
 import 'package:bpg_retail/core/data/models/common_response.dart';
 import 'package:bpg_retail/features/asset_category/data/models/asset_status_count_model.dart';
 import 'package:bpg_retail/features/asset_category/data/models/asset_type_model.dart';
+import 'package:bpg_retail/features/asset_category/data/models/asset_location_model.dart';
 import 'package:bpg_retail/features/asset_category/data/models/department_model.dart';
 import 'package:bpg_retail/features/asset_category/data/models/hospital_asset_model.dart';
 import 'package:injectable/injectable.dart';
@@ -67,6 +68,29 @@ class AssetRepository {
       );
     } catch (e) {
       return CommonResponse<HospitalAssetModel>(
+        success: false,
+        message: e.toString(),
+      );
+    }
+  }
+
+  Future<CommonResponse<List<AssetLocationModel>>> getAssetLocationHistory(
+    int id,
+  ) async {
+    try {
+      final response = await _baseDio.get(Api.getAssetLocationHistory(id));
+
+      return CommonResponse<List<AssetLocationModel>>.fromJson(
+        response.data,
+        (json) =>
+            (json as List)
+                .map(
+                  (e) => AssetLocationModel.fromJson(e as Map<String, dynamic>),
+                )
+                .toList(),
+      );
+    } catch (e) {
+      return CommonResponse<List<AssetLocationModel>>(
         success: false,
         message: e.toString(),
       );

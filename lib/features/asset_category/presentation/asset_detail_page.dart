@@ -15,12 +15,15 @@ import 'package:bpg_retail/core/widgets/chip_custom.dart';
 import 'package:bpg_retail/features/asset_category/data/bloc/asset_detail_cubit.dart';
 import 'package:bpg_retail/features/asset_category/data/bloc/asset_detail_state.dart';
 import 'package:bpg_retail/features/asset_category/data/models/hospital_asset_model.dart';
+import 'package:bpg_retail/features/asset_category/presentation/widgets/asset_transfer_history_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'widgets/asset_depreciation_bottom_sheet.dart';
 import 'widgets/asset_technical_specs_bottom_sheet.dart';
 import 'widgets/asset_set_bottom_sheet.dart';
 import 'widgets/maintenance_history_tab.dart';
+
+import 'package:bpg_retail/features/asset_category/data/bloc/asset_location_history_cubit.dart';
 
 @RoutePage()
 class AssetDetailPage extends StatefulWidget {
@@ -33,25 +36,31 @@ class AssetDetailPage extends StatefulWidget {
 
 class _AssetDetailPageState extends State<AssetDetailPage>
     with SingleTickerProviderStateMixin {
+  late AssetDetailCubit _detailCubit;
+  late AssetLocationHistoryCubit _historyCubit;
   late TabController _tabController;
-  final AssetDetailCubit _detailCubit = getIt.get<AssetDetailCubit>();
 
   @override
   void initState() {
     super.initState();
-    _detailCubit
-      ..navigator = getIt.get<AppNavigator>()
-      ..appCubit = getIt.get<AppCubit>()
-      ..preferences = getIt.get<Preferences>();
+    _detailCubit =
+        getIt.get<AssetDetailCubit>()..preferences = getIt.get<Preferences>();
+    _historyCubit = getIt.get<AssetLocationHistoryCubit>();
 
     _tabController = TabController(length: 3, vsync: this);
+    _tabController.addListener(() {
+      if (mounted) setState(() {});
+    });
+
     if (widget.asset.id != null) {
       _detailCubit.getAssetDetail(widget.asset.id!);
+      _historyCubit.getLocationHistory(widget.asset.id!);
     }
   }
 
   @override
   void dispose() {
+    _tabController.removeListener(() {});
     _tabController.dispose();
     super.dispose();
   }
@@ -92,7 +101,10 @@ class _AssetDetailPageState extends State<AssetDetailPage>
             controller: _tabController,
             children: [
               _buildAssetHistory(asset),
-              const Center(child: Text("Lịch sử điều chuyển")),
+              BlocProvider.value(
+                value: _historyCubit,
+                child: const AssetTransferHistoryTab(),
+              ),
               MaintenanceHistoryTab(
                 onCreateNew: () {
                   // TODO: Navigate to create maintenance record
@@ -101,7 +113,7 @@ class _AssetDetailPageState extends State<AssetDetailPage>
             ],
           ),
         ),
-        _buildBottomAction(),
+        _buildConditionalBottomAction(asset),
       ],
     );
   }
@@ -144,44 +156,9 @@ class _AssetDetailPageState extends State<AssetDetailPage>
         unselectedLabelStyle: AppTypography.p5,
         tabs: [
           const Tab(text: "Lý lịch tài sản"),
-          Tab(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text("Lịch sử điều chuyển và thanh lý tài sản"),
-                6.width,
-                _buildTabBadge('10'),
-              ],
-            ),
-          ),
-          Tab(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text("Lịch sử bảo dưỡng"),
-                6.width,
-                _buildTabBadge('10'),
-              ],
-            ),
-          ),
+          const Tab(text: "Lịch sử điều chuyển và thanh lý"),
+          const Tab(text: "Lịch sử bảo dưỡng"),
         ],
-      ),
-    );
-  }
-
-  Widget _buildTabBadge(String count) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-      decoration: BoxDecoration(
-        color: AppColors.grey10,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Text(
-        count,
-        style: AppTypography.p7.copyWith(
-          color: AppColors.text_tertiary,
-          fontWeight: FontWeight.w600,
-        ),
       ),
     );
   }
@@ -563,7 +540,72 @@ class _AssetDetailPageState extends State<AssetDetailPage>
     );
   }
 
-  Widget _buildBottomAction() {
+  Widget _buildConditionalBottomAction(HospitalAssetModel asset) {
+    if (_tabController.index == 1) {
+      // Transfer/Dispose History Tab Action Bar
+      return Container(
+        padding: const EdgeInsets.fromLTRB(16, 12, 16, 32),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 10,
+              offset: const Offset(0, -5),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: GestureDetector(
+                onTap: () {
+                  // TODO: Handle Transfer
+                },
+                child: BaseContainer(
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  borderRadius: 24,
+                  color: AppColors.grey10,
+                  child: Center(
+                    child: Text(
+                      "Điều chuyển",
+                      style: AppTypography.p5.copyWith(
+                        color: AppColors.text_primary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            16.width,
+            Expanded(
+              child: GestureDetector(
+                onTap: () {
+                  // TODO: Handle Dispose
+                },
+                child: BaseContainer(
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  borderRadius: 24,
+                  color: AppColors.red10,
+                  child: Center(
+                    child: Text(
+                      "Thanh lý",
+                      style: AppTypography.p5.copyWith(
+                        color: AppColors.red60,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    // Default Action Bar (e.g., "Chỉnh sửa")
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 32),
       decoration: BoxDecoration(

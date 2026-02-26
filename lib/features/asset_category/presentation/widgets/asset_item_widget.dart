@@ -131,27 +131,30 @@ class AssetItemWidget extends StatelessWidget {
 
             12.height,
             // Footer
-            Center(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(
-                    Icons.layers_outlined,
-                    size: 16,
-                    color: AppColors.text_tertiary,
-                  ),
-                  6.width,
-                  Text(
-                    asset.hasBoTaiSan == true
-                        ? "Đã có tài sản đi kèm"
-                        : "Chưa có tài sản đi kèm",
-                    style: AppTypography.p6.copyWith(
+            if (asset.hasBoTaiSan == true)
+              Center(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(
+                      Icons.layers_outlined,
+                      size: 16,
                       color: AppColors.text_tertiary,
                     ),
-                  ),
-                ],
+                    6.width,
+                    Column(
+                      children: [
+                        Text(
+                          "${asset.soLuongBoTaiSan} tài sản đi kèm",
+                          style: AppTypography.p6.copyWith(
+                            color: AppColors.text_tertiary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
             12.height,
             const Divider(height: 1, color: AppColors.border_tertiary),
           ],

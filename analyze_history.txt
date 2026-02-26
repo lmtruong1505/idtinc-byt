@@ -1,0 +1,55 @@
+﻿Analyzing 3 items...                                            
+
+  error - The method '_buildContent' isn't defined for the type '_AssetDetailPageState' - lib\features\asset_category\presentation\asset_detail_page.dart:81:35 - undefined_method
+  error - The method '_buildContent' isn't defined for the type '_AssetDetailPageState' - lib\features\asset_category\presentation\asset_detail_page.dart:82:29 - undefined_method
+  error - Expected a class member - lib\features\asset_category\presentation\asset_detail_page.dart:90:5 - expected_class_member
+   info - The variable name 'Column' isn't a lowerCamelCase identifier - lib\features\asset_category\presentation\asset_detail_page.dart:90:12 - non_constant_identifier_names
+  error - 'Column' must have a method body because '_AssetDetailPageState' isn't abstract - lib\features\asset_category\presentation\asset_detail_page.dart:90:12 - concrete_class_with_abstract_member
+  error - Named parameters must be enclosed in curly braces ('{' and '}') - lib\features\asset_category\presentation\asset_detail_page.dart:91:15 - named_parameter_outside_group
+  error - Using a colon as the separator before a default value is no longer supported - lib\features\asset_category\presentation\asset_detail_page.dart:91:15 - obsolete_colon_for_default_value
+  error - The default value of an optional parameter must be constant - lib\features\asset_category\presentation\asset_detail_page.dart:91:17 - non_constant_default_value
+  error - Undefined name 'asset' - lib\features\asset_category\presentation\asset_detail_page.dart:92:22 - undefined_identifier
+  error - Undefined name 'asset' - lib\features\asset_category\presentation\asset_detail_page.dart:98:34 - undefined_identifier
+  error - The method 'AssetTransferHistoryTab' isn't defined for the type '_AssetDetailPageState' - lib\features\asset_category\presentation\asset_detail_page.dart:99:15 - undefined_method
+  error - Undefined name 'asset' - lib\features\asset_category\presentation\asset_detail_page.dart:110:39 - undefined_identifier
+  error - The name 'AssetHistoryEvent' isn't a type, so it can't be used as a type argument - lib\features\asset_category\presentation\asset_detail_page.dart:116:14 - non_type_as_type_argument
+  error - The function 'AssetHistoryEvent' isn't defined - lib\features\asset_category\presentation\asset_detail_page.dart:117:5 - undefined_function
+  error - The values in a const list literal must be constants - lib\features\asset_category\presentation\asset_detail_page.dart:117:5 - non_constant_list_element
+  error - Undefined name 'AssetEventType' - lib\features\asset_category\presentation\asset_detail_page.dart:119:13 - undefined_identifier
+  error - The function 'AssetHistoryEvent' isn't defined - lib\features\asset_category\presentation\asset_detail_page.dart:127:5 - undefined_function
+  error - The values in a const list literal must be constants - lib\features\asset_category\presentation\asset_detail_page.dart:127:5 - non_constant_list_element
+  error - Undefined name 'AssetEventType' - lib\features\asset_category\presentation\asset_detail_page.dart:129:13 - undefined_identifier
+  error - The function 'AssetHistoryEvent' isn't defined - lib\features\asset_category\presentation\asset_detail_page.dart:134:5 - undefined_function
+  error - The values in a const list literal must be constants - lib\features\asset_category\presentation\asset_detail_page.dart:134:5 - non_constant_list_element
+  error - Undefined name 'AssetEventType' - lib\features\asset_category\presentation\asset_detail_page.dart:136:13 - undefined_identifier
+  error - The function 'AssetHistoryEvent' isn't defined - lib\features\asset_category\presentation\asset_detail_page.dart:141:5 - undefined_function
+  error - The values in a const list literal must be constants - lib\features\asset_category\presentation\asset_detail_page.dart:141:5 - non_constant_list_element
+  error - Undefined name 'AssetEventType' - lib\features\asset_category\presentation\asset_detail_page.dart:143:13 - undefined_identifier
+  error - The function 'AssetHistoryEvent' isn't defined - lib\features\asset_category\presentation\asset_detail_page.dart:148:5 - undefined_function
+  error - The values in a const list literal must be constants - lib\features\asset_category\presentation\asset_detail_page.dart:148:5 - non_constant_list_element
+  error - Undefined name 'AssetEventType' - lib\features\asset_category\presentation\asset_detail_page.dart:150:13 - undefined_identifier
+  error - The function 'AssetHistoryEvent' isn't defined - lib\features\asset_category\presentation\asset_detail_page.dart:154:5 - undefined_function
+  error - The values in a const list literal must be constants - lib\features\asset_category\presentation\asset_detail_page.dart:154:5 - non_constant_list_element
+  error - Undefined name 'AssetEventType' - lib\features\asset_category\presentation\asset_detail_page.dart:156:13 - undefined_identifier
+  error - The function 'AssetHistoryEvent' isn't defined - lib\features\asset_category\presentation\asset_detail_page.dart:163:5 - undefined_function
+  error - The values in a const list literal must be constants - lib\features\asset_category\presentation\asset_detail_page.dart:163:5 - non_constant_list_element
+  error - Undefined name 'AssetEventType' - lib\features\asset_category\presentation\asset_detail_page.dart:165:13 - undefined_identifier
+  error - Undefined name '_tabController' - lib\features\asset_category\presentation\asset_detail_page.dart:198:21 - undefined_identifier
+   info - Use 'const' literals as arguments to constructors of '@immutable' classes - lib\features\asset_category\presentation\asset_detail_page.dart:207:15 - prefer_const_literals_to_create_immutables
+   info - Use 'const' with the constructor to improve performance - lib\features\asset_category\presentation\asset_detail_page.dart:209:11 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\features\asset_category\presentation\asset_detail_page.dart:212:11 - prefer_const_constructors
+warning - The declaration '_buildTabBadge' isn't referenced - lib\features\asset_category\presentation\asset_detail_page.dart:220:10 - unused_element
+  error - Undefined name '_detailCubit' - lib\features\asset_category\presentation\asset_detail_page.dart:344:19 - undefined_identifier
+  error - Undefined name 'context' - lib\features\asset_category\presentation\asset_detail_page.dart:397:38 - undefined_identifier
+  error - Undefined name '_detailCubit' - lib\features\asset_category\presentation\asset_detail_page.dart:401:19 - undefined_identifier
+  error - Undefined name 'context' - lib\features\asset_category\presentation\asset_detail_page.dart:410:38 - undefined_identifier
+  error - Undefined name '_detailCubit' - lib\features\asset_category\presentation\asset_detail_page.dart:414:19 - undefined_identifier
+  error - Undefined name 'context' - lib\features\asset_category\presentation\asset_detail_page.dart:585:16 - undefined_identifier
+  error - Undefined name 'context' - lib\features\asset_category\presentation\asset_detail_page.dart:594:16 - undefined_identifier
+  error - Undefined name 'context' - lib\features\asset_category\presentation\asset_detail_page.dart:603:16 - undefined_identifier
+  error - Undefined name '_detailCubit' - lib\features\asset_category\presentation\asset_detail_page.dart:608:20 - undefined_identifier
+  error - Undefined name '_tabController' - lib\features\asset_category\presentation\asset_detail_page.dart:615:9 - undefined_identifier
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\asset_category\presentation\asset_detail_page.dart:623:35 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\asset_category\presentation\asset_detail_page.dart:686:33 - deprecated_member_use
+  error - Expected a method, getter, setter or operator declaration - lib\features\asset_category\presentation\asset_detail_page.dart:718:1 - expected_executable
+
