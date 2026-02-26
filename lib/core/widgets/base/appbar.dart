@@ -18,6 +18,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.iconTheme,
     this.titleWidget,
     this.titleSpacing,
+    this.leadingWidth,
   }) : super(key: key);
 
   final Color? backgroundColor;
@@ -28,6 +29,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? leadingIcon;
   final bool hasBack;
   final double? titleSpacing;
+  final double? leadingWidth;
   final List<Widget>? trailingIcons;
   final Color? iconColor;
   final bool centerTitle;
@@ -40,31 +42,34 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       centerTitle: centerTitle,
       titleSpacing: titleSpacing,
+      leadingWidth: leadingWidth,
       backgroundColor: backgroundColor ?? AppColors.white,
-      title: titleWidget ??
+      title:
+          titleWidget ??
           Text(
             title,
-            style: textStyle ??
-                AppTypography.h5.copyWith(
-                  color: AppColors.blackish,
-                ),
+            style:
+                textStyle ??
+                AppTypography.h5.copyWith(color: AppColors.blackish),
           ),
-      leading: hasLeading
-          ? GestureDetector(
-              onTap: () {
-                if (hasBack) {
-                  Navigator.pop(context);
-                } else {
-                  onTap?.call();
-                }
-              },
-              child: leadingIcon ??
-                  Icon(
-                    Icons.arrow_back_rounded,
-                    color: iconColor ?? AppColors.blackish,
-                  ),
-            )
-          : null,
+      leading:
+          hasLeading
+              ? GestureDetector(
+                onTap: () {
+                  if (hasBack) {
+                    Navigator.pop(context);
+                  } else {
+                    onTap?.call();
+                  }
+                },
+                child:
+                    leadingIcon ??
+                    Icon(
+                      Icons.arrow_back_rounded,
+                      color: iconColor ?? AppColors.blackish,
+                    ),
+              )
+              : null,
       iconTheme: iconTheme ?? IconThemeData(color: backgroundColor),
       actions: trailingIcons,
     );

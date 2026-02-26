@@ -1,3 +1,5 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:bpg_retail/app/routes/router.gr.dart';
 import 'package:bpg_retail/core/constants/typography.dart';
 import 'package:bpg_retail/core/core.dart';
 import 'package:bpg_retail/core/extension/spacing_extension.dart';
@@ -32,6 +34,19 @@ class AssetFilterWidget extends StatelessWidget {
               onChanged: (value) {
                 onSearchChanged?.call(value);
               },
+            ),
+          ),
+          12.width,
+          InkWell(
+            onTap: () => context.router.push(const QRScanRoute()),
+            child: BaseContainer(
+              width: 48,
+              height: 48,
+              isCircle: true,
+              color: AppColors.greyE2.withOpacity(0.5),
+              child: const Center(
+                child: Icon(Icons.qr_code_scanner, color: AppColors.black),
+              ),
             ),
           ),
           12.width,

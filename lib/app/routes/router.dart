@@ -33,7 +33,7 @@ class AppRouter extends $AppRouter {
       transitionsBuilder: TransitionsBuilders.noTransition,
     ),
     CustomRoute(
-      page: QrCodeScreen.page,
+      page: QRScanRoute.page,
       transitionsBuilder: TransitionsBuilders.noTransition,
     ),
 

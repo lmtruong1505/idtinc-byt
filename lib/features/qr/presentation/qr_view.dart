@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:bpg_retail/app/routes/router.gr.dart';
@@ -18,7 +17,7 @@ import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
 
 import '../../../core/constants/colors.dart';
 
-@RoutePage()
+// @RoutePage()
 class QrCodeScreen extends StatefulWidget {
   const QrCodeScreen({
     super.key,

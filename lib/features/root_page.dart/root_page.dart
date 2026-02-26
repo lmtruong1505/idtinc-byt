@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:bpg_retail/app/routes/router.gr.dart';
 import 'package:bpg_retail/core/widgets/base_container.dart';
 import 'package:bpg_retail/features/asset_category/presentation/asset_category_page.dart';
 import 'package:bpg_retail/features/dashboard/dashboard_page.dart';
@@ -10,12 +11,9 @@ import 'package:bpg_retail/core/base/index_cubit.dart';
 import 'package:bpg_retail/core/constants/colors.dart';
 import 'package:bpg_retail/core/constants/typography.dart';
 import 'package:bpg_retail/core/extension/init_ext.dart';
-import 'package:bpg_retail/core/injection/injection.dart';
 import 'package:bpg_retail/core/utilities/assets.dart';
 
 import '../../app/data/bloc/app_cubit.dart';
-import '../../core/base/cubit_state.dart';
-import '../../core/utilities/enum.dart';
 
 @RoutePage()
 class RootPage extends StatefulWidget {
@@ -149,27 +147,31 @@ class _RootPageState extends State<RootPage>
   }
 
   Widget _qrBtn() {
-    return BaseContainer(
-      width: 56,
-      height: 56,
-      isCircle: true,
-      borderColor: AppColors.greyE2,
-      borderWidth: 2,
-      color: Colors.transparent,
-      child: Center(
-        child: BaseContainer(
-          width: 44,
-          height: 44,
-          isCircle: true,
-          color: AppColors.main,
-          child: Center(
-            child: Assets.icon(
-              assetName: "ic_qrcode.svg",
-              width: 24,
-              height: 24,
-              colorFilter: const ColorFilter.mode(
-                Colors.white,
-                BlendMode.srcIn,
+    return InkWell(
+      onTap: () => context.router.push(const QRScanRoute()),
+      borderRadius: BorderRadius.circular(28),
+      child: BaseContainer(
+        width: 56,
+        height: 56,
+        isCircle: true,
+        borderColor: AppColors.greyE2,
+        borderWidth: 2,
+        color: Colors.transparent,
+        child: Center(
+          child: BaseContainer(
+            width: 44,
+            height: 44,
+            isCircle: true,
+            color: AppColors.main,
+            child: Center(
+              child: Assets.icon(
+                assetName: "ic_qrcode.svg",
+                width: 24,
+                height: 24,
+                colorFilter: const ColorFilter.mode(
+                  Colors.white,
+                  BlendMode.srcIn,
+                ),
               ),
             ),
           ),

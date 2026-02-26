@@ -28,7 +28,12 @@ import 'package:bpg_retail/features/asset_category/data/bloc/asset_location_hist
 @RoutePage()
 class AssetDetailPage extends StatefulWidget {
   final HospitalAssetModel asset;
-  const AssetDetailPage({super.key, required this.asset});
+  final int initialIndex;
+  const AssetDetailPage({
+    super.key,
+    required this.asset,
+    this.initialIndex = 0,
+  });
 
   @override
   State<AssetDetailPage> createState() => _AssetDetailPageState();
@@ -47,7 +52,11 @@ class _AssetDetailPageState extends State<AssetDetailPage>
         getIt.get<AssetDetailCubit>()..preferences = getIt.get<Preferences>();
     _historyCubit = getIt.get<AssetLocationHistoryCubit>();
 
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(
+      length: 3,
+      vsync: this,
+      initialIndex: widget.initialIndex,
+    );
     _tabController.addListener(() {
       if (mounted) setState(() {});
     });
