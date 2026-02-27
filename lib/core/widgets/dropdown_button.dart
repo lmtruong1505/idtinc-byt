@@ -32,6 +32,22 @@ class DropdownButtonModel {
 }
 
 class CustomDropdownButton extends StatelessWidget {
+  final dynamic value;
+  final String? hintText;
+  final List<DropdownButtonModel> items;
+  final Function(DropdownButtonModel?) onChanged;
+
+  final bool? isExpanded;
+  final IconStyleData? iconStyleData;
+  final ButtonStyleData? buttonStyleData;
+  final MenuItemStyleData? menuItemStyleData;
+  final DropdownStyleData? dropdownStyleData;
+  final DropdownSearchData<DropdownButtonModel>? dropdownSearchData;
+  final Function(bool)? onMenuStateChange;
+  final bool? showDivider;
+  final Color? dividerColor;
+  final int? maxLines;
+
   const CustomDropdownButton({
     super.key,
     this.hintText,
@@ -43,20 +59,12 @@ class CustomDropdownButton extends StatelessWidget {
     this.buttonStyleData,
     this.menuItemStyleData,
     this.dropdownStyleData,
+    this.dropdownSearchData,
+    this.onMenuStateChange,
+    this.showDivider,
+    this.dividerColor,
     this.maxLines,
   });
-
-  final dynamic value;
-  final String? hintText;
-  final List<DropdownButtonModel> items;
-  final Function(DropdownButtonModel?) onChanged;
-
-  final bool? isExpanded;
-  final IconStyleData? iconStyleData;
-  final ButtonStyleData? buttonStyleData;
-  final MenuItemStyleData? menuItemStyleData;
-  final DropdownStyleData? dropdownStyleData;
-  final int? maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -83,15 +91,30 @@ class CustomDropdownButton extends StatelessWidget {
               return DropdownMenuItem(
                 value: item,
                 enabled: item.enabled ?? true,
-                child: Text(
-                  item.label,
-                  style: AppTypography.p5.copyWith(
-                    color:
-                        [true, null].contains(item.enabled)
-                            ? AppColors.blackish
-                            : AppColors.grey_1,
+                child: Container(
+                  width: double.infinity,
+                  alignment: Alignment.centerLeft,
+                  decoration:
+                      (showDivider ?? false) && item != items.last
+                          ? BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: dividerColor ?? AppColors.grey_2,
+                                width: 1,
+                              ),
+                            ),
+                          )
+                          : null,
+                  child: Text(
+                    item.label,
+                    style: AppTypography.p5.copyWith(
+                      color:
+                          [true, null].contains(item.enabled)
+                              ? AppColors.blackish
+                              : AppColors.grey_1,
+                    ),
+                    textAlign: TextAlign.left,
                   ),
-                  textAlign: TextAlign.right,
                 ),
               );
             }).toList(),
@@ -137,6 +160,8 @@ class CustomDropdownButton extends StatelessWidget {
                     thumbVisibility: WidgetStateProperty.all(true),
                   ),
                 ),
+        dropdownSearchData: dropdownSearchData,
+        onMenuStateChange: onMenuStateChange,
       ),
     );
   }
