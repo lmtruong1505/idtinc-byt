@@ -3,7 +3,7 @@ import 'package:bpg_retail/app/data/bloc/localization_cubit.dart';
 import 'package:bpg_retail/app/routes/router.gr.dart';
 import 'package:bpg_retail/core/constants/colors.dart';
 import 'package:bpg_retail/core/constants/typography.dart';
-import 'package:bpg_retail/core/extension/init_ext.dart'; 
+import 'package:bpg_retail/core/extension/init_ext.dart';
 import 'package:bpg_retail/core/extension/spacing_extension.dart';
 import 'package:bpg_retail/core/injection/injection.dart';
 import 'package:bpg_retail/core/navigation/navigator.dart';
@@ -17,7 +17,7 @@ import 'package:bpg_retail/features/authentication/presentation/widget/header_au
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-@RoutePage()  
+@RoutePage()
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -61,11 +61,11 @@ class _LoginPageState extends State<LoginPage> {
             children: [
               32.height,
               ValidateTextField(
+                labelText: 'Tài khoản/Số điện thoại',
+                isRequired: true,
                 initialValue: state.phoneNumber,
                 margin: EdgeInsets.zero,
                 backgroundColor: AppColors.white,
-                hintText: trans.translate('email'),
-                hintStyle: AppTypography.p6.copyWith(color: AppColors.grey_1),
                 maxLines: 1,
                 onChanged: bloc.onChangePhoneNumber,
                 // validator: (value) {
@@ -81,11 +81,11 @@ class _LoginPageState extends State<LoginPage> {
               ),
               16.height,
               ValidateTextField(
+                labelText: 'Mật khẩu',
+                isRequired: true,
                 initialValue: state.password,
                 margin: EdgeInsets.zero,
                 backgroundColor: AppColors.white,
-                hintText: trans.translate('pls_password'),
-                hintStyle: AppTypography.p6.copyWith(color: AppColors.grey_1),
                 maxLines: 1,
                 onChanged: bloc.onChangePassword,
                 obscureText: !state.showPassword,

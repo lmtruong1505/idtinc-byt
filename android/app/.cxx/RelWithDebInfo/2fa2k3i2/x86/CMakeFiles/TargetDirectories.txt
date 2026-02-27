@@ -1,0 +1,2 @@
+C:/Users/anhtr/Desktop/byt_app/android/app/.cxx/RelWithDebInfo/2fa2k3i2/x86/CMakeFiles/edit_cache.dir
+C:/Users/anhtr/Desktop/byt_app/android/app/.cxx/RelWithDebInfo/2fa2k3i2/x86/CMakeFiles/rebuild_cache.dir

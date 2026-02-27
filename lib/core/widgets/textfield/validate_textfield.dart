@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:bpg_retail/core/constants/colors.dart';
 import 'package:bpg_retail/core/constants/spacing.dart';
 import 'package:bpg_retail/core/constants/typography.dart';
+import 'package:bpg_retail/core/extension/init_ext.dart';
+import 'package:bpg_retail/core/widgets/common/title_required.dart';
 
 class ValidateTextField extends StatefulWidget {
   const ValidateTextField({
@@ -39,6 +41,8 @@ class ValidateTextField extends StatefulWidget {
     this.suffixIcon,
     this.inputFormatters,
     this.decoration,
+    this.labelText,
+    this.isRequired = false,
   }) : super(key: key);
 
   final Color? backgroundColor;
@@ -73,6 +77,8 @@ class ValidateTextField extends StatefulWidget {
   final VoidCallback? onClear;
   final List<TextInputFormatter>? inputFormatters;
   final InputDecoration? decoration;
+  final String? labelText;
+  final bool isRequired;
 
   @override
   State<ValidateTextField> createState() => _ValidateTextFieldState();
@@ -114,7 +120,7 @@ class _ValidateTextFieldState extends State<ValidateTextField> {
   @override
   Widget build(BuildContext context) {
     print("========TextFormFieldRebuild======");
-    return TextFormField(
+    final textField = TextFormField(
       autofocus: widget.autofocus ?? false,
       controller: _controller,
       onTap: () => widget.onTap?.call(),
@@ -136,6 +142,11 @@ class _ValidateTextFieldState extends State<ValidateTextField> {
       decoration:
           widget.decoration ??
           InputDecoration(
+            hintText:
+                widget.hintText ??
+                (widget.labelText != null
+                    ? "Nhập ${widget.labelText!.toLowerCase()}"
+                    : ''),
             errorStyle: AppTypography.p7,
             filled: true,
             fillColor: widget.backgroundColor ?? AppColors.white,
@@ -248,7 +259,6 @@ class _ValidateTextFieldState extends State<ValidateTextField> {
                   top: 16.5,
                 ),
             isCollapsed: true,
-            hintText: widget.hintText ?? '',
             hintStyle:
                 widget.hintStyle ??
                 AppTypography.p6.copyWith(color: AppColors.grey_1),
@@ -258,6 +268,24 @@ class _ValidateTextFieldState extends State<ValidateTextField> {
       style: (widget.textStyle ?? AppTypography.p6).copyWith(
         overflow: TextOverflow.ellipsis,
       ),
+    );
+
+    if (widget.labelText != null) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [_titleLayout(widget.labelText!), 8.height, textField],
+      );
+    }
+    return textField;
+  }
+
+  Widget _titleLayout(String title) {
+    if (widget.isRequired) {
+      return requiredTitle(title);
+    }
+    return Text(
+      title,
+      style: AppTypography.p5.copyWith(color: AppColors.blackish),
     );
   }
 }
@@ -295,6 +323,8 @@ class ValidateTextFieldV2 extends StatefulWidget {
     this.isClear = false,
     this.autofocus,
     this.suffixIcon,
+    this.labelText,
+    this.isRequired = false,
   }) : super(key: key);
 
   final Color? backgroundColor;
@@ -327,6 +357,8 @@ class ValidateTextFieldV2 extends StatefulWidget {
   final String? defaultValue;
   final Widget? emptySuffixIcon;
   final VoidCallback? onClear;
+  final String? labelText;
+  final bool isRequired;
 
   @override
   State<ValidateTextFieldV2> createState() => _ValidateTextFieldV2State();
@@ -362,7 +394,7 @@ class _ValidateTextFieldV2State extends State<ValidateTextFieldV2> {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    final textField = TextFormField(
       autofocus: widget.autofocus ?? false,
       controller: _controller,
       onTap: () {
@@ -383,6 +415,11 @@ class _ValidateTextFieldV2State extends State<ValidateTextFieldV2> {
       // scrollPadding: EdgeInsets.zero,
       readOnly: widget.readOnly,
       decoration: InputDecoration(
+        hintText:
+            widget.hintText ??
+            (widget.labelText != null
+                ? "Nhập ${widget.labelText!.toLowerCase()}"
+                : ''),
         errorStyle: AppTypography.p7,
         filled: true,
         fillColor: widget.backgroundColor ?? AppColors.white,
@@ -467,7 +504,6 @@ class _ValidateTextFieldV2State extends State<ValidateTextFieldV2> {
             widget.padding ??
             const EdgeInsets.only(left: 0, right: 0, bottom: 15.5, top: 16.5),
         isCollapsed: true,
-        hintText: widget.hintText ?? '',
         hintStyle:
             widget.hintStyle ??
             AppTypography.p6.copyWith(color: AppColors.grey_1),
@@ -475,6 +511,24 @@ class _ValidateTextFieldV2State extends State<ValidateTextFieldV2> {
       cursorColor: widget.cursorColor ?? AppColors.bg_5,
       cursorWidth: 1,
       style: widget.textStyle ?? AppTypography.p6,
+    );
+
+    if (widget.labelText != null) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [_titleLayout(widget.labelText!), 8.height, textField],
+      );
+    }
+    return textField;
+  }
+
+  Widget _titleLayout(String title) {
+    if (widget.isRequired) {
+      return requiredTitle(title);
+    }
+    return Text(
+      title,
+      style: AppTypography.p5.copyWith(color: AppColors.blackish),
     );
   }
 }

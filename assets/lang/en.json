@@ -63,5 +63,7 @@
     "po_detail": "PO detail",
     "detail": "Detail",
     "see_more": "...See more",
-    "hide": "Hide"
+    "hide": "Hide",
+    "account_phone": "Account/Phone number",
+    "password_title": "Password"
 }
