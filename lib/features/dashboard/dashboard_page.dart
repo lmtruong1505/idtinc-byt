@@ -14,6 +14,9 @@ import 'package:bpg_retail/core/injection/injection.dart';
 import 'package:bpg_retail/features/dashboard/presentation/bloc/department_catalog_cubit.dart';
 import 'package:bpg_retail/features/dashboard/presentation/bloc/department_catalog_state.dart';
 import 'package:bpg_retail/features/dashboard/presentation/bloc/asset_overview_cubit.dart';
+import 'package:bpg_retail/features/dashboard/presentation/bloc/depreciation_rate_cubit.dart';
+import 'package:bpg_retail/features/dashboard/presentation/bloc/asset_quantity_cubit.dart';
+import 'package:bpg_retail/features/dashboard/presentation/bloc/asset_status_ratio_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
@@ -68,6 +71,21 @@ class _DashboardPageState extends State<DashboardPage> {
           create:
               (context) => getIt.get<AssetOverviewCubit>()..getAssetOverview(),
         ),
+        BlocProvider(
+          create:
+              (context) =>
+                  getIt.get<DepreciationRateCubit>()..getDepreciationRate(),
+        ),
+        BlocProvider(
+          create:
+              (context) =>
+                  getIt.get<AssetQuantityCubit>()..getAssetQuantityReport(),
+        ),
+        BlocProvider(
+          create:
+              (context) =>
+                  getIt.get<AssetStatusRatioCubit>()..getAssetStatusRatio(),
+        ),
       ],
       child: Scaffold(
         backgroundColor: AppColors.main,
@@ -101,8 +119,23 @@ class _DashboardPageState extends State<DashboardPage> {
                           // Fetch new overview data when department changes
                           // If 'Toàn viện' is selected, ID is null, default to 5 in Cubit
                           context.read<AssetOverviewCubit>().getAssetOverview(
-                            toChucId: state.selectedDepartment?.id,
+                            khoaId: state.selectedDepartment?.id,
                           );
+                          context
+                              .read<DepreciationRateCubit>()
+                              .getDepreciationRate(
+                                khoaId: state.selectedDepartment?.id,
+                              );
+                          context
+                              .read<AssetQuantityCubit>()
+                              .getAssetQuantityReport(
+                                khoaId: state.selectedDepartment?.id,
+                              );
+                          context
+                              .read<AssetStatusRatioCubit>()
+                              .getAssetStatusRatio(
+                                khoaId: state.selectedDepartment?.id,
+                              );
                         },
                         child: SingleChildScrollView(
                           controller: _scrollController,

@@ -9,6 +9,9 @@ import 'package:bpg_retail/features/asset_category/data/models/asset_location_mo
 import 'package:bpg_retail/features/asset_category/data/models/department_model.dart';
 import 'package:bpg_retail/features/asset_category/data/models/hospital_asset_model.dart';
 import 'package:bpg_retail/features/asset_category/data/models/asset_overview_model.dart';
+import 'package:bpg_retail/features/asset_category/data/models/asset_depreciation_rate_model.dart';
+import 'package:bpg_retail/features/asset_category/data/models/asset_quantity_report_model.dart';
+import 'package:bpg_retail/features/asset_category/data/models/asset_status_ratio_model.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton()
@@ -258,12 +261,13 @@ class AssetRepository {
   }
 
   Future<CommonResponse<AssetOverviewModel>> getAssetOverview(
-    int toChucId,
-  ) async {
+    int toChucId, {
+    int? khoaId,
+  }) async {
     try {
       final response = await _baseDio.post(
         Api.getAssetOverview,
-        data: {'to_chuc': toChucId},
+        data: {'to_chuc': toChucId, if (khoaId != null) 'khoa': khoaId},
       );
 
       return CommonResponse<AssetOverviewModel>.fromJson(
@@ -272,6 +276,82 @@ class AssetRepository {
       );
     } catch (e) {
       return CommonResponse<AssetOverviewModel>(
+        success: false,
+        message: e.toString(),
+      );
+    }
+  }
+
+  Future<CommonResponse<List<AssetDepreciationRateModel>>>
+  getAssetDepreciationRate(int toChucId, {int? khoaId}) async {
+    try {
+      final response = await _baseDio.post(
+        Api.getDepreciationRate,
+        data: {'to_chuc': toChucId, if (khoaId != null) 'khoa': khoaId},
+      );
+
+      return CommonResponse<List<AssetDepreciationRateModel>>.fromJson(
+        response.data,
+        (json) =>
+            (json as List)
+                .map(
+                  (e) => AssetDepreciationRateModel.fromJson(
+                    e as Map<String, dynamic>,
+                  ),
+                )
+                .toList(),
+      );
+    } catch (e) {
+      return CommonResponse<List<AssetDepreciationRateModel>>(
+        success: false,
+        message: e.toString(),
+      );
+    }
+  }
+
+  Future<CommonResponse<AssetQuantityReportModel>> getAssetQuantityReport(
+    int toChucId, {
+    int? khoaId,
+  }) async {
+    try {
+      final response = await _baseDio.post(
+        Api.getAssetQuantityReport,
+        data: {'to_chuc': toChucId, if (khoaId != null) 'khoa': khoaId},
+      );
+      return CommonResponse<AssetQuantityReportModel>.fromJson(
+        response.data,
+        (json) =>
+            AssetQuantityReportModel.fromJson(json as Map<String, dynamic>),
+      );
+    } catch (e) {
+      return CommonResponse<AssetQuantityReportModel>(
+        success: false,
+        message: e.toString(),
+      );
+    }
+  }
+
+  Future<CommonResponse<List<AssetStatusRatioModel>>> getAssetStatusRatio(
+    int toChucId, {
+    int? khoaId,
+  }) async {
+    try {
+      final response = await _baseDio.post(
+        Api.getAssetStatusRatio,
+        data: {'to_chuc': toChucId, if (khoaId != null) 'khoa': khoaId},
+      );
+      return CommonResponse<List<AssetStatusRatioModel>>.fromJson(
+        response.data,
+        (json) =>
+            (json as List)
+                .map(
+                  (e) =>
+                      AssetStatusRatioModel.fromJson(e as Map<String, dynamic>),
+                )
+                .toList(),
+      );
+    } catch (e) {
+      return CommonResponse<List<AssetStatusRatioModel>>(
         success: false,
         message: e.toString(),
       );

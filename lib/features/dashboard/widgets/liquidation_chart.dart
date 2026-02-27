@@ -35,19 +35,14 @@ class LiquidationChartWidget extends StatelessWidget {
           slConKhauHao =
               (state.data!.soLuongThanhLyConKhauHao ?? 0).formatNumber;
           percentConKhauHao =
-              "${(state.data!.tiLeSoLuongThanhLyConKhauHao ?? 0).formatNumber}%";
+              "${(state.data!.tiLeSoLuongThanhLyConKhauHao ?? 0).formatPercent()}%";
           valConKhauHao = state.data!.tiLeSoLuongThanhLyConKhauHao ?? 0;
 
           slHetKhauHao =
               (state.data!.soLuongThanhLyHetKhauHao ?? 0).formatNumber;
           percentHetKhauHao =
-              "${(state.data!.tiLeSoLuongThanhLyHetKhauHao ?? 0).formatNumber}%";
+              "${(state.data!.tiLeSoLuongThanhLyHetKhauHao ?? 0).formatPercent()}%";
           valHetKhauHao = state.data!.tiLeSoLuongThanhLyHetKhauHao ?? 0;
-
-          if (valConKhauHao == 0 && valHetKhauHao == 0) {
-            valConKhauHao = 50.0;
-            valHetKhauHao = 50.0;
-          }
         }
 
         return BaseContainer(
@@ -93,29 +88,31 @@ class LiquidationChartWidget extends StatelessWidget {
                   ),
                 ],
               ),
-              16.height,
-              const Divider(color: AppColors.border_tertiary, thickness: 1),
-              16.height,
-              Center(
-                child: SizedBox(
-                  width: 180,
-                  height: 180,
-                  child: CustomPaint(
-                    painter: PieChartPainter(
-                      sections: [
-                        PieSection(
-                          value: valHetKhauHao > 0 ? valHetKhauHao : 0.001,
-                          color: AppColors.blue70,
-                        ),
-                        PieSection(
-                          value: valConKhauHao > 0 ? valConKhauHao : 0.001,
-                          color: AppColors.blue30,
-                        ),
-                      ],
+              if (valConKhauHao > 0 || valHetKhauHao > 0) ...[
+                16.height,
+                const Divider(color: AppColors.border_tertiary, thickness: 1),
+                16.height,
+                Center(
+                  child: SizedBox(
+                    width: 180,
+                    height: 180,
+                    child: CustomPaint(
+                      painter: PieChartPainter(
+                        sections: [
+                          PieSection(
+                            value: valConKhauHao > 0 ? valConKhauHao : 0.001,
+                            color: AppColors.blue70,
+                          ),
+                          PieSection(
+                            value: valHetKhauHao > 0 ? valHetKhauHao : 0.001,
+                            color: AppColors.blue30,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
+              ],
               24.height,
               BaseContainer(
                 padding: const EdgeInsets.symmetric(

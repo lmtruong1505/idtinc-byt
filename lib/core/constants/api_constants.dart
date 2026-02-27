@@ -68,4 +68,10 @@ class Api {
       '$baseURLV2/api/v1/tai-san/$id/danh-sach-vi-tri-tai-san';
   static String getAssetOverview =
       '$baseURLV2/api/v1/bao-cao-tai-san/tong-quan-tai-san';
+  static String getDepreciationRate =
+      '$baseURLV2/api/v1/bao-cao-tai-san/ty-le-hao-mon';
+  static String getAssetQuantityReport =
+      '$baseURLV2/api/v1/bao-cao-tai-san/so-luong-tai-san';
+  static String getAssetStatusRatio =
+      '$baseURLV2/api/v1/bao-cao-tai-san/ty-le-trang-thai';
 }

@@ -1,28 +1,30 @@
 import 'package:bpg_retail/core/utilities/enum.dart';
 import 'package:bpg_retail/features/asset_category/data/repositories/asset_repository.dart';
-import 'package:bpg_retail/features/dashboard/presentation/bloc/asset_overview_state.dart';
+import 'package:bpg_retail/features/dashboard/presentation/bloc/depreciation_rate_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
-class AssetOverviewCubit extends Cubit<AssetOverviewState> {
+class DepreciationRateCubit extends Cubit<DepreciationRateState> {
   final AssetRepository _repository;
 
-  AssetOverviewCubit(this._repository)
-    : super(const AssetOverviewState(status: CubitStatus.init));
+  DepreciationRateCubit(this._repository)
+    : super(const DepreciationRateState(status: CubitStatus.init));
 
-  Future<void> getAssetOverview({int? toChucId, int? khoaId}) async {
+  Future<void> getDepreciationRate({int? toChucId, int? khoaId}) async {
     emit(state.copyWith(status: CubitStatus.loading));
 
     final actualToChucId = toChucId ?? 5; // Default to 5 ("Toàn viện")
 
-    final response = await _repository.getAssetOverview(
+    final response = await _repository.getAssetDepreciationRate(
       actualToChucId,
       khoaId: khoaId,
     );
 
     if (response.success == true) {
-      emit(state.copyWith(status: CubitStatus.success, data: response.data));
+      emit(
+        state.copyWith(status: CubitStatus.success, data: response.data ?? []),
+      );
     } else {
       emit(
         state.copyWith(

@@ -1,7 +1,16 @@
 import 'package:bpg_retail/core/configs/app_style/init_app_style.dart';
 import 'package:bpg_retail/core/extension/spacing_extension.dart';
+import 'package:bpg_retail/core/ext/ext_num.dart';
 import 'package:bpg_retail/core/widgets/base_container.dart';
+import 'package:bpg_retail/core/utilities/enum.dart';
+import 'package:bpg_retail/features/dashboard/presentation/bloc/asset_quantity_cubit.dart';
+import 'package:bpg_retail/features/dashboard/presentation/bloc/asset_quantity_state.dart';
+import 'package:bpg_retail/features/dashboard/presentation/bloc/depreciation_rate_cubit.dart';
+import 'package:bpg_retail/features/dashboard/presentation/bloc/depreciation_rate_state.dart';
+import 'package:bpg_retail/features/dashboard/presentation/bloc/asset_status_ratio_cubit.dart';
+import 'package:bpg_retail/features/dashboard/presentation/bloc/asset_status_ratio_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AssetListsWidget extends StatefulWidget {
   const AssetListsWidget({super.key});
@@ -34,71 +43,90 @@ class _AssetListsWidgetState extends State<AssetListsWidget> {
   }
 
   Widget _buildAssetQuantitySection() {
-    return BaseContainer(
-      padding: const EdgeInsets.all(24),
-      borderRadius: 24,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Số lượng tài sản",
-            style: AppStyle.headingXl.copyWith(color: const Color(0xFF201B51)),
-          ),
-          16.height,
-          Row(
+    return BlocBuilder<AssetQuantityCubit, AssetQuantityState>(
+      builder: (context, state) {
+        if (state.status == CubitStatus.loading) {
+          return const BaseContainer(
+            padding: EdgeInsets.all(24),
+            borderRadius: 24,
+            child: Center(child: CircularProgressIndicator()),
+          );
+        }
+
+        final items =
+            _selectedTabIndex == 0
+                ? state.data?.khoa ?? []
+                : state.data?.loaiTaiSan ?? [];
+
+        return BaseContainer(
+          padding: const EdgeInsets.all(24),
+          borderRadius: 24,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildTabItem(0, "Theo khoa phòng"),
-              _buildTabItem(1, "Theo loại tài sản"),
+              Text(
+                "Số lượng tài sản",
+                style: AppStyle.headingXl.copyWith(
+                  color: const Color(0xFF201B51),
+                ),
+              ),
+              16.height,
+              Row(
+                children: [
+                  _buildTabItem(0, "Theo khoa phòng"),
+                  _buildTabItem(1, "Theo loại tài sản"),
+                ],
+              ),
+              16.height,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      _selectedTabIndex == 0 ? "Khoa/Phòng" : "Loại tài sản",
+                      style: AppStyle.headingBs,
+                    ),
+                    Text("Tổng nguyên giá", style: AppStyle.headingBs),
+                  ],
+                ),
+              ),
+              12.height,
+              const Divider(height: 1, color: AppColors.grey20),
+              SizedBox(
+                height: items.isEmpty ? 100 : 240,
+                child:
+                    items.isEmpty
+                        ? const Center(child: Text("Không có dữ liệu"))
+                        : RawScrollbar(
+                          controller: _scrollController,
+                          thickness: 4,
+                          radius: const Radius.circular(3),
+                          thumbColor: AppColors.grey60.withOpacity(0.5),
+                          thumbVisibility: true,
+                          child: ListView.separated(
+                            controller: _scrollController,
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            itemCount: items.length,
+                            separatorBuilder:
+                                (context, index) => const Divider(
+                                  height: 1,
+                                  color: AppColors.grey20,
+                                ),
+                            itemBuilder: (context, index) {
+                              final item = items[index];
+                              return _buildListItem(
+                                item.name,
+                                item.totalOriginalPrice.formatVND,
+                              );
+                            },
+                          ),
+                        ),
+              ),
             ],
           ),
-          16.height,
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Khoa/Phòng", style: AppStyle.headingBs),
-                Text("Tổng nguyên giá", style: AppStyle.headingBs),
-              ],
-            ),
-          ),
-          12.height,
-          const Divider(height: 1, color: AppColors.grey20),
-          SizedBox(
-            height: 240, // Height for about 5 items
-            child: RawScrollbar(
-              controller: _scrollController,
-              thickness: 4,
-              radius: const Radius.circular(3),
-              thumbColor: AppColors.grey60.withOpacity(0.5),
-              thumbVisibility: true,
-              child: ListView.separated(
-                controller: _scrollController,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                itemCount: 10, // Mocking more items to show scroll
-                separatorBuilder:
-                    (context, index) =>
-                        const Divider(height: 1, color: AppColors.grey20),
-                itemBuilder: (context, index) {
-                  final titles = [
-                    "Khoa Dược",
-                    "Khoa Nhi",
-                    "Khoa Sản",
-                    "Khoa Cấp cứu",
-                    "Khoa Nội",
-                    "Khoa Ngoại",
-                    "Khoa Mắt",
-                    "Khoa Tai Mũi Họng",
-                    "Khoa Răng Hàm Mặt",
-                    "Khoa Chẩn đoán hình ảnh",
-                  ];
-                  return _buildListItem(titles[index % titles.length]);
-                },
-              ),
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -134,122 +162,142 @@ class _AssetListsWidgetState extends State<AssetListsWidget> {
     );
   }
 
-  Widget _buildListItem(String title) {
+  Widget _buildListItem(String title, String price) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(child: Text(title, style: AppStyle.bodyBsRegular)),
-          Text("123.456.789 đ", style: AppStyle.bodyBsSemiBold),
+          Text(price, style: AppStyle.bodyBsSemiBold),
         ],
       ),
     );
   }
 
   Widget _buildDepreciationRateSection() {
-    return BaseContainer(
-      padding: const EdgeInsets.all(24),
-      borderRadius: 24,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Tỷ lệ hao mòn tài sản",
-            style: AppStyle.headingXl.copyWith(color: const Color(0xFF201B51)),
+    return BlocBuilder<DepreciationRateCubit, DepreciationRateState>(
+      builder: (context, state) {
+        if (state.status == CubitStatus.loading) {
+          return const BaseContainer(
+            padding: EdgeInsets.all(24),
+            borderRadius: 24,
+            child: Center(child: CircularProgressIndicator()),
+          );
+        }
+
+        final items = state.data;
+
+        return BaseContainer(
+          padding: const EdgeInsets.all(24),
+          borderRadius: 24,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Tỷ lệ hao mòn tài sản",
+                style: AppStyle.headingXl.copyWith(
+                  color: const Color(0xFF201B51),
+                ),
+              ),
+              12.height,
+              const Divider(color: AppColors.grey20, height: 1),
+              12.height,
+              if (items.isEmpty)
+                const Center(child: Text("Không có dữ liệu"))
+              else
+                ListView.separated(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: items.length,
+                  itemBuilder: (context, index) {
+                    final item = items[index];
+                    return _buildProgressBar(
+                      label: item.label ?? "",
+                      color: _parseColor(item.color),
+                      percent: (item.percent ?? 0).toDouble() / 100,
+                      labelColor: _parseColor(item.color),
+                      value: item.value?.toString() ?? "0",
+                    );
+                  },
+                  separatorBuilder:
+                      (context, index) =>
+                          const Divider(color: AppColors.grey20, height: 24),
+                ),
+            ],
           ),
-          12.height,
-          const Divider(color: AppColors.grey20, height: 1),
-          12.height,
-          _buildProgressBar(
-            label: "Hao mòn 0-30%",
-            color: AppColors.green60,
-            percent: 0.85,
-            labelColor: AppColors.green60,
-          ),
-          const Divider(color: AppColors.grey20, height: 24),
-          _buildProgressBar(
-            label: "Hao mòn 31-60%",
-            color: AppColors.blue60,
-            percent: 0.85,
-            labelColor: AppColors.blue60,
-          ),
-          const Divider(color: AppColors.grey20, height: 24),
-          _buildProgressBar(
-            label: "Hao mòn 61-80%",
-            color: AppColors.orange60,
-            percent: 0.85,
-            labelColor: AppColors.orange60,
-          ),
-          const Divider(color: AppColors.grey20, height: 24),
-          _buildProgressBar(
-            label: "Hao mòn 81-100%",
-            color: AppColors.red60,
-            percent: 0.85,
-            labelColor: AppColors.red60,
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 
+  Color _parseColor(String? colorStr) {
+    if (colorStr == null || colorStr.isEmpty) return AppColors.main;
+    try {
+      final buffer = StringBuffer();
+      if (colorStr.length == 6 || colorStr.length == 7) buffer.write('ff');
+      buffer.write(colorStr.replaceFirst('#', ''));
+      return Color(int.parse(buffer.toString(), radix: 16));
+    } catch (e) {
+      return AppColors.main;
+    }
+  }
+
   Widget _buildAssetStatusSection() {
-    return BaseContainer(
-      padding: const EdgeInsets.all(24),
-      borderRadius: 24,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Tỷ lệ trạng thái tài sản",
-            style: AppStyle.headingXl.copyWith(color: const Color(0xFF201B51)),
+    return BlocBuilder<AssetStatusRatioCubit, AssetStatusRatioState>(
+      builder: (context, state) {
+        if (state.status == CubitStatus.loading) {
+          return const BaseContainer(
+            padding: EdgeInsets.all(24),
+            borderRadius: 24,
+            child: Center(child: CircularProgressIndicator()),
+          );
+        }
+
+        final items = state.data;
+
+        return BaseContainer(
+          padding: const EdgeInsets.all(24),
+          borderRadius: 24,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Tỷ lệ trạng thái tài sản",
+                style: AppStyle.headingXl.copyWith(
+                  color: const Color(0xFF201B51),
+                ),
+              ),
+              12.height,
+              const Divider(color: AppColors.grey20, height: 1),
+              12.height,
+              if (items.isEmpty)
+                const Center(child: Text("Không có dữ liệu"))
+              else
+                ListView.separated(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: items.length,
+                  itemBuilder: (context, index) {
+                    final item = items[index];
+                    return _buildProgressBar(
+                      label: item.label ?? "",
+                      color: AppColors.main,
+                      percent: (item.percent ?? 0).toDouble() / 100,
+                      price:
+                          item.amount != null ? item.amount.formatVND : "0 đ",
+                      value: item.value?.toString() ?? "0",
+                      labelColor: _parseColor(item.labelColor),
+                    );
+                  },
+                  separatorBuilder:
+                      (context, index) =>
+                          const Divider(color: AppColors.grey20, height: 12),
+                ),
+            ],
           ),
-          12.height,
-          const Divider(color: AppColors.grey20, height: 1),
-          12.height,
-          _buildProgressBar(
-            label: "Chưa nhập",
-            color: const Color(0xFF7E52FF),
-            percent: 0.85,
-            price: "123.345.456 đ",
-          ),
-          const Divider(color: AppColors.grey20, height: 24),
-          _buildProgressBar(
-            label: "Nhàn rỗi",
-            color: const Color(0xFF7E52FF),
-            percent: 0.85,
-            price: "123.345.456 đ",
-          ),
-          const Divider(color: AppColors.grey20, height: 24),
-          _buildProgressBar(
-            label: "Đang sử dụng",
-            color: const Color(0xFF7E52FF),
-            percent: 0.50,
-            price: "123.345.456 đ",
-          ),
-          const Divider(color: AppColors.grey20, height: 24),
-          _buildProgressBar(
-            label: "Đang sửa chữa",
-            color: const Color(0xFF7E52FF),
-            percent: 0.85,
-            price: "123.345.456 đ",
-          ),
-          const Divider(color: AppColors.grey20, height: 24),
-          _buildProgressBar(
-            label: "Đang bảo dưỡng",
-            color: const Color(0xFF7E52FF),
-            percent: 0.20,
-            price: "123.345.456 đ",
-          ),
-          const Divider(color: AppColors.grey20, height: 24),
-          _buildProgressBar(
-            label: "Chờ thanh lý",
-            color: const Color(0xFF7E52FF),
-            percent: 0.85,
-            price: "123.345.456 đ",
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -259,37 +307,51 @@ class _AssetListsWidgetState extends State<AssetListsWidget> {
     required double percent,
     String? price,
     Color? labelColor,
+    String? value,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text(
-              label,
-              style: AppStyle.bodyMdSemiBold.copyWith(
-                color: labelColor ?? AppColors.grey60,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    label,
+                    style: AppStyle.bodyMdSemiBold.copyWith(
+                      color: labelColor ?? AppColors.grey60,
+                    ),
+                  ),
+                  if (price != null) ...[
+                    4.height,
+
+                    BaseContainer(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 4,
+                        horizontal: 12,
+                      ),
+                      borderRadius: 20,
+                      color: AppColors.grey20.withOpacity(0.5),
+                      child: Text(
+                        price,
+                        textAlign: TextAlign.center,
+                        style: AppStyle.bodySmSemiBold.copyWith(
+                          color: AppColors.text_tertiary,
+                        ),
+                      ),
+                    ),
+                  ],
+                ],
               ),
             ),
-            Text("3.456", style: AppStyle.headingXl),
+            12.width,
+            Text(value ?? "0", style: AppStyle.headingXl),
           ],
         ),
-        if (price != null) ...[
-          4.height,
-          BaseContainer(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-            borderRadius: 8,
-            color: AppColors.grey20.withOpacity(0.5),
-            child: Text(
-              price,
-              style: AppStyle.bodySmRegular.copyWith(
-                color: AppColors.text_tertiary,
-              ),
-            ),
-          ),
-        ],
-        12.height,
         Row(
           children: [
             Expanded(
@@ -303,21 +365,29 @@ class _AssetListsWidgetState extends State<AssetListsWidget> {
                 ),
               ),
             ),
-            12.width,
-            BaseContainer(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-              borderRadius: 20,
-              color: AppColors.grey20.withOpacity(0.5),
-              child: Text(
-                "${(percent * 100).toInt()}%",
-                style: AppStyle.bodySmSemiBold.copyWith(
-                  color: AppColors.text_tertiary,
-                ),
-              ),
-            ),
+            20.width,
+            _buildPercentageBubble(percent),
           ],
         ),
       ],
+    );
+  }
+
+  Widget _buildPercentageBubble(double percent) {
+    return SizedBox(
+      width: 55,
+      child: BaseContainer(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        borderRadius: 20,
+        color: AppColors.grey20.withOpacity(0.5),
+        child: Text(
+          "${(percent * 100).formatPercent()}%",
+          textAlign: TextAlign.center,
+          style: AppStyle.bodySmSemiBold.copyWith(
+            color: AppColors.text_tertiary,
+          ),
+        ),
+      ),
     );
   }
 }

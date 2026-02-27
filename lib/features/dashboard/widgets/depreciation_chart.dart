@@ -33,9 +33,9 @@ class DepreciationChartWidget extends StatelessWidget {
           if (percentage > 1.0) percentage = 1.0;
           if (percentage < 0.0) percentage = 0.0;
 
-          percentStr = "${(state.data!.tiLeHaoMon ?? 0).formatNumber}%";
+          percentStr = "${(state.data!.tiLeHaoMon ?? 0).formatPercent()}%";
           percentConLaiStr =
-              "${(state.data!.tiLeHaoMonConLai ?? 0).formatNumber}%";
+              "${(state.data!.tiLeHaoMonConLai ?? 0).formatPercent()}%";
         }
 
         return BaseContainer(
@@ -82,32 +82,29 @@ class DepreciationChartWidget extends StatelessWidget {
                 ],
               ),
               24.height,
+              const Divider(height: 1, color: AppColors.grey10),
+              12.height,
               SizedBox(
                 height: 150,
                 width: double.infinity,
                 child: CustomPaint(
-                  painter: GaugeChartPainter(
-                    percentage:
-                        percentage > 0
-                            ? percentage
-                            : 0.001, // Prevent divide by zero drawing issues
-                  ),
-                  child: Stack(
-                    alignment: Alignment.bottomCenter,
+                  painter: GaugeChartPainter(percentage: percentage),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Positioned(
-                        left: 50,
-                        bottom: 20,
-                        child: Text(percentStr, style: AppTypography.h2),
+                      Text(
+                        percentStr,
+                        style: AppTypography.h2.copyWith(
+                          color: const Color(0xff22215B),
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                      Positioned(
-                        right: 50,
-                        bottom: 20,
-                        child: Text(
-                          percentConLaiStr,
-                          style: AppTypography.h2.copyWith(
-                            color: AppColors.text_tertiary,
-                          ),
+                      24.width,
+                      Text(
+                        percentConLaiStr,
+                        style: AppTypography.h2.copyWith(
+                          color: const Color(0xff88879C),
                         ),
                       ),
                     ],
@@ -155,7 +152,7 @@ class GaugeChartPainter extends CustomPainter {
       paintBg,
     );
 
-    final sweepAngle = pi * 0.23;
+    final sweepAngle = pi * percentage;
 
     paintValue.color = AppColors.blue70;
     canvas.drawArc(
