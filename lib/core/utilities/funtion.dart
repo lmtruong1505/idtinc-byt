@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/rendering.dart';
 import 'package:bpg_retail/core/constants/colors.dart';
 
-
 bool areListsEqual(List<int>? list1, List<int>? list2) {
   if (list1 == null || list2 == null) return false;
   if (list1.length != list2.length) return false;
@@ -84,7 +83,8 @@ Color getColorStatusBackgroundV0(String statusCode) {
 double calculateDistance(num lat1, num lon1, num lat2, num lon2) {
   const p = 0.017453292519943295;
   const c = cos;
-  final a = 0.5 -
+  final a =
+      0.5 -
       c((lat2 - lat1) * p) / 2 +
       c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
   return 12742 * asin(sqrt(a));

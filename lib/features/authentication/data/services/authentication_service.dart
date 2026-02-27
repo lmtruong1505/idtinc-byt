@@ -4,16 +4,11 @@ import 'package:injectable/injectable.dart';
 
 @LazySingleton()
 class AuthenticationService {
-  AuthenticationService(
-    this._baseDio,
-  );
+  AuthenticationService(this._baseDio);
 
   final BaseDio _baseDio;
 
-  Future<dynamic> login(
-    String phoneNumber,
-    String password,
-  ) async {
+  Future<dynamic> login(String phoneNumber, String password) async {
     final res = await _baseDio.post(
       //Api.login,
       Api.loginV2,
@@ -42,24 +37,14 @@ class AuthenticationService {
       "type": "PATIENT",
     };
 
-    final res = await _baseDio.post(
-      Api.register,
-      data: data,
-    );
+    final res = await _baseDio.post(Api.register, data: data);
     return res.data;
   }
 
-  Future<dynamic> sendOTPPhone(
-    String phoneNumber,
-  ) async {
-    final payload = {
-      'phone_number': phoneNumber,
-    };
+  Future<dynamic> sendOTPPhone(String phoneNumber) async {
+    final payload = {'phone_number': phoneNumber};
 
-    final res = await _baseDio.post(
-      Api.sendOtpPhoneV2,
-      data: payload,
-    );
+    final res = await _baseDio.post(Api.sendOtpPhoneV2, data: payload);
     return res.data;
   }
 
@@ -74,44 +59,27 @@ class AuthenticationService {
       'otp': otp,
     };
 
-    final res = await _baseDio.post(
-      Api.verifyOtpPhoneV2,
-      data: payload,
-    );
+    final res = await _baseDio.post(Api.verifyOtpPhoneV2, data: payload);
     return res.data;
   }
 
-
-  Future<dynamic> forgotPassword(
-    String phoneNumber,
-  ) async {
+  Future<dynamic> forgotPassword(String phoneNumber) async {
     final res = await _baseDio.post(
       Api.forgotPasswordV2,
-      data: {
-        'phone': phoneNumber,
-      },
+      data: {'phone': phoneNumber},
     );
     return res.data;
   }
 
-  Future<dynamic> verifyForgot(
-    String otp,
-    String sessionKey,
-  ) async {
+  Future<dynamic> verifyForgot(String otp, String sessionKey) async {
     final res = await _baseDio.post(
       Api.verifyForgotV2,
-      data: {
-        'otp_forgot': otp,
-        'session_key': sessionKey,
-      },
+      data: {'otp_forgot': otp, 'session_key': sessionKey},
     );
     return res.data;
   }
 
-  Future<dynamic> changePassForgot(
-    String sessionKey,
-    String password,
-  ) async {
+  Future<dynamic> changePassForgot(String sessionKey, String password) async {
     final res = await _baseDio.post(
       Api.resetPasswordV2,
       data: {
@@ -149,16 +117,10 @@ class AuthenticationService {
   //   return res.data;
   // }
 
-  Future<dynamic> changePassword(
-    String oldPassword,
-    String password,
-  ) async {
+  Future<dynamic> changePassword(String oldPassword, String password) async {
     final res = await _baseDio.post(
       Api.changePassword,
-      data: {
-        'new_password': password,
-        'old_password': oldPassword,
-      },
+      data: {'new_password': password, 'old_password': oldPassword},
     );
     return res.data;
   }

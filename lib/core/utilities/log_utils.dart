@@ -9,11 +9,7 @@ class LogUtils {
 
   static const _enableLog = kDebugMode;
 
-  static void d(
-    Object? message, {
-    String? name,
-    DateTime? time,
-  }) {
+  static void d(Object? message, {String? name, DateTime? time}) {
     _log('💡 $message', name: name ?? '', time: time);
   }
 

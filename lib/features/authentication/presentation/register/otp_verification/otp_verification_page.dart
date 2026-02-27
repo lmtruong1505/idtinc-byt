@@ -75,16 +75,14 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                 ),
               ),
               const SizedBox(height: 16),
-              const Text(
-                'Xác nhận OTP',
-                style: AppTypography.h4,
-              ),
+              const Text('Xác nhận OTP', style: AppTypography.h4),
               const SizedBox(height: 16),
               const Text('Số điện thoại', style: AppTypography.p5),
               const SizedBox(height: 8),
               BlocBuilder<AuthenticationCubit, AuthenticationState>(
-                buildWhen: (previous, current) =>
-                    previous.countTime != current.countTime,
+                buildWhen:
+                    (previous, current) =>
+                        previous.countTime != current.countTime,
                 builder: (context, state) {
                   return Container(
                     padding: const EdgeInsets.symmetric(
@@ -94,10 +92,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                     decoration: BoxDecoration(
                       color: AppColors.border_1,
                       borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        color: AppColors.border_2,
-                        width: 1.2,
-                      ),
+                      border: Border.all(color: AppColors.border_2, width: 1.2),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -167,12 +162,14 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                               borderWidth: 1,
                               fieldHeight: 45,
                               fieldWidth: 45,
-                              inactiveColor: state.isOTPVerify == 0
-                                  ? AppColors.red_1
-                                  : AppColors.border_2,
-                              activeColor: state.isOTPVerify == 0
-                                  ? AppColors.red_1
-                                  : AppColors.border_2,
+                              inactiveColor:
+                                  state.isOTPVerify == 0
+                                      ? AppColors.red_1
+                                      : AppColors.border_2,
+                              activeColor:
+                                  state.isOTPVerify == 0
+                                      ? AppColors.red_1
+                                      : AppColors.border_2,
                             ),
                             errorTextSpace: 20,
                             errorTextMargin: const EdgeInsets.only(left: 0),
@@ -240,24 +237,24 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                 builder: (context, state) {
                   return state.sendOtpCount > 0
                       ? SizedBox(
-                          height: 45,
-                          width: double.infinity,
-                          child: MainButton(
-                            title: 'Xác nhận',
-                            onTap: () {
-                              // bloc.onRegister(
-                              //   widget.phoneNumber,
-                              //   widget.password,
-                              //   widget.email,
-                              //   widget.fullname,
-                              //   widget.referralCode,
-                              //   widget.userReferralCode,
-                              // );
-                            },
-                            isDisable: state.isDisable,
-                            largeButton: true,
-                          ),
-                        )
+                        height: 45,
+                        width: double.infinity,
+                        child: MainButton(
+                          title: 'Xác nhận',
+                          onTap: () {
+                            // bloc.onRegister(
+                            //   widget.phoneNumber,
+                            //   widget.password,
+                            //   widget.email,
+                            //   widget.fullname,
+                            //   widget.referralCode,
+                            //   widget.userReferralCode,
+                            // );
+                          },
+                          isDisable: state.isDisable,
+                          largeButton: true,
+                        ),
+                      )
                       : const SizedBox.shrink();
                 },
               ),
@@ -265,20 +262,17 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
-                    'Đã có tài khoản? ',
-                    style: AppTypography.p6,
-                  ),
+                  const Text('Đã có tài khoản? ', style: AppTypography.p6),
                   GestureDetector(
                     onTap: () {
-                      navigator
-                          .replaceAll([const RootRoute(), const LoginRoute()]);
+                      navigator.replaceAll([
+                        const RootRoute(),
+                        const LoginRoute(),
+                      ]);
                     },
                     child: Text(
                       'Đăng nhập',
-                      style: AppTypography.p5.copyWith(
-                        color: AppColors.main,
-                      ),
+                      style: AppTypography.p5.copyWith(color: AppColors.main),
                     ),
                   ),
                 ],

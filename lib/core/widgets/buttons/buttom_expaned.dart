@@ -9,12 +9,7 @@ class ButtomExpaned extends StatefulWidget {
   final Widget? child;
   final Function()? onTap;
   final String title;
-  const ButtomExpaned({
-    super.key,
-    required this.title,
-    this.child,
-    this.onTap,
-  });
+  const ButtomExpaned({super.key, required this.title, this.child, this.onTap});
 
   @override
   State<ButtomExpaned> createState() => _ButtomExpanedState();
@@ -26,12 +21,13 @@ class _ButtomExpanedState extends State<ButtomExpaned> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: widget.child == null
-          ? widget.onTap
-          : () {
-              isSelected = !isSelected;
-              setState(() {});
-            },
+      onTap:
+          widget.child == null
+              ? widget.onTap
+              : () {
+                isSelected = !isSelected;
+                setState(() {});
+              },
       child: Container(
         padding: 16.padingVer + 16.padingLeft + 8.padingRight,
         decoration: BoxDecoration(

@@ -12,25 +12,19 @@ class BaseResponseModel<T> {
   final T? data;
   final dynamic extra;
 
-  BaseResponseModel({
-    this.code,
-    this.message,
-    this.data,
-    this.extra,
-  });
+  BaseResponseModel({this.code, this.message, this.data, this.extra});
 
   BaseResponseModel<T> copyWith({
     int? code,
     String? message,
     T? data,
     dynamic extra,
-  }) =>
-      BaseResponseModel(
-        code: code ?? this.code,
-        message: message ?? this.message,
-        data: data ?? this.data,
-        extra: extra ?? this.extra,
-      );
+  }) => BaseResponseModel(
+    code: code ?? this.code,
+    message: message ?? this.message,
+    data: data ?? this.data,
+    extra: extra ?? this.extra,
+  );
 
   factory BaseResponseModel.fromJson(Map<String, dynamic> json) =>
       BaseResponseModel(
@@ -41,9 +35,9 @@ class BaseResponseModel<T> {
       );
 
   Map<String, dynamic> toJson() => {
-        'code': code,
-        'message': message,
-        'data': data,
-        'extra': extra,
-      };
+    'code': code,
+    'message': message,
+    'data': data,
+    'extra': extra,
+  };
 }

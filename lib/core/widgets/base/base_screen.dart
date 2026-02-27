@@ -39,42 +39,41 @@ class BaseScreen extends StatelessWidget {
         resizeToAvoidBottomInset: true,
         backgroundColor: backgroundColor,
         bottomNavigationBar: bottomNavigationBar,
-        appBar: appBar ??
+        appBar:
+            appBar ??
             AppBar(
               elevation: 1,
               backgroundColor: AppColors.white,
               leading: const SizedBox(),
               leadingWidth: 0,
               centerTitle: false,
-              title: isBottom
-                  ? ExtraButton(
-                      onTap: onTap ??
-                          () {
-                            context.pop();
-                          },
-                      largeButton: false,
-                      title: 'Trở lại',
-                      radius: 12,
-                      icon: Assets.icons.icArrowLeftCalendar.svg(
-                        height: 16,
-                      ),
-                      padding: 12.padingHor + 6.padingVer,
-                    )
-                  : TextTitel(title: title),
-              bottom: isBottom
-                  ? PreferredSize(
-                      preferredSize: const Size.fromHeight(50),
-                      child: TextTitel(title: title).padding(16.pading),
-                    )
-                  : null,
+              title:
+                  isBottom
+                      ? ExtraButton(
+                        onTap:
+                            onTap ??
+                            () {
+                              context.pop();
+                            },
+                        largeButton: false,
+                        title: 'Trở lại',
+                        radius: 12,
+                        icon: Assets.icons.icArrowLeftCalendar.svg(height: 16),
+                        padding: 12.padingHor + 6.padingVer,
+                      )
+                      : TextTitel(title: title),
+              bottom:
+                  isBottom
+                      ? PreferredSize(
+                        preferredSize: const Size.fromHeight(50),
+                        child: TextTitel(title: title).padding(16.pading),
+                      )
+                      : null,
             ),
         body: Stack(
           fit: StackFit.expand,
           children: [
-            if (isImageBg)
-              Assets.images.bgScreen.image(
-                fit: BoxFit.cover,
-              ),
+            if (isImageBg) Assets.images.bgScreen.image(fit: BoxFit.cover),
             Container(
               padding: EdgeInsets.all(padding),
               width: context.width,

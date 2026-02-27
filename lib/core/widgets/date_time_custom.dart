@@ -17,8 +17,9 @@ class DateTimeCustom {
       }
     } catch (e) {
       print(e);
-      date =
-          DateFormat('yyyy/MM/dd').parse(initialDate ?? date.toTextDefaulftV2);
+      date = DateFormat(
+        'yyyy/MM/dd',
+      ).parse(initialDate ?? date.toTextDefaulftV2);
     }
 
     return showDatePicker(

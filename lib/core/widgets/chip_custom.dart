@@ -31,7 +31,8 @@ Widget chipCustomBadge({
         padding: padding ?? (6.padingHor + 2.5.padingVer),
         decoration: BoxDecoration(
           color: color.withValues(alpha: 0.1),
-          border: isBorder ? Border.all(color: color.withValues(alpha: 0.2)) : null,
+          border:
+              isBorder ? Border.all(color: color.withValues(alpha: 0.2)) : null,
           borderRadius: borderRadius ?? 20.radius,
         ),
         child: Row(
@@ -41,7 +42,7 @@ Widget chipCustomBadge({
             Text(
               title,
               style:
-                  titleStyle?.copyWith(color: color,) ??
+                  titleStyle?.copyWith(color: color) ??
                   AppStyle.bodyXsBold.copyWith(color: color, height: 1),
             ).flexible(),
             if (suffixIcon != null) ...[4.width, suffixIcon],

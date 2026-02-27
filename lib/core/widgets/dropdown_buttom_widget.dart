@@ -54,18 +54,17 @@ class DropdownButtonWidget<T> extends StatelessWidget {
         isExpanded: true,
         hint: Text(
           text != null ? text! : hintText,
-          style: text != null
-              ? AppTypography.p5.copyWith(color: AppColors.black)
-              : AppTypography.p6.copyWith(color: AppColors.grey_1),
+          style:
+              text != null
+                  ? AppTypography.p5.copyWith(color: AppColors.black)
+                  : AppTypography.p6.copyWith(color: AppColors.grey_1),
           maxLines: 1,
         ),
         items: items,
         onChanged: onChanged,
         iconStyleData: const IconStyleData(
           icon: Icon(Icons.keyboard_arrow_down_rounded),
-          openMenuIcon: Icon(
-            Icons.keyboard_arrow_up_rounded,
-          ),
+          openMenuIcon: Icon(Icons.keyboard_arrow_up_rounded),
           iconSize: 24,
         ),
         buttonStyleData: ButtonStyleData(
@@ -73,27 +72,16 @@ class DropdownButtonWidget<T> extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppColors.white,
             borderRadius: BorderRadius.circular(radius),
-            border: Border.all(
-              color: AppColors.border_2,
-              width: 1.2,
-            ),
+            border: Border.all(color: AppColors.border_2, width: 1.2),
           ),
-          padding: const EdgeInsets.only(
-            left: 12,
-            right: 12,
-            top: 1,
-          ),
+          padding: const EdgeInsets.only(left: 12, right: 12, top: 1),
           width: double.infinity,
         ),
-        menuItemStyleData: const MenuItemStyleData(
-          height: 45,
-        ),
+        menuItemStyleData: const MenuItemStyleData(height: 45),
         dropdownStyleData: DropdownStyleData(
           maxHeight: maxHeightDropdown,
           width: maxWidthDropdown,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-          ),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
           offset: const Offset(0, -2),
           scrollbarTheme: ScrollbarThemeData(
             radius: Radius.circular(radius),

@@ -31,10 +31,7 @@ class SelectImageWidgetV2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoActionSheet(
-      title: const Text(
-        'Thêm ảnh',
-        style: s14w500,
-      ),
+      title: const Text('Thêm ảnh', style: s14w500),
       actions: <Widget>[
         CupertinoActionSheetAction(
           isDefaultAction: true,
@@ -56,16 +53,15 @@ class SelectImageWidgetV2 extends StatelessWidget {
         CupertinoActionSheetAction(
           isDestructiveAction: true,
           onPressed: onTapCamera,
-          child:
-              Text("Chụp ảnh", style: s16w700.copyWith(color: AppColors.main)),
+          child: Text(
+            "Chụp ảnh",
+            style: s16w700.copyWith(color: AppColors.main),
+          ),
         ),
       ],
       cancelButton: CupertinoActionSheetAction(
         onPressed: navigator.pop,
-        child: Text(
-          'Hủy',
-          style: s16w700.copyWith(color: AppColors.red_1),
-        ),
+        child: Text('Hủy', style: s16w700.copyWith(color: AppColors.red_1)),
       ),
     );
   }
@@ -75,11 +71,10 @@ class SelectImageWidgetV2 extends StatelessWidget {
     if (isVideo) {
       if (Platform.isAndroid) {
         if (source == ImageSource.gallery) {
-          return (await FilePicker.platform
-                  .pickFiles(allowedExtensions: ['mp4'], type: FileType.custom))
-              ?.files
-              .first
-              .path;
+          return (await FilePicker.platform.pickFiles(
+            allowedExtensions: ['mp4'],
+            type: FileType.custom,
+          ))?.files.first.path;
         } else {
           return ImageUtils.pickerSingleVideo(source);
         }
@@ -87,8 +82,10 @@ class SelectImageWidgetV2 extends StatelessWidget {
         return ImageUtils.pickerSingleVideo(source);
       }
     }
-    final result = await ImageUtils.pickerSingleImage(source, isCrop: isCrop)
-        .catchError((e) {
+    final result = await ImageUtils.pickerSingleImage(
+      source,
+      isCrop: isCrop,
+    ).catchError((e) {
       if (e.message == "The user did not allow camera access.") {
         // ToastUtil.showToast("Camera chưa được cấp quyền.");
       } else {
@@ -124,9 +121,7 @@ class SelectImageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoActionSheet(
-      title: Text(
-        title ?? (isVideo == false ? 'Thêm ảnh' : 'Thêm video'),
-      ),
+      title: Text(title ?? (isVideo == false ? 'Thêm ảnh' : 'Thêm video')),
       actions: <Widget>[
         CupertinoActionSheetAction(
           isDefaultAction: true,
@@ -136,10 +131,7 @@ class SelectImageWidget extends StatelessWidget {
               callback.call(res);
             }
           },
-          child: const Text(
-            'Chọn từ thư viện',
-            style: s18w700,
-          ),
+          child: const Text('Chọn từ thư viện', style: s18w700),
         ),
         CupertinoActionSheetAction(
           isDestructiveAction: true,
@@ -156,10 +148,7 @@ class SelectImageWidget extends StatelessWidget {
         ),
       ],
       cancelButton: CupertinoActionSheetAction(
-        child: Text(
-          'Hủy',
-          style: s18w700.copyWith(color: AppColors.main),
-        ),
+        child: Text('Hủy', style: s18w700.copyWith(color: AppColors.main)),
         onPressed: () {
           navigator.pop();
         },
@@ -172,20 +161,15 @@ class SelectImageWidget extends StatelessWidget {
     if (isVideo) {
       if (Platform.isAndroid) {
         if (source == ImageSource.gallery) {
-          return (await FilePicker.platform
-                  .pickFiles(allowedExtensions: ['mp4'], type: FileType.custom))
-              ?.files
-              .first
-              .path;
+          return (await FilePicker.platform.pickFiles(
+            allowedExtensions: ['mp4'],
+            type: FileType.custom,
+          ))?.files.first.path;
         } else {
-          return ImageUtils.pickerSingleVideo(
-            source,
-          );
+          return ImageUtils.pickerSingleVideo(source);
         }
       } else {
-        return ImageUtils.pickerSingleVideo(
-          source,
-        );
+        return ImageUtils.pickerSingleVideo(source);
       }
     }
     // ignore: body_might_complete_normally_catch_error

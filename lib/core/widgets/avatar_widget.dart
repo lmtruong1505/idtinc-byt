@@ -24,32 +24,29 @@ class AvatarWidget extends StatelessWidget {
         url.isEmpty
             ? _defaultImage()
             : CachedNetworkImage(
-                imageUrl: url,
-                width: size ?? 32,
-                height: size ?? 32,
-                fit: BoxFit.cover,
-                imageBuilder: (_, provider) {
-                  return Container(
-                    width: size ?? 32,
-                    height: size ?? 32,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: provider,
-                        fit: BoxFit.cover,
-                      ),
-                      border: Border.all(color: AppColors.white, width: 0),
-                    ),
-                  );
-                },
-                memCacheWidth: 500,
-                progressIndicatorBuilder: (_, __, ___) {
-                  return _defaultImage();
-                },
-                errorWidget: (_, __, ___) {
-                  return _defaultImage();
-                },
-              ),
+              imageUrl: url,
+              width: size ?? 32,
+              height: size ?? 32,
+              fit: BoxFit.cover,
+              imageBuilder: (_, provider) {
+                return Container(
+                  width: size ?? 32,
+                  height: size ?? 32,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(image: provider, fit: BoxFit.cover),
+                    border: Border.all(color: AppColors.white, width: 0),
+                  ),
+                );
+              },
+              memCacheWidth: 500,
+              progressIndicatorBuilder: (_, __, ___) {
+                return _defaultImage();
+              },
+              errorWidget: (_, __, ___) {
+                return _defaultImage();
+              },
+            ),
         // if (isEdit ?? false)
         //   Positioned(
         //     bottom: 0,

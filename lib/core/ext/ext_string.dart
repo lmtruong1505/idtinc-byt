@@ -1,7 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
-
 extension extString on String? {
   String get validator => this ?? '';
   String get capitalizeFirstLetter {
@@ -40,8 +39,9 @@ extension extString on String? {
   }) {
     if (this != null) {
       try {
-        final dateTime =
-            DateFormat(parseFormat).parse(this!).add(Duration(hours: hours));
+        final dateTime = DateFormat(
+          parseFormat,
+        ).parse(this!).add(Duration(hours: hours));
         return DateFormat(fomat).format(dateTime);
       } catch (e) {}
     }
@@ -175,8 +175,11 @@ extension extString on String? {
     if (this == null) {
       return '';
     }
-    final formatter =
-        NumberFormat.simpleCurrency(locale: 'vi', name: '', decimalDigits: 0);
+    final formatter = NumberFormat.simpleCurrency(
+      locale: 'vi',
+      name: '',
+      decimalDigits: 0,
+    );
     return formatter.format(double.parse(this!));
   }
 
@@ -190,8 +193,6 @@ extension extString on String? {
 
     return regex.hasMatch(this!);
   }
-
-
 
   String get getGender {
     switch (this) {

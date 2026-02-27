@@ -111,7 +111,8 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   BaseCheckbox(
                     value: state.isRemember,
-                    radius: 4,
+                    radius: 999,
+
                     onChanged: (bool? value) {
                       bloc.onRememberAccount(value ?? false);
                     },
@@ -133,18 +134,16 @@ class _LoginPageState extends State<LoginPage> {
                       ],
                     ),
                   ),
-                  // const Spacer(),
-                  // GestureDetector(
-                  //   onTap: () {
-                  //     navigator.push(const ForgotPasswordPage());
-                  //   },
-                  //   child: Text(
-                  //     'Quên mật khẩu?',
-                  //     style: AppTypography.p4.copyWith(
-                  //       color: AppColors.blue_3,
-                  //     ),
-                  //   ),
-                  // ),
+                  const Spacer(),
+                  GestureDetector(
+                    onTap: () {
+                      // navigator.push(const ForgotPasswordPage());
+                    },
+                    child: Text(
+                      'Quên mật khẩu?',
+                      style: AppTypography.p4.copyWith(color: AppColors.blue_3),
+                    ),
+                  ),
                 ],
               ),
               const SizedBox(height: 16),
@@ -157,25 +156,25 @@ class _LoginPageState extends State<LoginPage> {
                   largeButton: true,
                 ),
               ),
-              const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Bạn chưa có tài khoản? ',
-                    style: AppTypography.p6,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      navigator.push(const RegisterRoute());
-                    },
-                    child: Text(
-                      'Đăng ký ngay',
-                      style: AppTypography.p5.copyWith(color: AppColors.blue_3),
-                    ),
-                  ),
-                ],
-              ),
+              // const SizedBox(height: 16),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     const Text(
+              //       'Bạn chưa có tài khoản? ',
+              //       style: AppTypography.p6,
+              //     ),
+              //     GestureDetector(
+              //       onTap: () {
+              //         navigator.push(const RegisterRoute());
+              //       },
+              //       child: Text(
+              //         'Đăng ký ngay',
+              //         style: AppTypography.p5.copyWith(color: AppColors.blue_3),
+              //       ),
+              //     ),
+              //   ],
+              // ),
             ],
           );
         },

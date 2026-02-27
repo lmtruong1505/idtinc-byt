@@ -16,11 +16,7 @@ Row TextTitel({required String title}) {
         ),
       ),
       8.width,
-      Text(
-        title,
-        style: s18w700,
-        overflow: TextOverflow.ellipsis,
-      ).expanded(),
+      Text(title, style: s18w700, overflow: TextOverflow.ellipsis).expanded(),
     ],
   );
 }

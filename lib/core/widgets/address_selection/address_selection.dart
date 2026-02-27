@@ -83,9 +83,7 @@ class _AddressSelectionState
       },
       child: Text(
         text,
-        style: AppTypography.p6.copyWith(
-          color: AppColors.main,
-        ),
+        style: AppTypography.p6.copyWith(color: AppColors.main),
       ),
     );
   }
@@ -110,18 +108,17 @@ class _AddressSelectionState
               children: List.generate(state.provinces.length, (index) {
                 return GestureDetector(
                   onTap: () {
-                    bloc.onChangeProvince(
-                      state.provinces[index],
-                    );
+                    bloc.onChangeProvince(state.provinces[index]);
                   },
                   child: Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 16,
                       vertical: 12,
                     ),
-                    color: isSelected(state, index)
-                        ? AppColors.bg_2
-                        : Colors.transparent,
+                    color:
+                        isSelected(state, index)
+                            ? AppColors.bg_2
+                            : Colors.transparent,
                     child: Text(
                       state.provinces[index]['name'],
                       style: AppTypography.p4,
@@ -156,18 +153,17 @@ class _AddressSelectionState
               children: List.generate(state.districts.length, (index) {
                 return GestureDetector(
                   onTap: () {
-                    bloc.onChangeDistrict(
-                      state.districts[index],
-                    );
+                    bloc.onChangeDistrict(state.districts[index]);
                   },
                   child: Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 16,
                       vertical: 12,
                     ),
-                    color: isSelected(state, index)
-                        ? AppColors.bg_2
-                        : Colors.transparent,
+                    color:
+                        isSelected(state, index)
+                            ? AppColors.bg_2
+                            : Colors.transparent,
                     child: Text(
                       state.districts[index]['name'],
                       style: AppTypography.p4,
@@ -212,9 +208,10 @@ class _AddressSelectionState
                       horizontal: 16,
                       vertical: 12,
                     ),
-                    color: isSelected(state, index)
-                        ? AppColors.bg_2
-                        : Colors.transparent,
+                    color:
+                        isSelected(state, index)
+                            ? AppColors.bg_2
+                            : Colors.transparent,
                     child: Text(
                       state.wards[index]['name'],
                       style: AppTypography.p4,
@@ -239,11 +236,7 @@ class _AddressSelectionState
         return Expanded(
           child: Container(
             width: double.infinity,
-            padding: const EdgeInsets.only(
-              left: 16,
-              right: 16,
-              bottom: 16,
-            ),
+            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
             child: Column(
               children: [
                 ValidateTextField(
@@ -251,9 +244,7 @@ class _AddressSelectionState
                   margin: EdgeInsets.zero,
                   backgroundColor: AppColors.white,
                   hintText: 'Địa chỉ chi tiết',
-                  hintStyle: AppTypography.p6.copyWith(
-                    color: AppColors.grey_1,
-                  ),
+                  hintStyle: AppTypography.p6.copyWith(color: AppColors.grey_1),
                   onChanged: (value) {
                     bloc.onChangeAddress(value);
                   },
@@ -288,9 +279,7 @@ class _AddressSelectionState
                         navigator.pop();
                       },
                     ),
-                    const SizedBox(
-                      width: 8,
-                    ),
+                    const SizedBox(width: 8),
                     ExtraButton(
                       largeButton: false,
                       title: 'Xác nhận',
@@ -363,19 +352,17 @@ class _AddressSelectionState
                 children: [
                   Container(
                     padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).viewInsets.bottom >
-                              AppBar().preferredSize.height
-                          ? AppBar().preferredSize.height
-                          : 24,
+                      top:
+                          MediaQuery.of(context).viewInsets.bottom >
+                                  AppBar().preferredSize.height
+                              ? AppBar().preferredSize.height
+                              : 24,
                       left: 16,
                       right: 16,
                     ),
                     child: Row(
                       children: [
-                        const Text(
-                          "Chọn địa chỉ",
-                          style: AppTypography.h5,
-                        ),
+                        const Text("Chọn địa chỉ", style: AppTypography.h5),
                         const Spacer(),
                         GestureDetector(
                           onTap: () {
@@ -429,10 +416,7 @@ class _AddressSelectionState
                                 ),
                                 leadingIcon: const Padding(
                                   padding: EdgeInsets.only(right: 6),
-                                  child: Icon(
-                                    Icons.search,
-                                    size: 22,
-                                  ),
+                                  child: Icon(Icons.search, size: 22),
                                 ),
                                 maxLines: 1,
                                 onChanged: bloc.handleSearch,
@@ -456,54 +440,52 @@ class _AddressSelectionState
                         return state.isLoading
                             ? const SizedBox.shrink()
                             : Padding(
-                                padding: const EdgeInsets.all(16),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: ExtraButton(
-                                        largeButton: false,
-                                        title: 'Xóa bộ lọc',
-                                        borderColor: AppColors.border_1,
-                                        color: AppColors.blackish,
-                                        onTap: () {
-                                          bloc.setInitialValue(
-                                            const AddressSelectionModel(
-                                              text: null,
-                                              ward: null,
-                                              address: null,
-                                              district: null,
-                                              province: null,
-                                            ),
-                                          );
-                                        },
-                                      ),
+                              padding: const EdgeInsets.all(16),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: ExtraButton(
+                                      largeButton: false,
+                                      title: 'Xóa bộ lọc',
+                                      borderColor: AppColors.border_1,
+                                      color: AppColors.blackish,
+                                      onTap: () {
+                                        bloc.setInitialValue(
+                                          const AddressSelectionModel(
+                                            text: null,
+                                            ward: null,
+                                            address: null,
+                                            district: null,
+                                            province: null,
+                                          ),
+                                        );
+                                      },
                                     ),
-                                    const SizedBox(
-                                      width: 12,
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: ExtraButton(
+                                      largeButton: false,
+                                      title: 'Xác nhận',
+                                      color: AppColors.white,
+                                      bgColor: AppColors.main,
+                                      borderColor: AppColors.main,
+                                      onTap: () {
+                                        navigator.pop(
+                                          result: {
+                                            "text": bloc.state.text,
+                                            "ward": bloc.state.ward,
+                                            "address": bloc.state.address,
+                                            "district": bloc.state.district,
+                                            "province": bloc.state.province,
+                                          },
+                                        );
+                                      },
                                     ),
-                                    Expanded(
-                                      child: ExtraButton(
-                                        largeButton: false,
-                                        title: 'Xác nhận',
-                                        color: AppColors.white,
-                                        bgColor: AppColors.main,
-                                        borderColor: AppColors.main,
-                                        onTap: () {
-                                          navigator.pop(
-                                            result: {
-                                              "text": bloc.state.text,
-                                              "ward": bloc.state.ward,
-                                              "address": bloc.state.address,
-                                              "district": bloc.state.district,
-                                              "province": bloc.state.province,
-                                            },
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
+                                  ),
+                                ],
+                              ),
+                            );
                       },
                     ),
                 ],

@@ -33,7 +33,6 @@ class AppCubit extends BaseCubit<AppState> {
     emit(state.copyWith(provinces: provinces));
   }
 
-
   void setLoading(bool isLoading) {
     emit(state.copyWith(isLoading: isLoading));
   }
@@ -44,11 +43,7 @@ class AppCubit extends BaseCubit<AppState> {
 
   void onAppInitialized() {
     if (preferences.accessToken != null) {
-      emit(
-        state.copyWith(
-          isLoggedIn: true,
-        ),
-      );
+      emit(state.copyWith(isLoggedIn: true));
     } else {
       emit(state.copyWith(isLoggedIn: false));
       emit(state.copyWith(avatar: null));
@@ -68,7 +63,7 @@ class AppCubit extends BaseCubit<AppState> {
         );
         navigator.replaceAll([const LoginRoute()]);
       }
-     
+
       navigator.replaceAll([const LoginRoute()]);
     } catch (e) {
       print(e);
@@ -80,5 +75,4 @@ class AppCubit extends BaseCubit<AppState> {
   void setCustomId(String customId) {
     emit(state.copyWith(customId: customId));
   }
-
 }

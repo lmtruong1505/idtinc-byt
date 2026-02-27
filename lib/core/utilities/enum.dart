@@ -1,7 +1,4 @@
-enum DeliveryType {
-  pickUp,
-  shipping,
-}
+enum DeliveryType { pickUp, shipping }
 
 enum CubitStatus {
   init,
@@ -12,23 +9,14 @@ enum CubitStatus {
   loadMore,
   sendSuccess,
   sendFaild,
-  update
+  update,
 }
 
-enum ForgotPasswordType {
-  email,
-  zalo,
-}
+enum ForgotPasswordType { email, zalo }
 
-enum PaymentMethodEnum {
-  wallet,
-  banking,
-}
+enum PaymentMethodEnum { wallet, banking }
 
-enum DeliveryMethodEnum {
-  pickUp,
-  ship,
-}
+enum DeliveryMethodEnum { pickUp, ship }
 
 enum OrderEnum {
   DRAFT(code: 'DRAFT'),

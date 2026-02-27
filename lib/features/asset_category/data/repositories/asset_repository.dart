@@ -8,6 +8,7 @@ import 'package:bpg_retail/features/asset_category/data/models/asset_type_model.
 import 'package:bpg_retail/features/asset_category/data/models/asset_location_model.dart';
 import 'package:bpg_retail/features/asset_category/data/models/department_model.dart';
 import 'package:bpg_retail/features/asset_category/data/models/hospital_asset_model.dart';
+import 'package:bpg_retail/features/asset_category/data/models/asset_overview_model.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton()
@@ -250,6 +251,27 @@ class AssetRepository {
       );
     } catch (e) {
       return CommonResponse<List<AssetTypeModel>>(
+        success: false,
+        message: e.toString(),
+      );
+    }
+  }
+
+  Future<CommonResponse<AssetOverviewModel>> getAssetOverview(
+    int toChucId,
+  ) async {
+    try {
+      final response = await _baseDio.post(
+        Api.getAssetOverview,
+        data: {'to_chuc': toChucId},
+      );
+
+      return CommonResponse<AssetOverviewModel>.fromJson(
+        response.data,
+        (json) => AssetOverviewModel.fromJson(json as Map<String, dynamic>),
+      );
+    } catch (e) {
+      return CommonResponse<AssetOverviewModel>(
         success: false,
         message: e.toString(),
       );

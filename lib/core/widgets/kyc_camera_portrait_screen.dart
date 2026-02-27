@@ -48,10 +48,7 @@ class _KycCameraPortraitScreenState extends State<KycCameraPortraitScreen> {
           style: s18w700.copyWith(color: AppColors.white),
         ),
         leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back_ios,
-            color: AppColors.white,
-          ),
+          icon: const Icon(Icons.arrow_back_ios, color: AppColors.white),
           onPressed: () => navigator.pop(),
         ),
       ),
@@ -73,22 +70,26 @@ class _KycCameraPortraitScreenState extends State<KycCameraPortraitScreen> {
             children: [
               Container(
                 padding: EdgeInsets.only(
-                  top: ImageUtils.kycPortraitOffsetY(context.height.toInt())
-                      .toDouble(),
+                  top:
+                      ImageUtils.kycPortraitOffsetY(
+                        context.height.toInt(),
+                      ).toDouble(),
                 ),
                 height: context.height,
                 width: context.width,
-                decoration: const BoxDecoration(
-                  color: Color(0x33000000),
-                ),
+                decoration: const BoxDecoration(color: Color(0x33000000)),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Container(
-                      width: ImageUtils.kycPortraitSize(context.width.toInt())
-                          .toDouble(),
-                      height: ImageUtils.kycPortraitSize(context.width.toInt())
-                          .toDouble(),
+                      width:
+                          ImageUtils.kycPortraitSize(
+                            context.width.toInt(),
+                          ).toDouble(),
+                      height:
+                          ImageUtils.kycPortraitSize(
+                            context.width.toInt(),
+                          ).toDouble(),
                       decoration: const BoxDecoration(
                         color: AppColors.black,
                         shape: BoxShape.circle,
@@ -104,8 +105,10 @@ class _KycCameraPortraitScreenState extends State<KycCameraPortraitScreen> {
           children: [
             Padding(
               padding: EdgeInsets.only(
-                top: ImageUtils.kycPortraitOffsetY(context.height.toInt())
-                        .toDouble() -
+                top:
+                    ImageUtils.kycPortraitOffsetY(
+                      context.height.toInt(),
+                    ).toDouble() -
                     6,
               ),
               child: DottedBorder(
@@ -113,11 +116,15 @@ class _KycCameraPortraitScreenState extends State<KycCameraPortraitScreen> {
                 dashPattern: const [5],
                 color: AppColors.grey79,
                 child: SizedBox(
-                  width: ImageUtils.kycPortraitSize(context.width.toInt())
-                          .toDouble() +
+                  width:
+                      ImageUtils.kycPortraitSize(
+                        context.width.toInt(),
+                      ).toDouble() +
                       6,
-                  height: ImageUtils.kycPortraitSize(context.width.toInt())
-                          .toDouble() +
+                  height:
+                      ImageUtils.kycPortraitSize(
+                        context.width.toInt(),
+                      ).toDouble() +
                       6,
                 ),
               ),
@@ -152,10 +159,7 @@ class _KycCameraPortraitScreenState extends State<KycCameraPortraitScreen> {
           ),
         ),
         const SizedBox(height: 20),
-        Container(
-          height: context.height * 0.1,
-          color: AppColors.black,
-        ),
+        Container(height: context.height * 0.1, color: AppColors.black),
       ],
     );
   }
@@ -173,12 +177,13 @@ class _KycCameraPortraitScreenState extends State<KycCameraPortraitScreen> {
           );
         } else {
           return KycCameraPreview(
-            camera: snapshot.data!
-                .where(
-                  (element) =>
-                      element.lensDirection == CameraLensDirection.front,
-                )
-                .first,
+            camera:
+                snapshot.data!
+                    .where(
+                      (element) =>
+                          element.lensDirection == CameraLensDirection.front,
+                    )
+                    .first,
             onCameraCreated: (controller) => this.controller = controller,
           );
         }

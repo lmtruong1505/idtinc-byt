@@ -18,9 +18,7 @@ Future<void> _bootstrap() async {
   await Firebase.initializeApp();
 
   SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      statusBarColor: Color.fromARGB(50, 0, 0, 0),
-    ),
+    const SystemUiOverlayStyle(statusBarColor: Color.fromARGB(50, 0, 0, 0)),
   );
 
   await configureDependencies();

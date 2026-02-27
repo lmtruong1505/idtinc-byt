@@ -46,7 +46,6 @@ class FirebaseMessageConfig {
       print("======= $routeName");
       print("======= ${message.data}");
     }
-  
   }
 
   Future iniPushNotification(BuildContext context) async {
@@ -78,7 +77,7 @@ class FirebaseMessageConfig {
           print("======= $routeName");
           print("======= ${message.data}");
         }
-       
+
         final RemoteNotification? notification = message.notification;
         if (notification == null) {
           return;
@@ -102,7 +101,6 @@ class FirebaseMessageConfig {
             jsonDecode(details.payload!);
             final navigator = getIt.get<AppNavigator>();
             navigator.getCurrentRouteName();
-          
           } else {
             debugPrint('notification payload');
           }

@@ -7,12 +7,7 @@ class PinInputField extends StatefulWidget {
   final TextEditingController? ctrl;
   final String? Function(String?)? validator;
 
-  const PinInputField({
-    super.key,
-    this.onDone,
-    this.ctrl,
-    this.validator,
-  });
+  const PinInputField({super.key, this.onDone, this.ctrl, this.validator});
   @override
   PinInputFieldState createState() => PinInputFieldState();
 }
@@ -52,9 +47,7 @@ class PinInputFieldState extends State<PinInputField> {
           borderSide: const BorderSide(color: AppColors.grey79),
         ),
         suffixIcon: IconButton(
-          icon: Icon(
-            _obscureText ? Icons.visibility : Icons.visibility_off,
-          ),
+          icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
           onPressed: () {
             setState(() {
               _obscureText = !_obscureText; // Chuyển trạng thái ẩn/hiện
@@ -63,23 +56,15 @@ class PinInputFieldState extends State<PinInputField> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
-          borderSide: const BorderSide(
-            color: AppColors.main,
-          ),
+          borderSide: const BorderSide(color: AppColors.main),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
-          borderSide: const BorderSide(
-            color: AppColors.border_2,
-            width: 1.2,
-          ),
+          borderSide: const BorderSide(color: AppColors.border_2, width: 1.2),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
-          borderSide: const BorderSide(
-            color: AppColors.red_1,
-            width: 1.2,
-          ),
+          borderSide: const BorderSide(color: AppColors.red_1, width: 1.2),
         ),
       ),
     );

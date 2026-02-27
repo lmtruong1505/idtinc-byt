@@ -6,14 +6,10 @@ import 'package:bpg_retail/core/extension/init_ext.dart';
 import 'package:bpg_retail/core/utilities/debouncer.dart';
 import 'package:bpg_retail/core/widgets/textfield/validate_textfield.dart';
 
-typedef ItemOverlayBuilder<ItemType> = Widget Function(
-  BuildContext context,
-  ItemType item,
-  int index,
-);
-typedef LoadDataOverlay<ItemType> = Future<List<ItemType>> Function(
-  bool isMore,
-);
+typedef ItemOverlayBuilder<ItemType> =
+    Widget Function(BuildContext context, ItemType item, int index);
+typedef LoadDataOverlay<ItemType> =
+    Future<List<ItemType>> Function(bool isMore);
 
 class OverlayInputV2<T> extends StatefulWidget {
   final Function(T)? onChanged;
@@ -93,15 +89,13 @@ class _OverlayInputV2State<T> extends State<OverlayInputV2<T>> {
     controler = widget.controller ?? TextEditingController();
     _scroll.addListener(onMore);
     newData();
-    _focusNode.addListener(
-      () {
-        if (_focusNode.hasFocus) {
-          _insertOverlay();
-        } else {
-          _closeOverlay();
-        }
-      },
-    );
+    _focusNode.addListener(() {
+      if (_focusNode.hasFocus) {
+        _insertOverlay();
+      } else {
+        _closeOverlay();
+      }
+    });
   }
 
   @override
@@ -126,9 +120,10 @@ class _OverlayInputV2State<T> extends State<OverlayInputV2<T>> {
     final Size screenSize = MediaQuery.of(context).size;
 
     final hightDefault = screenSize.height * 0.4;
-    final heightOverlay = value.items.isEmpty
-        ? hightDefault
-        : widget.itemHeight * value.items.length > hightDefault
+    final heightOverlay =
+        value.items.isEmpty
+            ? hightDefault
+            : widget.itemHeight * value.items.length > hightDefault
             ? hightDefault
             : widget.itemHeight * value.items.length;
     return heightOverlay;
@@ -173,9 +168,7 @@ class _OverlayInputV2State<T> extends State<OverlayInputV2<T>> {
                   elevation: widget.elevation,
                   color: widget.backgroundColor,
                   shape: RoundedRectangleBorder(
-                    side: const BorderSide(
-                      color: AppColors.grey79,
-                    ),
+                    side: const BorderSide(color: AppColors.grey79),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: ClipRRect(
@@ -197,9 +190,7 @@ class _OverlayInputV2State<T> extends State<OverlayInputV2<T>> {
     if (value.isLoad == true) {
       return SizedBox(
         height: height,
-        child: const Center(
-          child: CircularProgressIndicator(),
-        ),
+        child: const Center(child: CircularProgressIndicator()),
       );
     }
     if (value.items.length < 4) {
@@ -207,10 +198,7 @@ class _OverlayInputV2State<T> extends State<OverlayInputV2<T>> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (widget.header != null) widget.header!,
-          if (widget.header != null)
-            const Divider(
-              thickness: 1,
-            ),
+          if (widget.header != null) const Divider(thickness: 1),
           _buildList(),
         ],
       );
@@ -225,44 +213,36 @@ class _OverlayInputV2State<T> extends State<OverlayInputV2<T>> {
         child: SingleChildScrollView(
           padding: widget.padding ?? EdgeInsets.zero,
           controller: _scroll,
-          physics: value.items.length > 3
-              ? const ScrollPhysics()
-              : const NeverScrollableScrollPhysics(),
+          physics:
+              value.items.length > 3
+                  ? const ScrollPhysics()
+                  : const NeverScrollableScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               if (widget.header != null) widget.header!,
-              if (widget.header != null)
-                const Divider(
-                  thickness: 1,
-                ),
+              if (widget.header != null) const Divider(thickness: 1),
               _buildList(),
               if (value.items.length > 3)
                 Padding(
                   padding: const EdgeInsets.all(4.0),
-                  child: value.isMore != true
-                      ? const SizedBox(
-                          height: 20,
-                        )
-                      : const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 20,
-                              height: 20,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 1,
+                  child:
+                      value.isMore != true
+                          ? const SizedBox(height: 20)
+                          : const Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                width: 20,
+                                height: 20,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 1,
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              'Đang tải',
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ],
-                        ),
+                              SizedBox(width: 5),
+                              Text('Đang tải', style: TextStyle(fontSize: 12)),
+                            ],
+                          ),
                 ),
             ],
           ),
@@ -281,37 +261,34 @@ class _OverlayInputV2State<T> extends State<OverlayInputV2<T>> {
       shrinkWrap: true,
       padding: EdgeInsets.zero,
       itemCount: value.items.length,
-      separatorBuilder: (context, index) =>
-          widget.separator ?? const Divider(height: 1),
-      itemBuilder: (context, index) => SizedBox(
-        height: widget.itemHeight,
-        child: InkWell(
-          onTap: () {
-            widget.onChanged?.call(value.items[index]);
-            _focusNode.unfocus();
-          },
-          child: widget.itemBuilder(context, value.items[index], index),
-        ),
-      ),
+      separatorBuilder:
+          (context, index) => widget.separator ?? const Divider(height: 1),
+      itemBuilder:
+          (context, index) => SizedBox(
+            height: widget.itemHeight,
+            child: InkWell(
+              onTap: () {
+                widget.onChanged?.call(value.items[index]);
+                _focusNode.unfocus();
+              },
+              child: widget.itemBuilder(context, value.items[index], index),
+            ),
+          ),
     );
   }
 
   InputDecoration get theme {
     return InputDecoration(
-      label: widget.label == null
-          ? null
-          : RichText(
-              text: TextSpan(
-                text: widget.label,
-                style: const TextStyle(color: Colors.black),
-                children: [
-                  if (widget.isRequired)
-                    const TextSpan(
-                      text: '*',
-                    ),
-                ],
+      label:
+          widget.label == null
+              ? null
+              : RichText(
+                text: TextSpan(
+                  text: widget.label,
+                  style: const TextStyle(color: Colors.black),
+                  children: [if (widget.isRequired) const TextSpan(text: '*')],
+                ),
               ),
-            ),
       hintText: widget.hintText ?? 'Nhập từ khoá',
       hintStyle:
           widget.hintStyle ?? const TextStyle(fontSize: 14, color: Colors.grey),
@@ -333,9 +310,9 @@ class _OverlayInputV2State<T> extends State<OverlayInputV2<T>> {
   }
 
   OutlineInputBorder get border => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(widget.borderRadius),
-        borderSide: BorderSide(color: widget.enabledBorderColor),
-      );
+    borderRadius: BorderRadius.circular(widget.borderRadius),
+    borderSide: BorderSide(color: widget.enabledBorderColor),
+  );
 
   void newData() async {
     value.isLoad = true;

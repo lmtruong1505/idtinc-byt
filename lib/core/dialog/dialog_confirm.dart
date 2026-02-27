@@ -33,9 +33,7 @@ class DialogConfirm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: 16.radius,
-      ),
+      shape: RoundedRectangleBorder(borderRadius: 16.radius),
       child: Padding(
         padding: 16.padingHor,
         child: Column(
@@ -45,26 +43,25 @@ class DialogConfirm extends StatelessWidget {
             10.height,
             icon ?? const IconDiaLog(),
             4.height,
-            Text(
-              title,
-              style: AppStyle.headingLg,
-              textAlign: TextAlign.center,
-            ),
+            Text(title, style: AppStyle.headingLg, textAlign: TextAlign.center),
             if (content != null) content!.padding(4.padingTop),
             16.height,
             Row(
               children: [
                 LabelButton(
                   label: closeLabel ?? 'Huỷ bỏ',
-                  backgroundColor: !actionConfirmBorder
-                      ? AppColors.button_neutral_alpha_backgroundDefault
-                      : AppColors.button_neutral_solid_backgroundDefault,
+                  backgroundColor:
+                      !actionConfirmBorder
+                          ? AppColors.button_neutral_alpha_backgroundDefault
+                          : AppColors.button_neutral_solid_backgroundDefault,
                   labelStyle: AppStyle.bodyBsMedium.copyWith(
-                    color: !actionConfirmBorder
-                        ? AppColors.button_neutral_alpha_textDefault
-                        : AppColors.button_neutral_solid_textDefault,
+                    color:
+                        !actionConfirmBorder
+                            ? AppColors.button_neutral_alpha_textDefault
+                            : AppColors.button_neutral_solid_textDefault,
                   ),
-                  onPressed: close ??
+                  onPressed:
+                      close ??
                       () {
                         context.pop();
                       },
@@ -74,17 +71,20 @@ class DialogConfirm extends StatelessWidget {
                   LabelButton(
                     label: confirmLabel ?? 'Xác nhận',
                     border: BorderSide(
-                      color: actionConfirmBorder
-                          ? colorConfirmBtn
-                          : AppColors.button_brand_solid_textDefault,
+                      color:
+                          actionConfirmBorder
+                              ? colorConfirmBtn
+                              : AppColors.button_brand_solid_textDefault,
                     ),
-                    backgroundColor: !actionConfirmBorder
-                        ? colorConfirmBtn
-                        : AppColors.bg_primary,
+                    backgroundColor:
+                        !actionConfirmBorder
+                            ? colorConfirmBtn
+                            : AppColors.bg_primary,
                     labelStyle: AppStyle.bodyBsMedium.copyWith(
-                      color: actionConfirmBorder
-                          ? colorConfirmBtn
-                          : AppColors.button_brand_solid_textDefault,
+                      color:
+                          actionConfirmBorder
+                              ? colorConfirmBtn
+                              : AppColors.button_brand_solid_textDefault,
                     ),
                     onPressed: confirm,
                   ).expanded(),

@@ -497,7 +497,6 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     }
   }
 
-
   void setWarningMessage() {
     emit(state.copyWith(message: 'Không thể nhập mã của chính mình!'));
   }

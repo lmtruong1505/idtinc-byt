@@ -46,9 +46,10 @@ class DatetimePicker extends StatelessWidget {
     final DateTime maxDate = DateTime(dateNow.year, dateNow.month, lastday);
     final DateTime minDate = DateTime(1900);
 
-    final TextStyle textStyle = !isNotEmpty
-        ? valueStyle ?? AppTypography.p6.copyWith(color: AppColors.grey_1)
-        : hintStyle ?? AppTypography.p5;
+    final TextStyle textStyle =
+        !isNotEmpty
+            ? valueStyle ?? AppTypography.p6.copyWith(color: AppColors.grey_1)
+            : hintStyle ?? AppTypography.p5;
 
     final textPreview = isNotEmpty ? defaultValue! : hintText ?? 'Lựa chọn';
 
@@ -62,10 +63,7 @@ class DatetimePicker extends StatelessWidget {
     final Decoration defaultDecoration = BoxDecoration(
       color: AppColors.white,
       borderRadius: BorderRadius.circular(8),
-      border: Border.all(
-        color: AppColors.border_2,
-        width: 1.2,
-      ),
+      border: Border.all(color: AppColors.border_2, width: 1.2),
     );
 
     return GestureDetector(
@@ -87,13 +85,7 @@ class DatetimePicker extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(
-              child: Text(
-                textPreview,
-                style: textStyle,
-                maxLines: 1,
-              ),
-            ),
+            Expanded(child: Text(textPreview, style: textStyle, maxLines: 1)),
             icon ?? const Icon(Icons.calendar_today, size: 16),
           ],
         ),

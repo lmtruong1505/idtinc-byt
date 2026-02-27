@@ -109,22 +109,15 @@ class _Card extends StatelessWidget {
       aspectRatio: 1.6,
       child: Center(
         child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(6),
-          ),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(6)),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(
-                Icons.add,
-                color: AppColors.main,
-              ),
+              const Icon(Icons.add, color: AppColors.main),
               6.height,
               Text(
                 type == ImageIdentityTypeEnum.front ? "Mặt trước" : "Mặt sau",
-                style: s16w500.copyWith(
-                  color: AppColors.main,
-                ),
+                style: s16w500.copyWith(color: AppColors.main),
               ),
             ],
           ),
@@ -155,8 +148,4 @@ class _CardV2 extends StatelessWidget {
   }
 }
 
-enum ImageIdentityTypeEnum {
-  front,
-  back,
-  other,
-}
+enum ImageIdentityTypeEnum { front, back, other }

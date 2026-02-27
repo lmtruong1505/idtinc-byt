@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 
 class LazyIndexedStack extends StatefulWidget {
-  const LazyIndexedStack({
-    Key? key,
-    this.index = 0,
-    this.children = const [],
-  }) : super(key: key);
+  const LazyIndexedStack({Key? key, this.index = 0, this.children = const []})
+    : super(key: key);
 
   final int index;
   final List<Widget> children;
@@ -34,9 +31,6 @@ class _LazyIndexedStackState extends State<LazyIndexedStack> {
     final children = List.generate(_activated.length, (i) {
       return _activated[i] ? widget.children[i] : const SizedBox.shrink();
     });
-    return IndexedStack(
-      index: widget.index,
-      children: children,
-    );
+    return IndexedStack(index: widget.index, children: children);
   }
 }

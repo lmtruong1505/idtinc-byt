@@ -3,17 +3,15 @@ import 'package:intl/intl.dart';
 
 extension extNum on num? {
   num get validator => this ?? 0;
-  String formatDate({
-    String? valDefault,
-    String? format,
-  }) {
+  String formatDate({String? valDefault, String? format}) {
     try {
       final double time = double.tryParse(toString()) ?? 0;
       if (time <= 0) {
         return valDefault ?? '';
       }
-      return DateFormat(format ?? 'dd/MM/yyyy')
-          .format(DateTime.fromMillisecondsSinceEpoch(time.round() * 1000));
+      return DateFormat(
+        format ?? 'dd/MM/yyyy',
+      ).format(DateTime.fromMillisecondsSinceEpoch(time.round() * 1000));
     } catch (e) {
       return valDefault ?? '';
     }
@@ -28,10 +26,7 @@ extension extNum on num? {
     return formatter.format(this);
   }
 
-  String formatPrice({
-    String type = '',
-    bool isDefault = true,
-  }) {
+  String formatPrice({String type = '', bool isDefault = true}) {
     if (validator < 0) {
       if (!isDefault) {
         return '';
@@ -53,10 +48,7 @@ extension extNum on num? {
     return '$format đ';
   }
 
-  String formatPercent({
-    String type = '',
-    bool isDefault = true,
-  }) {
+  String formatPercent({String type = '', bool isDefault = true}) {
     if (!isDefault && validator <= 0) {
       return '';
     }

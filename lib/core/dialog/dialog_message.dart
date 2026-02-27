@@ -3,7 +3,6 @@ import 'package:bpg_retail/core/extension/init_ext.dart';
 import 'package:bpg_retail/core/widgets/buttons/label_button.dart';
 import 'package:flutter/material.dart';
 
-
 class DialogMessage extends StatelessWidget {
   final String? title;
   final String? content;
@@ -28,9 +27,7 @@ class DialogMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: 16.radius,
-      ),
+      shape: RoundedRectangleBorder(borderRadius: 16.radius),
       child: Padding(
         padding: 16.padingHor,
         child: Column(
@@ -40,20 +37,22 @@ class DialogMessage extends StatelessWidget {
             10.height,
             icon ??
                 IconDiaLog(
-                  color: isError
-                      ? AppColors.bg_negativePrimary
-                      : AppColors.bg_positivePrimary,
-                  icon: isError
-                      ? const Icon(
-                          Icons.error,
-                          weight: 32,
-                          color: AppColors.fg_negative,
-                        )
-                      : const Icon(
-                          Icons.check_rounded,
-                          weight: 32,
-                          color: AppColors.fg_positive,
-                        ),
+                  color:
+                      isError
+                          ? AppColors.bg_negativePrimary
+                          : AppColors.bg_positivePrimary,
+                  icon:
+                      isError
+                          ? const Icon(
+                            Icons.error,
+                            weight: 32,
+                            color: AppColors.fg_negative,
+                          )
+                          : const Icon(
+                            Icons.check_rounded,
+                            weight: 32,
+                            color: AppColors.fg_positive,
+                          ),
                 ),
             4.height,
             Text(
@@ -108,20 +107,14 @@ class DialogMessage extends StatelessWidget {
 class IconDiaLog extends StatelessWidget {
   final Color? color;
   final Widget? icon;
-  const IconDiaLog({
-    super.key,
-    this.color,
-    this.icon,
-  });
+  const IconDiaLog({super.key, this.color, this.icon});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border: Border.all(
-          color: color ?? AppColors.bg_positivePrimary,
-        ),
+        border: Border.all(color: color ?? AppColors.bg_positivePrimary),
       ),
       padding: 8.pading,
       child: Container(
@@ -139,7 +132,8 @@ class IconDiaLog extends StatelessWidget {
             shape: BoxShape.circle,
           ),
           padding: 8.pading,
-          child: icon ??
+          child:
+              icon ??
               const Icon(
                 Icons.check_rounded,
                 color: AppColors.fg_positive,

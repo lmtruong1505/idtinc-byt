@@ -66,4 +66,6 @@ class Api {
   static String createAsset = '$baseURLV2/api/v1/tai-san/tao-tai-san';
   static String getAssetLocationHistory(int id) =>
       '$baseURLV2/api/v1/tai-san/$id/danh-sach-vi-tri-tai-san';
+  static String getAssetOverview =
+      '$baseURLV2/api/v1/bao-cao-tai-san/tong-quan-tai-san';
 }

@@ -39,66 +39,69 @@ class _ExtraButtonState extends State<ExtraButton> {
   bool canPress = true;
   @override
   Widget build(BuildContext context) {
-    final buttonTypography = widget.textStyle ??
+    final buttonTypography =
+        widget.textStyle ??
         (widget.largeButton ? AppTypography.h6 : AppTypography.p5);
 
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
-        backgroundColor: widget.isLoading
-            ? AppColors.grey_1
-            : widget.bgColor ?? AppColors.white,
-        padding: widget.padding ??
-            const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 12,
-            ),
+        backgroundColor:
+            widget.isLoading
+                ? AppColors.grey_1
+                : widget.bgColor ?? AppColors.white,
+        padding:
+            widget.padding ??
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(widget.radius),
         ),
         side: BorderSide(
-          color: widget.isLoading
-              ? AppColors.grey_1
-              : widget.borderColor ?? AppColors.border_2,
+          color:
+              widget.isLoading
+                  ? AppColors.grey_1
+                  : widget.borderColor ?? AppColors.border_2,
           width: 1.2,
         ),
       ),
-      onPressed: widget.isLoading || !canPress
-          ? null
-          : () {
-              canPress = false;
-              widget.onTap?.call();
-              Future.delayed(300.milliseconds, () => canPress = true);
-            },
-      child: widget.isLoading
-          ? const SizedBox(
-              height: 16,
-              width: 16,
-              child: Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.white,
-                  strokeWidth: 2,
-                ),
-              ),
-            )
-          : Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                widget.icon ?? const SizedBox.shrink(),
-                if (widget.icon != null && widget.title != null)
-                  const SizedBox(width: 8),
-                if (widget.title != null)
-                  Flexible(
-                    child: Text(
-                      '${widget.title}',
-                      style: buttonTypography.copyWith(
-                        color: widget.color ?? AppColors.blackish,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+      onPressed:
+          widget.isLoading || !canPress
+              ? null
+              : () {
+                canPress = false;
+                widget.onTap?.call();
+                Future.delayed(300.milliseconds, () => canPress = true);
+              },
+      child:
+          widget.isLoading
+              ? const SizedBox(
+                height: 16,
+                width: 16,
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: AppColors.white,
+                    strokeWidth: 2,
                   ),
-              ],
-            ),
+                ),
+              )
+              : Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  widget.icon ?? const SizedBox.shrink(),
+                  if (widget.icon != null && widget.title != null)
+                    const SizedBox(width: 8),
+                  if (widget.title != null)
+                    Flexible(
+                      child: Text(
+                        '${widget.title}',
+                        style: buttonTypography.copyWith(
+                          color: widget.color ?? AppColors.blackish,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                ],
+              ),
     );
   }
 }
@@ -135,9 +138,10 @@ class ExtraButtonV2 extends StatelessWidget {
   Widget build(BuildContext context) {
     final buttonTypography =
         textStyle ?? (largeButton ? AppTypography.h6 : AppTypography.p5);
-    final backgroundColor = isDissemble
-        ? AppColors.grey_1.withOpacity(0.5)
-        : bgColor ?? AppColors.white;
+    final backgroundColor =
+        isDissemble
+            ? AppColors.grey_1.withOpacity(0.5)
+            : bgColor ?? AppColors.white;
 
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
@@ -147,10 +151,7 @@ class ExtraButtonV2 extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(borderRadius ?? 30),
         ),
-        side: BorderSide(
-          color: backgroundColor,
-          width: 1.2,
-        ),
+        side: BorderSide(color: backgroundColor, width: 1.2),
       ),
       onPressed: isDissemble ? null : onTap,
       child: Row(
@@ -163,9 +164,10 @@ class ExtraButtonV2 extends StatelessWidget {
               child: Text(
                 '$title',
                 style: buttonTypography.copyWith(
-                  color: isDissemble
-                      ? AppColors.border_1
-                      : color ?? AppColors.blackish,
+                  color:
+                      isDissemble
+                          ? AppColors.border_1
+                          : color ?? AppColors.blackish,
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,

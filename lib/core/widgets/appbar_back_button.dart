@@ -54,15 +54,8 @@ class AppBarBackButtonV2 extends StatelessWidget {
         child: const Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
-              size: 22,
-            ),
-            Text(
-              "Trờ lại",
-              style: s16w500,
-            ),
+            Icon(Icons.arrow_back_ios, color: Colors.black, size: 22),
+            Text("Trờ lại", style: s16w500),
           ],
         ),
       ),

@@ -56,9 +56,7 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
     return BlocProvider(
       create: (context) => bloc,
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: AppColors.white,
-        ),
+        appBar: AppBar(backgroundColor: AppColors.white),
         backgroundColor: AppColors.white,
         body: SingleChildScrollView(
           child: Column(
@@ -122,12 +120,14 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
                   borderWidth: 1,
                   fieldHeight: 45,
                   fieldWidth: 45,
-                  inactiveColor: state.isOTPVerify == 0
-                      ? AppColors.red_1
-                      : AppColors.border_2,
-                  activeColor: state.isOTPVerify == 0
-                      ? AppColors.red_1
-                      : AppColors.border_2,
+                  inactiveColor:
+                      state.isOTPVerify == 0
+                          ? AppColors.red_1
+                          : AppColors.border_2,
+                  activeColor:
+                      state.isOTPVerify == 0
+                          ? AppColors.red_1
+                          : AppColors.border_2,
                 ),
                 errorTextSpace: 20,
                 errorTextMargin: const EdgeInsets.only(left: 0),

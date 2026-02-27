@@ -10,10 +10,7 @@ class RememberAccount {
   final String? phoneNumber;
   final String? password;
 
-  RememberAccount({
-    this.phoneNumber,
-    this.password,
-  });
+  RememberAccount({this.phoneNumber, this.password});
 
   factory RememberAccount.fromJson(Map<String, dynamic> json) =>
       RememberAccount(
@@ -22,7 +19,7 @@ class RememberAccount {
       );
 
   Map<String, dynamic> toJson() => {
-        "phone_number": phoneNumber,
-        "password": password,
-      };
+    "phone_number": phoneNumber,
+    "password": password,
+  };
 }

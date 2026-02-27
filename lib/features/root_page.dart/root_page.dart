@@ -137,7 +137,7 @@ class _RootPageState extends State<RootPage>
             width: 24,
             height: 24,
             colorFilter: ColorFilter.mode(
-              index == indexCubit.state ? AppColors.main : AppColors.grey79,
+              index == indexCubit.state ? AppColors.blackish : AppColors.grey79,
               BlendMode.srcIn,
             ),
           ),
@@ -162,7 +162,7 @@ class _RootPageState extends State<RootPage>
             width: 44,
             height: 44,
             isCircle: true,
-            color: AppColors.main,
+            color: AppColors.accent_4,
             child: Center(
               child: Assets.icon(
                 assetName: "ic_qrcode.svg",

@@ -13,9 +13,8 @@ extension extContext on BuildContext {
 
   double get height => MediaQuery.of(this).size.height;
 
-  EdgeInsets get padding => MediaQuery.of(this).padding.copyWith(
-        bottom: Platform.isIOS ? null : 16,
-      );
+  EdgeInsets get padding =>
+      MediaQuery.of(this).padding.copyWith(bottom: Platform.isIOS ? null : 16);
 
   permissionError() {
     extContext(this).dialog(
@@ -81,10 +80,9 @@ extension extContext on BuildContext {
   }) async {
     return showModalBottomSheet(
       context: this,
-      builder: (context) => Padding(
-        padding: MediaQuery.of(context).viewInsets,
-        child: child,
-      ),
+      builder:
+          (context) =>
+              Padding(padding: MediaQuery.of(context).viewInsets, child: child),
       isScrollControlled: isScrollControlled,
       useSafeArea: useSafeArea,
       backgroundColor: Colors.transparent,
@@ -110,17 +108,18 @@ extension extContext on BuildContext {
     return () async {
       await showDialog(
         context: this,
-        builder: (context) => const DialogMessage(
-          title: 'Cảnh báo',
-          content: 'Bạn không có quyền thực hiện chức năng này',
-          icon: IconDiaLog(
-            color: AppColors.ultility_carrot_10,
-            icon: Icon(
-              Icons.warning_amber_rounded,
-              color: AppColors.ultility_carrot_60,
+        builder:
+            (context) => const DialogMessage(
+              title: 'Cảnh báo',
+              content: 'Bạn không có quyền thực hiện chức năng này',
+              icon: IconDiaLog(
+                color: AppColors.ultility_carrot_10,
+                icon: Icon(
+                  Icons.warning_amber_rounded,
+                  color: AppColors.ultility_carrot_60,
+                ),
+              ),
             ),
-          ),
-        ),
       );
     };
   }
@@ -195,7 +194,7 @@ extension extContext on BuildContext {
     return MaterialPageRoute(builder: (_) => child);
   }
 
-//login ? const ScreenLogin() : page
+  //login ? const ScreenLogin() : page
 }
 
 enum PageRouteAnimation { Fade, Scale, Rotate, Slide, SlideBottomTop }

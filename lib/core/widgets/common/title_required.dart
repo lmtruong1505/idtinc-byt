@@ -9,13 +9,8 @@ Widget requiredTitle(String? title) {
         title ?? "",
         style: AppTypography.p5.copyWith(color: AppColors.blackish),
       ),
-      const SizedBox(
-        width: 4,
-      ),
-      Text(
-        "*",
-        style: AppTypography.p5.copyWith(color: AppColors.red_1),
-      ),
+      const SizedBox(width: 4),
+      Text("*", style: AppTypography.p5.copyWith(color: AppColors.red_1)),
     ],
   );
 }

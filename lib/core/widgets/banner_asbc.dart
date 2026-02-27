@@ -17,10 +17,7 @@ class BannerAsbc extends StatelessWidget {
           fit: BoxFit.cover,
         ),
         Assets.images.logo
-            .image(
-              width: 56,
-              height: 56,
-            )
+            .image(width: 56, height: 56)
             .padding(16.padingBottom),
         if (Navigator.canPop(context))
           Positioned(

@@ -1,9 +1,9 @@
 part of 'init_ext.dart';
 
 extension extContext on BuildContext {
-  EdgeInsets get padding => MediaQuery.of(this).padding.copyWith(
-        bottom: Platform.isAndroid ? 20 : null,
-      );
+  EdgeInsets get padding => MediaQuery.of(
+    this,
+  ).padding.copyWith(bottom: Platform.isAndroid ? 20 : null);
   double get width => MediaQuery.of(this).size.width;
   double get height => MediaQuery.of(this).size.height;
 
@@ -35,11 +35,9 @@ extension extContext on BuildContext {
   }) async {
     if (login) {}
     if (isNewTask) {
-      return await Navigator.of(this).pushNamedAndRemoveUntil(
-        route,
-        (route) => false,
-        arguments: arguments,
-      );
+      return await Navigator.of(
+        this,
+      ).pushNamedAndRemoveUntil(route, (route) => false, arguments: arguments);
     }
     return await Navigator.of(this).pushNamed(route, arguments: arguments);
   }
@@ -88,10 +86,7 @@ extension extContext on BuildContext {
     );
   }
 
-  Future dialog({
-    required Widget child,
-    bool isDismissble = true,
-  }) async {
+  Future dialog({required Widget child, bool isDismissble = true}) async {
     return await showDialog(
       context: this,
       barrierDismissible: isDismissble,

@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 
 import '../../style_app/init_style.dart';
 
-
 Widget InputColumn({
   TextEditingController? controller,
   String? label,
@@ -73,15 +72,24 @@ Widget InputColumn({
           readOnly: readOnly ?? onTap != null,
           prefixIcon: prefixIcon,
           suffixIcon: suffixIcon,
-          hintText: hintText ?? '${onTap != null ? "Chọn" : 'Nhập'} ${label?.toLowerCase()}',
+          hintText:
+              hintText ??
+              '${onTap != null ? "Chọn" : 'Nhập'} ${label?.toLowerCase()}',
           textInputType: textInputType,
-          hintStyle: AppStyle.bodyBsRegular.copyWith(color: AppColors.input_placeholderDefault, height: 1),
+          hintStyle: AppStyle.bodyBsRegular.copyWith(
+            color: AppColors.input_placeholderDefault,
+            height: 1,
+          ),
           show: !isPassword,
-          inputFormatters: inputFormatters ??
+          inputFormatters:
+              inputFormatters ??
               [
-                if (TextInputType.phone == textInputType || TextInputType.number == textInputType) FilteringTextInputFormatter.digitsOnly,
+                if (TextInputType.phone == textInputType ||
+                    TextInputType.number == textInputType)
+                  FilteringTextInputFormatter.digitsOnly,
               ],
-          validate: validate ??
+          validate:
+              validate ??
               (value) {
                 if (isRequired && value.validator.trim().isEmptyOrNull) {
                   return 'Vui lòng nhập ${label?.toLowerCase()}';
@@ -121,7 +129,8 @@ Widget InputColumn2({
   double? radius,
   int? minLines,
   Color? fillColor,
-  String? hintText, TextStyle? textStyle,
+  String? hintText,
+  TextStyle? textStyle,
 }) {
   return Padding(
     padding: padding ?? Dimensions.sp16.pading,
@@ -131,9 +140,7 @@ Widget InputColumn2({
         RichText(
           text: TextSpan(
             text: label,
-            style: AppStyle.bodyBsMedium.copyWith(
-              color: AppColors.input_label,
-            ),
+            style: AppStyle.bodyBsMedium.copyWith(color: AppColors.input_label),
             children: [
               if (isRequired)
                 TextSpan(
@@ -182,15 +189,20 @@ Widget InputColumn2({
               ),
             ],
           ),
-          hintText: hintText ?? '${onTap != null ? "Chọn" : 'Nhập'} ${label.toLowerCase()}',
+          hintText:
+              hintText ??
+              '${onTap != null ? "Chọn" : 'Nhập'} ${label.toLowerCase()}',
           textInputType: textInputType,
           hintStyle: AppStyle.bodyBsRegular.copyWith(
             color: AppColors.input_placeholderDefault,
           ),
           show: !isPassword,
-          inputFormatters: inputFormatters ??
+          inputFormatters:
+              inputFormatters ??
               [
-                if (TextInputType.phone == textInputType || TextInputType.number == textInputType) FilteringTextInputFormatter.digitsOnly,
+                if (TextInputType.phone == textInputType ||
+                    TextInputType.number == textInputType)
+                  FilteringTextInputFormatter.digitsOnly,
               ],
           validate: (value) {
             if (isRequired && value.isEmptyOrNull) {
@@ -269,17 +281,23 @@ Widget InputColumnButon({
               readOnly: readOnly ?? onTap != null,
               prefixIcon: prefixIcon,
               suffixIcon: suffixIcon,
-              hintText: hintText ?? '${onTap != null ? "Chọn" : 'Nhập'} ${label?.toLowerCase()}',
+              hintText:
+                  hintText ??
+                  '${onTap != null ? "Chọn" : 'Nhập'} ${label?.toLowerCase()}',
               textInputType: textInputType,
               hintStyle: AppStyle.bodyBsRegular.copyWith(
                 color: AppColors.input_placeholderDefault,
               ),
               show: !isPassword,
-              inputFormatters: inputFormatters ??
+              inputFormatters:
+                  inputFormatters ??
                   [
-                    if (TextInputType.phone == textInputType || TextInputType.number == textInputType) FilteringTextInputFormatter.digitsOnly,
+                    if (TextInputType.phone == textInputType ||
+                        TextInputType.number == textInputType)
+                      FilteringTextInputFormatter.digitsOnly,
                   ],
-              validate: validate ??
+              validate:
+                  validate ??
                   (value) {
                     if (isRequired && value.validator.trim().isEmptyOrNull) {
                       return 'Vui lòng nhập ${label?.toLowerCase()}';
@@ -367,15 +385,24 @@ Widget InputColumnComfirm({
           readOnly: readOnly ?? onTap != null,
           prefixIcon: prefixIcon,
           suffixIcon: suffixIcon,
-          hintText: hintText ?? '${onTap != null ? "Chọn" : 'Nhập'} ${label?.toLowerCase()}',
+          hintText:
+              hintText ??
+              '${onTap != null ? "Chọn" : 'Nhập'} ${label?.toLowerCase()}',
           textInputType: textInputType,
-          hintStyle: AppStyle.bodyBsRegular.copyWith(color: AppColors.input_placeholderDefault, height: 1),
+          hintStyle: AppStyle.bodyBsRegular.copyWith(
+            color: AppColors.input_placeholderDefault,
+            height: 1,
+          ),
           show: !isPassword,
-          inputFormatters: inputFormatters ??
+          inputFormatters:
+              inputFormatters ??
               [
-                if (TextInputType.phone == textInputType || TextInputType.number == textInputType) FilteringTextInputFormatter.digitsOnly,
+                if (TextInputType.phone == textInputType ||
+                    TextInputType.number == textInputType)
+                  FilteringTextInputFormatter.digitsOnly,
               ],
-          validate: validate ??
+          validate:
+              validate ??
               (value) {
                 if (isRequired && value.validator.trim().isEmptyOrNull) {
                   return 'Vui lòng nhập ${label?.toLowerCase()}';
@@ -459,17 +486,23 @@ Widget InputColumnDrop<T>({
           onTap: onTap,
           readOnly: readOnly ?? onTap != null,
           prefixIcon: prefixIcon,
-          hintText: hintText ?? '${onTap != null ? "Chọn" : "Nhập"} ${label?.toLowerCase()}',
+          hintText:
+              hintText ??
+              '${onTap != null ? "Chọn" : "Nhập"} ${label?.toLowerCase()}',
           textInputType: textInputType,
           hintStyle: AppStyle.bodyBsRegular.copyWith(
             color: AppColors.input_placeholderDefault,
           ),
           show: !isPassword,
-          inputFormatters: inputFormatters ??
+          inputFormatters:
+              inputFormatters ??
               [
-                if (TextInputType.phone == textInputType || TextInputType.number == textInputType) FilteringTextInputFormatter.digitsOnly,
+                if (TextInputType.phone == textInputType ||
+                    TextInputType.number == textInputType)
+                  FilteringTextInputFormatter.digitsOnly,
               ],
-          validate: validate ??
+          validate:
+              validate ??
               (value) {
                 if (isRequired && value.validator.trim().isEmptyOrNull) {
                   return 'Vui lòng nhập ${label?.toLowerCase()}';
@@ -482,37 +515,35 @@ Widget InputColumnDrop<T>({
                 }
                 return null;
               },
-          suffixIcon: dropdownItems != null
-              ? IntrinsicHeight(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        width: 1.5,
-                        color: Colors.grey,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade200,
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(radius ?? 8),
-                            bottomRight: Radius.circular(radius ?? 8),
+          suffixIcon:
+              dropdownItems != null
+                  ? IntrinsicHeight(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(width: 1.5, color: Colors.grey),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade200,
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(radius ?? 8),
+                              bottomRight: Radius.circular(radius ?? 8),
+                            ),
+                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: DropdownButton<T>(
+                            value: dropdownValue,
+                            underline: const SizedBox(),
+                            dropdownColor: Colors.white,
+                            items: dropdownItems,
+                            onChanged: onDropdownChanged,
                           ),
                         ),
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: DropdownButton<T>(
-                          value: dropdownValue,
-                          underline: const SizedBox(),
-                          dropdownColor: Colors.white,
-                          items: dropdownItems,
-                          onChanged: onDropdownChanged,
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              : null,
+                      ],
+                    ),
+                  )
+                  : null,
         ),
       ],
     ),
@@ -552,9 +583,7 @@ Widget InputColumnV2({
         RichText(
           text: TextSpan(
             text: label,
-            style: AppStyle.bodyBsMedium.copyWith(
-              color: AppColors.input_label,
-            ),
+            style: AppStyle.bodyBsMedium.copyWith(color: AppColors.input_label),
             children: [
               if (isRequired)
                 TextSpan(
@@ -582,17 +611,23 @@ Widget InputColumnV2({
           readOnly: readOnly ?? onTap != null,
           prefixIcon: prefixIcon,
           suffixIcon: suffixIcon,
-          hintText: hintText ?? '${onTap != null ? "Chọn" : 'Nhập'} ${label.toLowerCase()}',
+          hintText:
+              hintText ??
+              '${onTap != null ? "Chọn" : 'Nhập'} ${label.toLowerCase()}',
           textInputType: textInputType,
           hintStyle: AppStyle.bodyBsRegular.copyWith(
             color: AppColors.input_placeholderDefault,
           ),
           show: !isPassword,
-          inputFormatters: inputFormatters ??
+          inputFormatters:
+              inputFormatters ??
               [
-                if (TextInputType.phone == textInputType || TextInputType.number == textInputType) FilteringTextInputFormatter.digitsOnly,
+                if (TextInputType.phone == textInputType ||
+                    TextInputType.number == textInputType)
+                  FilteringTextInputFormatter.digitsOnly,
               ],
-          validate: validate ??
+          validate:
+              validate ??
               (value) {
                 if (isRequired && value.validator.trim().isEmptyOrNull) {
                   return 'Vui lòng nhập ${label.toLowerCase()}';

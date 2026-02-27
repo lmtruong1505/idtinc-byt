@@ -43,7 +43,7 @@ class Preferences {
       return UserModel();
     }
   }
- 
+
   String get cartPrds {
     final data = _preferences.getString(PrefKeys.cart) ?? '[]';
     return data;

@@ -7,10 +7,7 @@ class ProfileModel {
   final String? field;
   final dynamic value;
 
-  ProfileModel({
-    this.field,
-    this.value,
-  });
+  ProfileModel({this.field, this.value});
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) =>
       _$ProfileModelFromJson(json);

@@ -374,8 +374,4 @@ const TextStyle s8w400 = TextStyle(
   fontSize: 8,
   fontWeight: DEFAULT,
 );
-const TextStyle s8w700 = TextStyle(
-  height: 1.5,
-  fontSize: 8,
-  fontWeight: BOLD,
-);
+const TextStyle s8w700 = TextStyle(height: 1.5, fontSize: 8, fontWeight: BOLD);

@@ -2,45 +2,25 @@ import 'package:bpg_retail/core/extension/init_ext.dart';
 import 'package:bpg_retail/core/style_app/color_app.dart';
 import 'package:flutter/material.dart';
 
-
 extension ExtWidget on Widget {
   ClipRRect radius(BorderRadius value) {
-    return ClipRRect(
-      borderRadius: value,
-      child: this,
-    );
+    return ClipRRect(borderRadius: value, child: this);
   }
 
   Padding padding(EdgeInsets value) {
-    return Padding(
-      padding: value,
-      child: this,
-    );
+    return Padding(padding: value, child: this);
   }
 
   Expanded expanded({int flex = 1}) {
-    return Expanded(
-      flex: flex,
-      child: this,
-    );
+    return Expanded(flex: flex, child: this);
   }
 
   Flexible flexible({int flex = 1}) {
-    return Flexible(
-      flex: flex,
-      child: this,
-    );
+    return Flexible(flex: flex, child: this);
   }
 
-  SizedBox size({
-    double? height,
-    double? width,
-  }) {
-    return SizedBox(
-      height: height,
-      width: width,
-      child: this,
-    );
+  SizedBox size({double? height, double? width}) {
+    return SizedBox(height: height, width: width, child: this);
   }
 
   Widget container({

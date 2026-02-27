@@ -32,63 +32,67 @@ class CacheAvatarImage extends StatelessWidget {
       height: he,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(borderRadius ?? 8),
-        child: url.nullOrEmpty
-            ? Container(
-                width: wD,
-                height: he,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(borderRadius ?? 8),
-                  border: Border.all(color: AppColors.border_1),
-                ),
-                child: Assets.icons.avatarDefault.svg(
+        child:
+            url.nullOrEmpty
+                ? Container(
                   width: wD,
                   height: he,
-                  fit: BoxFit.cover,
-                ),
-              )
-            : BaseContainer(
-                width: wD,
-                height: he,
-                borderColor: AppColors.greyA7,
-                borderRadius: borderRadius,
-                color: AppColors.white,
-                child: CachedNetworkImage(
-                  imageUrl: url ?? "",
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(borderRadius ?? 8),
+                    border: Border.all(color: AppColors.border_1),
+                  ),
+                  child: Assets.icons.avatarDefault.svg(
+                    width: wD,
+                    height: he,
+                    fit: BoxFit.cover,
+                  ),
+                )
+                : BaseContainer(
                   width: wD,
                   height: he,
-                  fit: fit ?? BoxFit.cover,
-                  placeholder: (context, url) => Stack(
-                    children: [
-                      Positioned(
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        child: Assets.icons.avatarDefault.svg(
-                          width: wD,
-                          height: he,
-                          fit: BoxFit.cover,
+                  borderColor: AppColors.greyA7,
+                  borderRadius: borderRadius,
+                  color: AppColors.white,
+                  child: CachedNetworkImage(
+                    imageUrl: url ?? "",
+                    width: wD,
+                    height: he,
+                    fit: fit ?? BoxFit.cover,
+                    placeholder:
+                        (context, url) => Stack(
+                          children: [
+                            Positioned(
+                              top: 0,
+                              left: 0,
+                              right: 0,
+                              bottom: 0,
+                              child: Assets.icons.avatarDefault.svg(
+                                width: wD,
+                                height: he,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            const Center(child: CupertinoActivityIndicator()),
+                          ],
                         ),
-                      ),
-                      const Center(
-                        child: CupertinoActivityIndicator(),
-                      ),
-                    ],
-                  ),
-                  errorWidget: (context, url, error) => Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(borderRadius ?? 8),
-                      border: Border.all(color: AppColors.border_1),
-                    ),
-                    child: errorWidget ??
-                        Assets.icons.avatarDefault.svg(
-                          width: wD,
-                          height: he,
-                          fit: BoxFit.contain,
+                    errorWidget:
+                        (context, url, error) => Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              borderRadius ?? 8,
+                            ),
+                            border: Border.all(color: AppColors.border_1),
+                          ),
+                          child:
+                              errorWidget ??
+                              Assets.icons.avatarDefault.svg(
+                                width: wD,
+                                height: he,
+                                fit: BoxFit.contain,
+                              ),
                         ),
                   ),
                 ),
-              ),
       ),
     );
   }

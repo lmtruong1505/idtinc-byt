@@ -13,11 +13,12 @@ class BottomSheetService {
   }) async {
     return showCupertinoModalPopup(
       context: context,
-      builder: (context) => SelectImageWidget(
-        isCrop: isCrop,
-        callback: callback,
-        title: title,
-      ),
+      builder:
+          (context) => SelectImageWidget(
+            isCrop: isCrop,
+            callback: callback,
+            title: title,
+          ),
     );
   }
 
@@ -31,17 +32,18 @@ class BottomSheetService {
   }) async {
     return showCupertinoModalPopup(
       context: context,
-      builder: (context) => SelectImageWidgetV2(
-        isCrop: isCrop,
-        onTapGallary: (p0) async {
-          await onTapGallary.call(p0);
-        },
-        onTapCamera: () async {
-          onTapCamera.call();
-        },
-        title: title,
-        cropStyle: cropStyle,
-      ),
+      builder:
+          (context) => SelectImageWidgetV2(
+            isCrop: isCrop,
+            onTapGallary: (p0) async {
+              await onTapGallary.call(p0);
+            },
+            onTapCamera: () async {
+              onTapCamera.call();
+            },
+            title: title,
+            cropStyle: cropStyle,
+          ),
     );
   }
 
@@ -51,11 +53,12 @@ class BottomSheetService {
   ) async {
     return showCupertinoModalPopup(
       context: context,
-      builder: (context) => SelectImageWidget(
-        isCrop: false,
-        isVideo: true,
-        callback: callback,
-      ),
+      builder:
+          (context) => SelectImageWidget(
+            isCrop: false,
+            isVideo: true,
+            callback: callback,
+          ),
     );
   }
 }

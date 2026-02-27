@@ -34,10 +34,7 @@ class _CustomSwitchState extends State<CustomSwitch>
       begin: widget.value ? Alignment.centerRight : Alignment.centerLeft,
       end: widget.value ? Alignment.centerLeft : Alignment.centerRight,
     ).animate(
-      CurvedAnimation(
-        parent: _animationController!,
-        curve: Curves.linear,
-      ),
+      CurvedAnimation(parent: _animationController!, curve: Curves.linear),
     );
   }
 
@@ -66,23 +63,22 @@ class _CustomSwitchState extends State<CustomSwitch>
                 height: 20,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(24.0),
-                  color: _circleAnimation!.value == Alignment.centerLeft
-                      ? Colors.grey
-                      : Colors.blue,
+                  color:
+                      _circleAnimation!.value == Alignment.centerLeft
+                          ? Colors.grey
+                          : Colors.blue,
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                    top: 5.0,
-                    bottom: 5.0,
-                  ),
+                  padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
                   child: Container(
-                    alignment: !widget.value
-                        ? ((Directionality.of(context) == TextDirection.rtl)
-                            ? Alignment.centerRight
-                            : Alignment.centerLeft)
-                        : ((Directionality.of(context) == TextDirection.rtl)
-                            ? Alignment.centerLeft
-                            : Alignment.centerRight),
+                    alignment:
+                        !widget.value
+                            ? ((Directionality.of(context) == TextDirection.rtl)
+                                ? Alignment.centerRight
+                                : Alignment.centerLeft)
+                            : ((Directionality.of(context) == TextDirection.rtl)
+                                ? Alignment.centerLeft
+                                : Alignment.centerRight),
                     child: Container(
                       width: 20.0,
                       height: 20.0,
@@ -94,15 +90,9 @@ class _CustomSwitchState extends State<CustomSwitch>
                   ),
                 ),
               ),
+              if (widget.label != null) const SizedBox(width: 6),
               if (widget.label != null)
-                const SizedBox(
-                  width: 6,
-                ),
-              if (widget.label != null)
-                Text(
-                  widget.label!,
-                  style: AppTypography.p4,
-                ),
+                Text(widget.label!, style: AppTypography.p4),
             ],
           ),
         );

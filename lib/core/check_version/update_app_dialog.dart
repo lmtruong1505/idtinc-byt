@@ -8,10 +8,7 @@ import "package:bpg_retail/core/widgets/buttons/main_button.dart";
 
 class UpdateAppDialog extends StatelessWidget {
   final ModelVersion version;
-  const UpdateAppDialog({
-    super.key,
-    required this.version,
-  });
+  const UpdateAppDialog({super.key, required this.version});
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +44,7 @@ class UpdateAppDialog extends StatelessWidget {
               ],
             ),
             16.height,
-            Text(
-              'Cập nhật ứng dụng?',
-              style: s16w400.copyWith(fontSize: 20),
-            ),
+            Text('Cập nhật ứng dụng?', style: s16w400.copyWith(fontSize: 20)),
             2.height,
             Text(
               'Phiên bản mới đã hoàn thiện.\n'
@@ -68,15 +62,19 @@ class UpdateAppDialog extends StatelessWidget {
                 version.notes!.length,
                 (index) => Text(
                   '${index + 1}. ${version.notes![index]}',
-                  style:
-                      s16w500.copyWith(fontSize: 16, color: AppColors.border_2),
+                  style: s16w500.copyWith(
+                    fontSize: 16,
+                    color: AppColors.border_2,
+                  ),
                 ),
               )
             else
               Text(
                 'Nâng cấp hiệu năng và sữa lỗi ứng dụng',
-                style:
-                    s16w500.copyWith(fontSize: 16, color: AppColors.border_2),
+                style: s16w500.copyWith(
+                  fontSize: 16,
+                  color: AppColors.border_2,
+                ),
               ),
             16.height,
             MainButton(

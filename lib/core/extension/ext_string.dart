@@ -29,7 +29,6 @@ extension extString on String? {
     return true;
   }
 
-
   String? validatorTextField({
     String? msg,
     TextInputType type = TextInputType.text,
@@ -80,32 +79,32 @@ extension extString on String? {
     return null;
   }
 
-
   DateTime? get toDate {
     DateTime? date = DateTime.tryParse(validator);
     return date;
   }
 
-  String toDateText({
-    String? valDefault,
-    String? format,
-  }) {
+  String toDateText({String? valDefault, String? format}) {
     try {
       double time = double.tryParse(toString()) ?? 0;
       if (time <= 0) {
         return valDefault ?? "";
       }
-      return DateFormat(format ?? "dd/MM/yyyy")
-          .format(DateTime.fromMillisecondsSinceEpoch(time.round() * 1000));
+      return DateFormat(
+        format ?? "dd/MM/yyyy",
+      ).format(DateTime.fromMillisecondsSinceEpoch(time.round() * 1000));
     } catch (e) {
       return valDefault ?? "";
     }
   }
 
   String get toCamelCase {
-    return validator.split(' ').map((String word) {
-      return word.capitalize;
-    }).join('');
+    return validator
+        .split(' ')
+        .map((String word) {
+          return word.capitalize;
+        })
+        .join('');
   }
 
   String get toPascalCase {
@@ -146,7 +145,8 @@ extension extString on String? {
 
   bool isIpv4() {
     return isMatch(
-        r'^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$');
+      r'^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$',
+    );
   }
 
   bool isIpv6() {
@@ -163,7 +163,8 @@ extension extString on String? {
 
   bool isRgbaColor() {
     return isMatch(
-        r'^rgba\((\d{1,3}), (\d{1,3}), (\d{1,3}), (0(\.\d+)?|1(\.0+)?)\)$');
+      r'^rgba\((\d{1,3}), (\d{1,3}), (\d{1,3}), (0(\.\d+)?|1(\.0+)?)\)$',
+    );
   }
 
   bool isHslColor() {
@@ -172,7 +173,8 @@ extension extString on String? {
 
   bool isHslaColor() {
     return isMatch(
-        r'^hsla\((\d{1,3}), (\d{1,3})%, (\d{1,3})%, (0(\.\d+)?|1(\.0+)?)\)$');
+      r'^hsla\((\d{1,3}), (\d{1,3})%, (\d{1,3})%, (0(\.\d+)?|1(\.0+)?)\)$',
+    );
   }
 
   String removeAllNonNumeber() {

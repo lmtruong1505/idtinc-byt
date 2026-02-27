@@ -20,23 +20,19 @@ Widget IconBtn({
       count: count,
       backgroundColor: ColorApp.red,
       isLabelVisible: count > 0,
-      textStyle: StyleApp.normal(
-        color: ColorApp.white,
-        fontSize: 11,
-      ),
+      textStyle: StyleApp.normal(color: ColorApp.white, fontSize: 11),
       child: Container(
         padding: padding ?? 8.pading,
         height: size?.height ?? 40,
         width: size?.width ?? 40,
         decoration: BoxDecoration(
-          color: backgroundColor ??
+          color:
+              backgroundColor ??
               AppColors.button_neutral_alpha_backgroundDefault,
           borderRadius: borderRadius ?? 50.radius,
           boxShadow: boxShadow,
         ),
-        child: Center(
-          child: icon,
-        ),
+        child: Center(child: icon),
       ),
     ),
   );

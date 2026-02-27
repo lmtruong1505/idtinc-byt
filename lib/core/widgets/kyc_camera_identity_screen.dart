@@ -52,10 +52,7 @@ class _KycCameraIdentityScreenState extends State<KycCameraIdentityScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back_ios,
-            color: AppColors.white,
-          ),
+          icon: const Icon(Icons.arrow_back_ios, color: AppColors.white),
           onPressed: () => navgator.pop(),
         ),
       ),
@@ -78,29 +75,33 @@ class _KycCameraIdentityScreenState extends State<KycCameraIdentityScreen> {
               Container(
                 height: context.height,
                 width: context.width,
-                decoration: const BoxDecoration(
-                  color: Color(0x33000000),
-                ),
+                decoration: const BoxDecoration(color: Color(0x33000000)),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Container(
                       margin: EdgeInsets.only(
-                        top: ImageUtils.kycIdentityOffsetY(
-                          context.height.toInt(),
-                        ).toDouble(),
+                        top:
+                            ImageUtils.kycIdentityOffsetY(
+                              context.height.toInt(),
+                            ).toDouble(),
                         left:
-                            ImageUtils.kycIdentityOffsetX(context.width.toInt())
-                                .toDouble(),
+                            ImageUtils.kycIdentityOffsetX(
+                              context.width.toInt(),
+                            ).toDouble(),
                         right:
-                            ImageUtils.kycIdentityOffsetX(context.width.toInt())
-                                .toDouble(),
+                            ImageUtils.kycIdentityOffsetX(
+                              context.width.toInt(),
+                            ).toDouble(),
                       ),
                       height:
-                          ImageUtils.kycIdentityHeight(context.width.toInt())
-                              .toDouble(),
-                      width: ImageUtils.kycIdentityWidth(context.width.toInt())
-                          .toDouble(),
+                          ImageUtils.kycIdentityHeight(
+                            context.width.toInt(),
+                          ).toDouble(),
+                      width:
+                          ImageUtils.kycIdentityWidth(
+                            context.width.toInt(),
+                          ).toDouble(),
                       decoration: BoxDecoration(
                         color: AppColors.black,
                         borderRadius: BorderRadius.circular(8),
@@ -124,8 +125,10 @@ class _KycCameraIdentityScreenState extends State<KycCameraIdentityScreen> {
           children: [
             Padding(
               padding: EdgeInsets.only(
-                top: ImageUtils.kycIdentityOffsetY(context.height.toInt())
-                        .toDouble() -
+                top:
+                    ImageUtils.kycIdentityOffsetY(
+                      context.height.toInt(),
+                    ).toDouble() -
                     6,
               ),
               child: DottedBorder(
@@ -135,10 +138,14 @@ class _KycCameraIdentityScreenState extends State<KycCameraIdentityScreen> {
                 radius: const Radius.circular(8),
                 padding: const EdgeInsets.all(6),
                 child: SizedBox(
-                  height: ImageUtils.kycIdentityHeight(context.width.toInt())
-                      .toDouble(),
-                  width: ImageUtils.kycIdentityWidth(context.width.toInt())
-                      .toDouble(),
+                  height:
+                      ImageUtils.kycIdentityHeight(
+                        context.width.toInt(),
+                      ).toDouble(),
+                  width:
+                      ImageUtils.kycIdentityWidth(
+                        context.width.toInt(),
+                      ).toDouble(),
                 ),
               ),
             ),

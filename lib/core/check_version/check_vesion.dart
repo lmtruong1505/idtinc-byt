@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:bpg_retail/core/configs/dio_config.dart';
@@ -16,31 +15,23 @@ class CheckVersion {
     check(
       ios: 'com.idtinc.ecommerceAsbc',
       android: 'co.idtinc.bpg_retail',
-    ).then(
-      (value) {
-        if (value.isUpdate) {
-          Future.delayed(100.milliseconds).then(
-            (val) {
-              context.dialog(
-                child: UpdateAppDialog(
-                  version: value,
-                ),
-                isDismissble: true,
-              );
-            },
+    ).then((value) {
+      if (value.isUpdate) {
+        Future.delayed(100.milliseconds).then((val) {
+          context.dialog(
+            child: UpdateAppDialog(version: value),
+            isDismissble: true,
           );
-        }
-      },
-    );
+        });
+      }
+    });
   }
 
   static Future<ModelVersion> check({
     required String ios,
     required String android,
   }) async {
-    final versionData = ModelVersion(
-      isUpdate: false,
-    );
+    final versionData = ModelVersion(isUpdate: false);
     try {
       final PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
@@ -57,16 +48,14 @@ class CheckVersion {
       final List<String> numbers = localVersion.split('.');
 
       if (Platform.isAndroid) {
-        final ModelVersion? modelVersion =
-            await _getAndroidStoreVersion(android);
+        final ModelVersion? modelVersion = await _getAndroidStoreVersion(
+          android,
+        );
 
         final storeVersion = modelVersion?.version ?? '1.0.0';
         final List<String> storeNumbers = storeVersion.split('.');
 
-        final bool isStore = _checkList(
-          list1: storeNumbers,
-          list2: numbers,
-        );
+        final bool isStore = _checkList(list1: storeNumbers, list2: numbers);
 
         versionData.isUpdate = isStore;
         versionData.url = modelVersion?.url;
@@ -89,20 +78,14 @@ class CheckVersion {
           list2: storeNumbers2,
         );
         if (isStore1) {
-          final bool isStore = _checkList(
-            list1: storeNumbers1,
-            list2: numbers,
-          );
+          final bool isStore = _checkList(list1: storeNumbers1, list2: numbers);
           versionData.isUpdate = isStore;
           versionData.url = ios1?.url;
           versionData.version = iosVer1;
 
           return versionData;
         } else {
-          final bool isStore = _checkList(
-            list1: storeNumbers2,
-            list2: numbers,
-          );
+          final bool isStore = _checkList(list1: storeNumbers2, list2: numbers);
           versionData.isUpdate = isStore;
           versionData.url = ios2?.url;
           versionData.version = iosVer2;
@@ -148,8 +131,9 @@ class CheckVersion {
     if (response.statusCode != 200) {
       return null;
     }
-    final String? version =
-        RegExp(r',\[\[\["([0-9,\.]*)"]],').firstMatch(response.body)!.group(1);
+    final String? version = RegExp(
+      r',\[\[\["([0-9,\.]*)"]],',
+    ).firstMatch(response.body)!.group(1);
     return ModelVersion(url: url, version: version ?? '1.0.0');
   }
 

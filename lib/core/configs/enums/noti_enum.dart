@@ -5,15 +5,14 @@ extension ModuleEnumExtension on ModuleEnum {
     switch (this) {
       case ModuleEnum.TM_ORDER:
         return ModuleEnum.TM_ORDER;
-      }
+    }
   }
 
   String get title {
     switch (this) {
       case ModuleEnum.TM_ORDER:
         return "TM_ORDER";
-
-      }
+    }
   }
 }
 

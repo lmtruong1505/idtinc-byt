@@ -5,28 +5,22 @@ extension extNum on num? {
   double get toDouble => validator.toDouble();
   int get toInt => validator.toInt();
   Widget get height {
-    return SizedBox(
-      height: toDouble,
-    );
+    return SizedBox(height: toDouble);
   }
 
   Widget get width {
-    return SizedBox(
-      width: toDouble,
-    );
+    return SizedBox(width: toDouble);
   }
 
-  String toDateText({
-    String? valDefault,
-    String? format,
-  }) {
+  String toDateText({String? valDefault, String? format}) {
     try {
       final double time = double.tryParse(toString()) ?? 0;
       if (time <= 0) {
         return valDefault ?? "";
       }
-      return DateFormat(format ?? "dd/MM/yyyy")
-          .format(DateTime.fromMillisecondsSinceEpoch(time.round() * 1000));
+      return DateFormat(
+        format ?? "dd/MM/yyyy",
+      ).format(DateTime.fromMillisecondsSinceEpoch(time.round() * 1000));
     } catch (e) {
       return valDefault ?? "";
     }

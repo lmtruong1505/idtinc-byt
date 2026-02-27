@@ -6,10 +6,11 @@ class DashedLinePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final Paint paint = Paint()
-      ..color = Colors.grey
-      ..strokeWidth = 2
-      ..style = PaintingStyle.stroke;
+    final Paint paint =
+        Paint()
+          ..color = Colors.grey
+          ..strokeWidth = 2
+          ..style = PaintingStyle.stroke;
 
     const double dashWidth = 6;
     const double dashSpace = 6;
@@ -47,17 +48,14 @@ class DashedLineWidget extends StatelessWidget {
   final Axis axis;
   final double length;
 
-  const DashedLineWidget({
-    super.key,
-    required this.axis,
-    required this.length,
-  });
+  const DashedLineWidget({super.key, required this.axis, required this.length});
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      size: axis == Axis.vertical
-          ? Size(2, length) // Chiều dọc: rộng 2px, cao = length
-          : Size(length, 2), // Kích thước đường dash
+      size:
+          axis == Axis.vertical
+              ? Size(2, length) // Chiều dọc: rộng 2px, cao = length
+              : Size(length, 2), // Kích thước đường dash
       painter: DashedLinePainter(axis: axis),
     );
   }

@@ -50,9 +50,7 @@ class _MyAppState extends BaseState<MyApp, AppCubit>
   Widget buildPage(BuildContext context) {
     return OverlaySupport(
       child: MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (context) => localizationBloc),
-        ],
+        providers: [BlocProvider(create: (context) => localizationBloc)],
         child: BlocBuilder<LocalizationCubit, Locale>(
           builder: (context, state) {
             return MaterialApp.router(

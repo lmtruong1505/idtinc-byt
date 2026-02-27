@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:bpg_retail/core/widgets/base/base_loading.dart';
 
-typedef ItemWidgetBuilder<ItemType> = Widget Function(
-  BuildContext context,
-  ItemType item,
-  int index,
-);
+typedef ItemWidgetBuilder<ItemType> =
+    Widget Function(BuildContext context, ItemType item, int index);
 
 class _Const {
   static const pageSize = 10;
@@ -49,8 +46,10 @@ class InfiniteList<ItemType> extends StatefulWidget {
 class _InfiniteListState<ItemType> extends State<InfiniteList<ItemType>> {
   @override
   void initState() {
-    widget.infiniteListController
-        .onLoadMore(getData: widget.getData, pageSize: widget.pageSize);
+    widget.infiniteListController.onLoadMore(
+      getData: widget.getData,
+      pageSize: widget.pageSize,
+    );
     widget.scrollController.addListener(() {
       if (widget.scrollController.position.atEdge) {
         final bool isTop = widget.scrollController.position.pixels == 0;
@@ -180,8 +179,11 @@ class InfiniteListController<ItemType>
       value = value.copyWith(listItem: allList);
       value = value.copyWith(pages: page, isRefresh: false);
     } else {
-      value =
-          value.copyWith(hasMore: false, isRefresh: false, isLoading: false);
+      value = value.copyWith(
+        hasMore: false,
+        isRefresh: false,
+        isLoading: false,
+      );
     }
   }
 }

@@ -16,17 +16,16 @@ abstract class BaseStateDelegate<T extends StatefulWidget, B extends BaseCubit>
   final AppCubit appCubit = getIt.get<AppCubit>();
   final Preferences preferences = getIt.get<Preferences>();
 
-  late final B bloc = getIt.get<B>()
-    ..navigator = navigator
-    ..appCubit = appCubit
-    ..preferences = preferences;
+  late final B bloc =
+      getIt.get<B>()
+        ..navigator = navigator
+        ..appCubit = appCubit
+        ..preferences = preferences;
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        Provider<AppNavigator>(create: (_) => navigator),
-      ],
+      providers: [Provider<AppNavigator>(create: (_) => navigator)],
       child: MultiBlocProvider(
         providers: [
           BlocProvider(

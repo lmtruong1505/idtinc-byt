@@ -1,3 +1,8 @@
+import 'package:bpg_retail/core/utilities/enum.dart';
+import 'package:bpg_retail/core/ext/ext_num.dart';
+import 'package:bpg_retail/features/dashboard/presentation/bloc/asset_overview_cubit.dart';
+import 'package:bpg_retail/features/dashboard/presentation/bloc/asset_overview_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bpg_retail/core/configs/app_style/init_app_style.dart';
 import 'package:bpg_retail/core/constants/typography.dart';
 import 'package:bpg_retail/core/extension/spacing_extension.dart';
@@ -27,24 +32,36 @@ class OverviewCards extends StatelessWidget {
           ],
         ),
         16.height,
-        Row(
-          children: [
-            Expanded(
-              child: _buildCard(
-                title: "Tổng số lượng",
-                adjust: "789",
-                color: const Color(0xFF6A5AE0),
-              ),
-            ),
-            12.width,
-            Expanded(
-              child: _buildCard(
-                title: "Tổng nguyên giá",
-                adjust: "234.567.789 đ",
-                color: const Color(0xFF6A5AE0),
-              ),
-            ),
-          ],
+        BlocBuilder<AssetOverviewCubit, AssetOverviewState>(
+          builder: (context, state) {
+            String quantity = "---";
+            String price = "--- đ";
+
+            if (state.status == CubitStatus.success && state.data != null) {
+              quantity = (state.data!.tongSoLuong ?? 0).formatNumber;
+              price = "${(state.data!.tongNguyenGia ?? 0).formatNumber} đ";
+            }
+
+            return Row(
+              children: [
+                Expanded(
+                  child: _buildCard(
+                    title: "Tổng số lượng",
+                    adjust: quantity,
+                    color: AppColors.main,
+                  ),
+                ),
+                12.width,
+                Expanded(
+                  child: _buildCard(
+                    title: "Tổng nguyên giá",
+                    adjust: price,
+                    color: AppColors.main,
+                  ),
+                ),
+              ],
+            );
+          },
         ),
       ],
     );

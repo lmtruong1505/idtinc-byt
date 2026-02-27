@@ -387,7 +387,7 @@ class AppColors {
   static const bg_border1 = Color(0x26000000);
   static const bg_border2 = Color(0x07000000);
 
-// Semantic
+  // Semantic
 
   static const checkbox_foregroundDefault = fg_white;
   static const checkbox_foregroundDisabled = fg_disable;

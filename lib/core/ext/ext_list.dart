@@ -4,12 +4,11 @@ extension ExtList on List? {
     if (this == null) {
       return '';
     }
-    this!.removeWhere(
-      (element) => element == null || element == '',
-    );
+    this!.removeWhere((element) => element == null || element == '');
     return toString().replaceAll('[', '').replaceAll(']', '');
   }
 }
+
 extension ExtendList<T> on List<T> {
   void extend(int newLength, T defaultValue) {
     assert(newLength >= 0);

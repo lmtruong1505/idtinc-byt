@@ -64,11 +64,7 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const HeaderAuthForm(
-                  height: 50,
-                  width: 97,
-                  isPaddingTop: 0,
-                ),
+                const HeaderAuthForm(height: 50, width: 97, isPaddingTop: 0),
                 24.height,
                 _formView(),
               ],
@@ -93,9 +89,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 margin: EdgeInsets.zero,
                 backgroundColor: AppColors.white,
                 hintText: 'Nhập email',
-                hintStyle: AppTypography.p6.copyWith(
-                  color: AppColors.grey_1,
-                ),
+                hintStyle: AppTypography.p6.copyWith(color: AppColors.grey_1),
                 maxLines: 1,
                 onChanged: bloc.onChangeEmail,
                 validator: (value) {
@@ -131,9 +125,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 margin: EdgeInsets.zero,
                 backgroundColor: AppColors.white,
                 hintText: 'Nhập mật khẩu',
-                hintStyle: AppTypography.p6.copyWith(
-                  color: AppColors.grey_1,
-                ),
+                hintStyle: AppTypography.p6.copyWith(color: AppColors.grey_1),
                 maxLines: 1,
                 onChanged: bloc.onChangePassword,
                 obscureText: !state.showPassword,
@@ -195,9 +187,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 margin: EdgeInsets.zero,
                 backgroundColor: AppColors.white,
                 hintText: 'Nhập tên doanh nghiệp',
-                hintStyle: AppTypography.p6.copyWith(
-                  color: AppColors.grey_1,
-                ),
+                hintStyle: AppTypography.p6.copyWith(color: AppColors.grey_1),
                 maxLines: 1,
                 onChanged: (value) {
                   bloc.onChangeFullname(value);
@@ -219,9 +209,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 margin: EdgeInsets.zero,
                 backgroundColor: AppColors.white,
                 hintText: 'Nhập tên người đại diện',
-                hintStyle: AppTypography.p6.copyWith(
-                  color: AppColors.grey_1,
-                ),
+                hintStyle: AppTypography.p6.copyWith(color: AppColors.grey_1),
                 maxLines: 1,
                 onChanged: (value) {
                   bloc.onChangeRepresent(value);
@@ -240,9 +228,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 margin: EdgeInsets.zero,
                 backgroundColor: AppColors.white,
                 hintText: 'Nhập mã số thuế',
-                hintStyle: AppTypography.p6.copyWith(
-                  color: AppColors.grey_1,
-                ),
+                hintStyle: AppTypography.p6.copyWith(color: AppColors.grey_1),
                 maxLines: 1,
                 onChanged: (value) {
                   bloc.onChangeTax(value);
@@ -258,9 +244,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 margin: EdgeInsets.zero,
                 backgroundColor: AppColors.white,
                 hintText: 'Nhập số điện thoại',
-                hintStyle: AppTypography.p6.copyWith(
-                  color: AppColors.grey_1,
-                ),
+                hintStyle: AppTypography.p6.copyWith(color: AppColors.grey_1),
                 maxLines: 1,
                 onChanged: (value) {
                   bloc.onChangePhoneNumber(value);
@@ -358,19 +342,14 @@ class _RegisterPageState extends State<RegisterPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
-                    'Đã có tài khoản? ',
-                    style: AppTypography.p6,
-                  ),
+                  const Text('Đã có tài khoản? ', style: AppTypography.p6),
                   GestureDetector(
                     onTap: () {
                       navigator.replace(const LoginRoute());
                     },
                     child: Text(
                       'Đăng nhập ngay',
-                      style: AppTypography.p5.copyWith(
-                        color: AppColors.main,
-                      ),
+                      style: AppTypography.p5.copyWith(color: AppColors.main),
                     ),
                   ),
                 ],
@@ -381,5 +360,4 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
   }
-
 }

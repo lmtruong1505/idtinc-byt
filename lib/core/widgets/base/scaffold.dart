@@ -59,9 +59,10 @@ class BaseScaffold extends StatelessWidget {
                       : AppBar().preferredSize.height),
             ),
             child: Padding(
-              padding: paddingTopAppBar == true
-                  ? EdgeInsets.only(top: plusHeight)
-                  : EdgeInsets.zero,
+              padding:
+                  paddingTopAppBar == true
+                      ? EdgeInsets.only(top: plusHeight)
+                      : EdgeInsets.zero,
               child: appBar != null ? appBar! : const SizedBox.shrink(),
             ),
           ),
@@ -70,19 +71,21 @@ class BaseScaffold extends StatelessWidget {
               if (backgroundImage == true)
                 Positioned.fill(
                   child: Assets.image(
-                    assetName: backgroundImageSecond == true
-                        ? "background_1.png"
-                        : "background_1.png",
+                    assetName:
+                        backgroundImageSecond == true
+                            ? "background_1.png"
+                            : "background_1.png",
                     fit: BoxFit.cover,
                     alignment: Alignment.topCenter,
                   ),
                 ),
               Container(
-                padding: paddingTop == true
-                    ? EdgeInsets.only(
-                        top: MediaQuery.of(context).padding.top,
-                      )
-                    : EdgeInsets.zero,
+                padding:
+                    paddingTop == true
+                        ? EdgeInsets.only(
+                          top: MediaQuery.of(context).padding.top,
+                        )
+                        : EdgeInsets.zero,
                 width: double.infinity,
                 height: heightDevice(context),
                 child: body ?? const SizedBox(),

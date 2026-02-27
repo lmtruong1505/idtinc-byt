@@ -81,13 +81,13 @@ const double sp80 = 80;
 const double sp124 = 124;
 
 Widget gapWidth(double value) {
-  return SizedBox(width: value,);
+  return SizedBox(width: value);
 }
 
 Widget gapHeight(double value) {
-  return SizedBox(height: value,);
+  return SizedBox(height: value);
 }
 
 Widget gap(double width, double height) {
-  return SizedBox(height: height, width: width,);
+  return SizedBox(height: height, width: width);
 }

@@ -6,12 +6,8 @@ extension extDateTime on DateTime? {
   String get toTextDefaulftV2 =>
       this == null ? '' : DateFormat('yyyy/MM/dd').format(this!);
 
-  TimeOfDay? get toTime => this == null
-      ? null
-      : TimeOfDay(
-          hour: this!.hour,
-          minute: this!.minute,
-        );
+  TimeOfDay? get toTime =>
+      this == null ? null : TimeOfDay(hour: this!.hour, minute: this!.minute);
 
   String toText({String fomat = 'dd/MM/yyyy', String valDefault = ''}) {
     if (this != null) {
@@ -40,18 +36,10 @@ extension extDateTime on DateTime? {
   }
 
   DateTime? get startDay {
-    return this?.copyWith(
-      hour: 0,
-      minute: 0,
-      second: 0,
-    );
+    return this?.copyWith(hour: 0, minute: 0, second: 0);
   }
 
   DateTime? get endDay {
-    return this?.copyWith(
-      hour: 23,
-      minute: 59,
-      second: 59,
-    );
+    return this?.copyWith(hour: 23, minute: 59, second: 59);
   }
 }

@@ -12,12 +12,8 @@ extension extDateTime on DateTime? {
     return '';
   }
 
-  TimeOfDay? get toTime => this == null
-      ? null
-      : TimeOfDay(
-          hour: this!.hour,
-          minute: this!.minute,
-        );
+  TimeOfDay? get toTime =>
+      this == null ? null : TimeOfDay(hour: this!.hour, minute: this!.minute);
 
   String fomatCustom({String fomat = 'dd/MM/yyyy'}) {
     if (this != null) {
@@ -68,18 +64,10 @@ extension extDateTime on DateTime? {
   }
 
   DateTime? get startDay {
-    return this?.copyWith(
-      hour: 0,
-      minute: 0,
-      second: 0,
-    );
+    return this?.copyWith(hour: 0, minute: 0, second: 0);
   }
 
   DateTime? get endDay {
-    return this?.copyWith(
-      hour: 23,
-      minute: 59,
-      second: 59,
-    );
+    return this?.copyWith(hour: 23, minute: 59, second: 59);
   }
 }

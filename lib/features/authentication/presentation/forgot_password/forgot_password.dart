@@ -16,9 +16,7 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 
 @RoutePage()
 class ForgotPasswordPage extends StatefulWidget {
-  const ForgotPasswordPage({
-    Key? key,
-  }) : super(key: key);
+  const ForgotPasswordPage({Key? key}) : super(key: key);
 
   @override
   State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
@@ -37,11 +35,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage>
           return SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const BannerAsbc(),
-                24.height,
-                _formView(),
-              ],
+              children: [const BannerAsbc(), 24.height, _formView()],
             ),
           );
         },
@@ -79,9 +73,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage>
           margin: EdgeInsets.zero,
           backgroundColor: AppColors.white,
           hintText: 'Nhập mật khẩu',
-          hintStyle: AppTypography.p6.copyWith(
-            color: AppColors.grey_1,
-          ),
+          hintStyle: AppTypography.p6.copyWith(color: AppColors.grey_1),
           maxLines: 1,
           onChanged: bloc.onChangePassword,
           obscureText: !bloc.state.showPassword,
@@ -168,9 +160,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage>
         Text(
           "Nhập mã OTP được gửi về Zalo theo số điện thoại của bạn để xác nhận thông tin",
           textAlign: TextAlign.left,
-          style: s14w400.copyWith(
-            color: AppColors.grey79,
-          ),
+          style: s14w400.copyWith(color: AppColors.grey79),
         ),
         24.height,
         PinCodeTextField(
@@ -184,12 +174,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage>
             borderWidth: 1,
             fieldHeight: 45,
             fieldWidth: 45,
-            inactiveColor: bloc.state.isOTPVerify == 0
-                ? AppColors.red_1
-                : AppColors.border_2,
-            activeColor: bloc.state.isOTPVerify == 0
-                ? AppColors.red_1
-                : AppColors.border_2,
+            inactiveColor:
+                bloc.state.isOTPVerify == 0
+                    ? AppColors.red_1
+                    : AppColors.border_2,
+            activeColor:
+                bloc.state.isOTPVerify == 0
+                    ? AppColors.red_1
+                    : AppColors.border_2,
           ),
           errorTextSpace: 20,
           errorTextMargin: const EdgeInsets.only(left: 0),
@@ -242,9 +234,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage>
           margin: EdgeInsets.zero,
           backgroundColor: AppColors.white,
           hintText: 'Nhập số điện thoại',
-          hintStyle: AppTypography.p6.copyWith(
-            color: AppColors.grey_1,
-          ),
+          hintStyle: AppTypography.p6.copyWith(color: AppColors.grey_1),
           maxLines: 1,
           onChanged: bloc.onChangePhoneNumber,
           validator: (value) {

@@ -1,6 +1,5 @@
 part of 'init_ext.dart';
 
-
 extension ListExtension on List {
   List<T> addAll<T>(List<T> list) {
     return [...this, ...list];
@@ -75,7 +74,6 @@ extension ListExtension on List {
   }
 }
 
-
 extension ExtList on List? {
   List get validator => this ?? [];
   String get toText {
@@ -99,7 +97,7 @@ extension ExtendList<T> on List<T> {
 
     // Thêm các phần tử mặc định để đạt tới newLength.
     addAll(List.filled(lengthDifference, defaultValue));
-    
+
     // List<int> numbers = [1, 2, 3];
 
     // print("Before extend: $numbers"); // Output: Before extend: [1, 2, 3]

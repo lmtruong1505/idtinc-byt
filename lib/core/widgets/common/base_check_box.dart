@@ -19,15 +19,9 @@ class BaseCheckbox extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(radius),
       ),
-      side: const BorderSide(
-        width: 1.5,
-        color: AppColors.blackish,
-      ),
+      side: const BorderSide(width: 1.5, color: AppColors.border_2),
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      visualDensity: const VisualDensity(
-        horizontal: -4,
-        vertical: -4,
-      ),
+      visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
       splashRadius: 8,
       checkColor: AppColors.white,
       activeColor: AppColors.main,

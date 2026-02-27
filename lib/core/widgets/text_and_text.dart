@@ -17,24 +17,19 @@ Widget TextAndText({
   return Row(
     crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.start,
     children: [
-      Text(
-        title,
-        style: s14w400.copyWith(
-          color: AppColors.grey79,
-        ),
-      ),
+      Text(title, style: s14w400.copyWith(color: AppColors.grey79)),
       8.width,
       isExpanded
           ? Text(
-              subtitle,
-              style: style ?? s14w400,
-              textAlign: textAlign,
-            ).expanded()
+            subtitle,
+            style: style ?? s14w400,
+            textAlign: textAlign,
+          ).expanded()
           : Text(
-              subtitle,
-              style: style ?? s14w400,
-              textAlign: textAlign,
-            ).flexible(),
+            subtitle,
+            style: style ?? s14w400,
+            textAlign: textAlign,
+          ).flexible(),
       if (icon != null) icon,
     ],
   );

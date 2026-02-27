@@ -30,7 +30,8 @@ class DoubleButton extends StatelessWidget {
     return Row(
       children: [
         LabelButton(
-          prefixIcon: (iconCodeCance != null) ? FaIcon(iconCode: iconCodeCance!) : null,
+          prefixIcon:
+              (iconCodeCance != null) ? FaIcon(iconCode: iconCodeCance!) : null,
           label: cancelText ?? 'Hủy bỏ',
           onPressed: onCancel,
           backgroundColor: AppColors.button_neutral_alpha_backgroundDefault,
@@ -39,16 +40,20 @@ class DoubleButton extends StatelessWidget {
         ).expanded(),
         12.width,
         LabelButton(
-          prefixIcon: (iconCodeConfirm != null) ? FaIcon(iconCode: iconCodeConfirm!) : null,
+          prefixIcon:
+              (iconCodeConfirm != null)
+                  ? FaIcon(iconCode: iconCodeConfirm!)
+                  : null,
           label: confirmText ?? 'Xác nhận',
           onPressed: onConfirm,
           backgroundColor: confirmColor ?? mainColor,
-          labelStyle: onConfirm == null
-              ? AppStyle.bodyMdMedium.copyWith(
-                  color: AppColors.button_brand_ghost_textDisabled,
-                  height: 1,
-                )
-              : null,
+          labelStyle:
+              onConfirm == null
+                  ? AppStyle.bodyMdMedium.copyWith(
+                    color: AppColors.button_brand_ghost_textDisabled,
+                    height: 1,
+                  )
+                  : null,
           fixedSize: const Size(double.infinity, 40),
         ).expanded(),
       ],
@@ -91,7 +96,10 @@ class DoubleButtonWithIcon extends StatelessWidget {
           fixedSize: const Size(double.infinity, 40),
           prefixIcon: iconConfirm,
           labelStyle: AppStyle.bodyMdMedium.copyWith(
-            color: canPressed ? AppColors.button_brand_solid_textDefault : AppColors.button_brand_solid_textDisabled,
+            color:
+                canPressed
+                    ? AppColors.button_brand_solid_textDefault
+                    : AppColors.button_brand_solid_textDisabled,
           ),
         ).expanded(),
       ],
@@ -99,16 +107,16 @@ class DoubleButtonWithIcon extends StatelessWidget {
   }
 
   Widget get cancelBtn => LabelButton(
-        label: cancelText ?? 'Hủy bỏ',
-        onPressed: onCancel,
-        backgroundColor: AppColors.bg_primary,
-        labelStyle: AppStyle.medium(),
-        fixedSize: const Size(double.infinity, 40),
-        border: const BorderSide(
-          color: AppColors.button_neutral_outlined_borderDefault,
-          width: 1,
-        ),
-        prefixIcon: iconCancel,
-        padding: 16.padingHor + 8.padingVer,
-      );
+    label: cancelText ?? 'Hủy bỏ',
+    onPressed: onCancel,
+    backgroundColor: AppColors.bg_primary,
+    labelStyle: AppStyle.medium(),
+    fixedSize: const Size(double.infinity, 40),
+    border: const BorderSide(
+      color: AppColors.button_neutral_outlined_borderDefault,
+      width: 1,
+    ),
+    prefixIcon: iconCancel,
+    padding: 16.padingHor + 8.padingVer,
+  );
 }

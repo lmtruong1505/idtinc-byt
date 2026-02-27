@@ -33,7 +33,9 @@ class BtnIcon extends StatelessWidget {
             // clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
               border: Border.all(
-                  color: borderColor ?? color ?? Colors.white, width: 1),
+                color: borderColor ?? color ?? Colors.white,
+                width: 1,
+              ),
               color: color ?? Colors.white,
               borderRadius: radius.radius,
               boxShadow: const [
@@ -50,17 +52,18 @@ class BtnIcon extends StatelessWidget {
           Visibility(
             visible: hasData,
             child: Positioned(
-                top: 0,
-                right: 0,
-                child: Container(
-                  decoration: const BoxDecoration(
-                    color: AppColors.main,
-                    shape: BoxShape.circle,
-                  ),
-                  width: 6,
-                  height: 6,
-                )),
-          )
+              top: 0,
+              right: 0,
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: AppColors.main,
+                  shape: BoxShape.circle,
+                ),
+                width: 6,
+                height: 6,
+              ),
+            ),
+          ),
         ],
       ),
     );

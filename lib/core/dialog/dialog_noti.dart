@@ -5,7 +5,6 @@ import 'package:bpg_retail/core/widgets/icon_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-
 class DialogNoti extends StatelessWidget {
   final String message;
   final String icon;
@@ -30,9 +29,7 @@ class DialogNoti extends StatelessWidget {
       color: AppColors.bg_primary,
       shape: RoundedRectangleBorder(
         borderRadius: 12.radius,
-        side: const BorderSide(
-          color: AppColors.border_secondary,
-        ),
+        side: const BorderSide(color: AppColors.border_secondary),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -55,9 +52,7 @@ class DialogNoti extends StatelessWidget {
               IconBtn(
                 onTap: onClose,
                 backgroundColor: Colors.transparent,
-                icon: const Icon(
-                  Icons.close,
-                ),
+                icon: const Icon(Icons.close),
               ),
             ],
           ),
@@ -66,10 +61,7 @@ class DialogNoti extends StatelessWidget {
             style: AppStyle.headingLg.copyWith(height: 1.5),
           ).padding(16.padingHor),
           if (subTitle != null) subTitle!.padding(16.padingHor + 4.padingTop),
-          if (actions != null)
-            Row(
-              children: actions!,
-            ),
+          if (actions != null) Row(children: actions!),
           16.height,
         ],
       ),

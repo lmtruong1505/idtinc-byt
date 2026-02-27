@@ -41,49 +41,49 @@ class _MainButtonState extends State<MainButton> {
         elevation: 0,
         backgroundColor:
             widget.isDisable ? AppColors.main.withOpacity(0.6) : AppColors.main,
-        padding: widget.padding ??
-            const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 12,
-            ),
+        padding:
+            widget.padding ??
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(widget.radius),
         ),
       ),
-      onPressed: widget.isLoad || !canPress || widget.isDisable
-          ? null
-          : () {
-              canPress = false;
-              widget.onTap?.call();
-              Future.delayed(300.milliseconds, () => canPress = true);
-            },
-      child: widget.isLoad
-          ? Center(
-              child: CircularProgressIndicator(
-                strokeWidth: 1,
-                color: widget.loadColor ?? Colors.white,
-              ),
-            ).size(height: 20, width: 20)
-          : Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                widget.icon ?? const SizedBox.shrink(),
-                if (widget.icon != null && widget.title != null)
-                  const SizedBox(width: 8),
-                if (widget.title != null)
-                  Flexible(
-                    child: Text(
-                      '${widget.title}',
-                      style: (widget.largeButton
-                              ? AppTypography.h6
-                              : AppTypography.p5)
-                          .copyWith(color: AppColors.white),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+      onPressed:
+          widget.isLoad || !canPress || widget.isDisable
+              ? null
+              : () {
+                canPress = false;
+                widget.onTap?.call();
+                Future.delayed(300.milliseconds, () => canPress = true);
+              },
+      child:
+          widget.isLoad
+              ? Center(
+                child: CircularProgressIndicator(
+                  strokeWidth: 1,
+                  color: widget.loadColor ?? Colors.white,
+                ),
+              ).size(height: 20, width: 20)
+              : Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  widget.icon ?? const SizedBox.shrink(),
+                  if (widget.icon != null && widget.title != null)
+                    const SizedBox(width: 8),
+                  if (widget.title != null)
+                    Flexible(
+                      child: Text(
+                        '${widget.title}',
+                        style: (widget.largeButton
+                                ? AppTypography.h6
+                                : AppTypography.p5)
+                            .copyWith(color: AppColors.white),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
-                  ),
-              ],
-            ),
+                ],
+              ),
     );
   }
 }

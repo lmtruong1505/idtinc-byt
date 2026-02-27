@@ -16,10 +16,7 @@ import 'check_vesion.dart';
 @RoutePage()
 class UpdateAppPage extends StatefulWidget {
   final ModelVersion modelVersion;
-  const UpdateAppPage({
-    super.key,
-    required this.modelVersion,
-  });
+  const UpdateAppPage({super.key, required this.modelVersion});
 
   @override
   State<UpdateAppPage> createState() => _UpdateAppPageState();
@@ -32,12 +29,7 @@ class _UpdateAppPageState extends State<UpdateAppPage> {
       canPop: false,
       child: Scaffold(
         backgroundColor: AppColors.border_1,
-        appBar: AppBar(
-          title: const Text(
-            'Cập nhật phiên bản',
-            style: s16w500,
-          ),
-        ),
+        appBar: AppBar(title: const Text('Cập nhật phiên bản', style: s16w500)),
         body: SingleChildScrollView(
           padding: 16.pading,
           child: Column(
@@ -59,10 +51,7 @@ class _UpdateAppPageState extends State<UpdateAppPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Text(
-                      'Đã có phiên bản mới',
-                      style: s16w500,
-                    ),
+                    const Text('Đã có phiên bản mới', style: s16w500),
                     const SizedBox(height: sp16),
                     RichText(
                       text: TextSpan(
@@ -139,16 +128,10 @@ class _UpdateAppPageState extends State<UpdateAppPage> {
   void _updateApp() async {
     if (Platform.isAndroid) {
       final url = Uri.parse(widget.modelVersion.url ?? '');
-      launchUrl(
-        url,
-        mode: LaunchMode.externalApplication,
-      );
+      launchUrl(url, mode: LaunchMode.externalApplication);
     } else if (Platform.isIOS) {
       final url = Uri.parse(widget.modelVersion.url ?? '');
-      launchUrl(
-        url,
-        mode: LaunchMode.externalApplication,
-      );
+      launchUrl(url, mode: LaunchMode.externalApplication);
     }
   }
 }

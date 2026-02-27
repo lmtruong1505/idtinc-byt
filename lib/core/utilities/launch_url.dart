@@ -20,11 +20,10 @@ class LaunchUrl {
     final Uri emailLaunchUri = Uri(
       scheme: 'mailto',
       path: emailto,
-      queryParameters: content == null
-          ? null
-          : <String, String>{
-              'body': Uri.encodeComponent(content),
-            },
+      queryParameters:
+          content == null
+              ? null
+              : <String, String>{'body': Uri.encodeComponent(content)},
     );
     if (!await launchUrl(emailLaunchUri)) {
       throw Exception('Could not launch $emailto');
@@ -34,9 +33,10 @@ class LaunchUrl {
   static phone(String phone) async {
     final Uri uri = Uri(
       scheme: 'tel',
-      path: phone.startsWith('+84')
-          ? phone
-          : '+84${phone.substring(1, phone.length)}',
+      path:
+          phone.startsWith('+84')
+              ? phone
+              : '+84${phone.substring(1, phone.length)}',
     );
     if (!await launchUrl(uri)) {
       throw Exception('Could not launch $uri');
@@ -52,29 +52,24 @@ class LaunchUrl {
     final Uri uri = Uri(
       scheme: 'sms',
       path: '+84339604406',
-      queryParameters: content == null
-          ? null
-          : <String, String>{
-              'body': Uri.encodeComponent(content),
-            },
+      queryParameters:
+          content == null
+              ? null
+              : <String, String>{'body': Uri.encodeComponent(content)},
     );
     if (!await launchUrl(uri)) {
       throw Exception('Could not launch $uri');
     }
   }
 
-  static Future openMessenger({
-    required String idMessager,
-  }) async {
+  static Future openMessenger({required String idMessager}) async {
     await launchUrl(
       Uri.parse('https://m.me/$idMessager'),
       mode: LaunchMode.externalApplication,
     );
   }
 
-  static Future openFaceBook({
-    required String idFacebook,
-  }) async {
+  static Future openFaceBook({required String idFacebook}) async {
     await launchUrl(
       Uri.parse('https://www.facebook.com/$idFacebook'),
       mode: LaunchMode.externalApplication,

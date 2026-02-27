@@ -41,8 +41,7 @@ Widget AppInputV2({
   ScrollPhysics? scrollPhysics,
   TextInputAction? textInputAction,
   Key? key,
-  TextStyle? textStyle, 
-
+  TextStyle? textStyle,
 }) {
   return TextFormField(
     scrollPhysics: scrollPhysics,
@@ -63,7 +62,10 @@ Widget AppInputV2({
         onConfirm(value);
       }
     },
-    onTapOutside: (event) => onTapOutside?.call() ?? FocusManager.instance.primaryFocus?.unfocus(),
+    onTapOutside:
+        (event) =>
+            onTapOutside?.call() ??
+            FocusManager.instance.primaryFocus?.unfocus(),
     keyboardType: textInputType,
     controller: controller,
     obscureText: !show,
@@ -80,23 +82,25 @@ Widget AppInputV2({
       isDense: isDense,
       fillColor: backgroundColor,
       filled: backgroundColor != null,
-      label: label == null
-          ? null
-          : RichText(
-              textAlign: TextAlign.start,
-              text: TextSpan(
-                text: label,
-                style: labelStyle ?? StyleApp.medium(),
-                children: [
-                  if (required)
-                    TextSpan(
-                      text: ' *',
-                      style: StyleApp.medium(color: ColorApp.red),
-                    ),
-                ],
+      label:
+          label == null
+              ? null
+              : RichText(
+                textAlign: TextAlign.start,
+                text: TextSpan(
+                  text: label,
+                  style: labelStyle ?? StyleApp.medium(),
+                  children: [
+                    if (required)
+                      TextSpan(
+                        text: ' *',
+                        style: StyleApp.medium(color: ColorApp.red),
+                      ),
+                  ],
+                ),
               ),
-            ),
-      contentPadding: contentPadding ??
+      contentPadding:
+          contentPadding ??
           const EdgeInsets.symmetric(
             vertical: Dimensions.sp12,
             horizontal: Dimensions.sp16,
@@ -188,7 +192,10 @@ Widget AppInputV3({
             onConfirm(value);
           }
         },
-        onTapOutside: (event) => onTapOutside?.call() ?? FocusManager.instance.primaryFocus?.unfocus(),
+        onTapOutside:
+            (event) =>
+                onTapOutside?.call() ??
+                FocusManager.instance.primaryFocus?.unfocus(),
         keyboardType: textInputType,
         controller: controller,
         obscureText: !show,
@@ -203,61 +210,59 @@ Widget AppInputV3({
         decoration: InputDecoration(
           fillColor: backgroundColor,
           filled: backgroundColor != null,
-          label: label == null
-              ? null
-              : RichText(
-                  text: TextSpan(
-                    text: label,
-                    style: labelStyle ?? StyleApp.medium(),
-                    children: [
-                      if (required)
-                        TextSpan(
-                          text: ' *',
-                          style: StyleApp.medium(color: ColorApp.red),
-                        ),
-                    ],
+          label:
+              label == null
+                  ? null
+                  : RichText(
+                    text: TextSpan(
+                      text: label,
+                      style: labelStyle ?? StyleApp.medium(),
+                      children: [
+                        if (required)
+                          TextSpan(
+                            text: ' *',
+                            style: StyleApp.medium(color: ColorApp.red),
+                          ),
+                      ],
+                    ),
                   ),
-                ),
-          contentPadding: contentPadding ??
+          contentPadding:
+              contentPadding ??
               const EdgeInsets.symmetric(
                 vertical: Dimensions.sp12,
                 horizontal: Dimensions.sp16,
               ),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(radius).copyWith(
-              topRight: Radius.zero,
-              bottomRight: Radius.zero,
-            ),
+            borderRadius: BorderRadius.circular(
+              radius,
+            ).copyWith(topRight: Radius.zero, bottomRight: Radius.zero),
             borderSide: BorderSide(
               color: borderColor ?? AppColors.input_borderDefault,
               width: 1,
             ),
           ),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(radius).copyWith(
-              topRight: Radius.zero,
-              bottomRight: Radius.zero,
-            ),
+            borderRadius: BorderRadius.circular(
+              radius,
+            ).copyWith(topRight: Radius.zero, bottomRight: Radius.zero),
             borderSide: BorderSide(
               color: borderColor ?? AppColors.input_borderDefault,
               width: 1,
             ),
           ),
           disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(radius).copyWith(
-              topRight: Radius.zero,
-              bottomRight: Radius.zero,
-            ),
+            borderRadius: BorderRadius.circular(
+              radius,
+            ).copyWith(topRight: Radius.zero, bottomRight: Radius.zero),
             borderSide: BorderSide(
               color: borderColor ?? AppColors.input_borderDefault,
               width: 1,
             ),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(radius).copyWith(
-              topRight: Radius.zero,
-              bottomRight: Radius.zero,
-            ),
+            borderRadius: BorderRadius.circular(
+              radius,
+            ).copyWith(topRight: Radius.zero, bottomRight: Radius.zero),
             borderSide: const BorderSide(
               color: AppColors.input_borderFocus,
               width: 1,
@@ -274,10 +279,9 @@ Widget AppInputV3({
         child: Container(
           height: double.infinity,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(radius).copyWith(
-              topLeft: Radius.zero,
-              bottomLeft: Radius.zero,
-            ),
+            borderRadius: BorderRadius.circular(
+              radius,
+            ).copyWith(topLeft: Radius.zero, bottomLeft: Radius.zero),
             color: AppColors.bg_secondary,
             border: Border.all(
               color: borderColor ?? AppColors.input_borderDefault,

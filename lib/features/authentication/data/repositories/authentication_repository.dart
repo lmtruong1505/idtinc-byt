@@ -338,7 +338,6 @@ class AuthenticationRepository {
     }
   }
 
-
   Future<BaseResponseModel> sendRequestChangeToken(
     String token,
     String otp,
@@ -362,7 +361,6 @@ class AuthenticationRepository {
     }
   }
 
-
   Future<BaseResponseModel> verifyBankAccout(String phone, String otp) async {
     try {
       final payload = {"phone": phone, "otp": otp};
@@ -382,6 +380,7 @@ class AuthenticationRepository {
       return BaseResponseModel(code: 400, message: err.toString());
     }
   }
+
   Future<BaseResponseModel> logOut() async {
     try {
       final res = await _baseDio.get(Api.logOut);
