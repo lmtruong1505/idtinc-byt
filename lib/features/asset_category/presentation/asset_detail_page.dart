@@ -9,7 +9,6 @@ import 'package:bpg_retail/core/navigation/navigator.dart';
 import 'package:bpg_retail/core/preferences/preferences.dart';
 import 'package:bpg_retail/core/injection/injection.dart';
 import 'package:bpg_retail/core/utilities/converts.dart';
-import 'package:bpg_retail/core/widgets/base/appbar.dart';
 import 'package:bpg_retail/core/widgets/base_container.dart';
 import 'package:bpg_retail/core/widgets/chip_custom.dart';
 import 'package:bpg_retail/features/asset_category/data/bloc/asset_detail_cubit.dart';
@@ -80,69 +79,105 @@ class _AssetDetailPageState extends State<AssetDetailPage>
       value: _detailCubit,
       child: Scaffold(
         backgroundColor: AppColors.white,
-        appBar: BaseAppBar(
-          title: "Danh sách tài sản",
-          hasLeading: true,
-          centerTitle: false,
-          textStyle: AppTypography.p5.copyWith(color: AppColors.text_tertiary),
-        ),
-        body: BlocBuilder<AssetDetailCubit, AssetDetailState>(
-          builder: (context, state) {
-            return state.maybeWhen(
-              loading: () => const Center(child: CircularProgressIndicator()),
-              failure: (message) => Center(child: Text(message)),
-              success: (asset) => _buildContent(asset),
-              orElse: () => _buildContent(widget.asset),
-            );
-          },
+        body: SafeArea(
+          child: BlocBuilder<AssetDetailCubit, AssetDetailState>(
+            builder: (context, state) {
+              final asset = state.maybeWhen(
+                success: (asset) => asset,
+                orElse: () => widget.asset,
+              );
+
+              return Column(
+                children: [_buildHeader(asset), _buildContent(asset)],
+              );
+            },
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildContent(HospitalAssetModel asset) {
+  Widget _buildHeader(HospitalAssetModel asset) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
-        _buildHeader(asset),
-        _buildTabs(),
-        Expanded(
-          child: TabBarView(
-            controller: _tabController,
+        Padding(
+          padding: const EdgeInsets.only(top: 4, left: 4),
+          child: Row(
             children: [
-              _buildAssetHistory(asset),
-              BlocProvider.value(
-                value: _historyCubit,
-                child: const AssetTransferHistoryTab(),
+              IconButton(
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
+                icon: const Icon(
+                  Icons.arrow_back_ios_new,
+                  size: 16,
+                  color: AppColors.text_tertiary,
+                ),
+                onPressed: () => Navigator.pop(context),
               ),
-              MaintenanceHistoryTab(
-                onCreateNew: () {
-                  // TODO: Navigate to create maintenance record
-                },
+              4.width,
+              Text(
+                "Danh sách tài sản",
+                style: AppTypography.p6.copyWith(
+                  color: AppColors.text_tertiary,
+                ),
               ),
             ],
           ),
         ),
-        _buildConditionalBottomAction(asset),
+        Container(
+          padding: const EdgeInsets.fromLTRB(16, 2, 16, 12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 4),
+                  child: Text(
+                    asset.tenTaiSan ?? "N/A",
+                    style: AppTypography.h3.copyWith(
+                      color: AppColors.text_primary,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              const Icon(
+                Icons.memory,
+                color: AppColors.text_tertiary,
+                size: 24,
+              ),
+            ],
+          ),
+        ),
+        const Divider(height: 1, color: AppColors.grey20, thickness: 1),
       ],
     );
   }
 
-  Widget _buildHeader(HospitalAssetModel asset) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Widget _buildContent(HospitalAssetModel asset) {
+    return Expanded(
+      child: Column(
         children: [
+          _buildTabs(),
           Expanded(
-            child: Text(
-              asset.tenTaiSan ?? "N/A",
-              style: AppTypography.h3.copyWith(
-                color: AppColors.text_primary,
-                fontWeight: FontWeight.bold,
-              ),
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                _buildAssetHistory(asset),
+                BlocProvider.value(
+                  value: _historyCubit,
+                  child: const AssetTransferHistoryTab(),
+                ),
+                MaintenanceHistoryTab(
+                  onCreateNew: () {
+                    // TODO: Navigate to create maintenance record
+                  },
+                ),
+              ],
             ),
           ),
-          const Icon(Icons.memory, color: AppColors.text_tertiary, size: 24),
+          _buildConditionalBottomAction(asset),
         ],
       ),
     );
@@ -175,78 +210,76 @@ class _AssetDetailPageState extends State<AssetDetailPage>
   Widget _buildAssetHistory(HospitalAssetModel asset) {
     return SingleChildScrollView(
       child: Column(
-        children: [
-          _buildAssetSummary(asset),
-          const Divider(height: 1, color: AppColors.grey20),
-          _buildDetailedInfo(asset),
-        ],
+        children: [_buildAssetSummary(asset), _buildDetailedInfo(asset)],
       ),
     );
   }
 
   Widget _buildAssetSummary(HospitalAssetModel asset) {
-    return Padding(
+    return Container(
       padding: const EdgeInsets.all(16.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Image and status
-          Expanded(
-            flex: 4,
-            child: Column(
-              children: [
-                BaseContainer(
-                  width: double.infinity,
-                  height: 150,
-                  borderRadius: 8,
-                  color: AppColors.grey10,
-                  child:
-                      asset.hinhAnh != null
-                          ? Image.network(asset.hinhAnh!, fit: BoxFit.contain)
-                          : const Icon(
-                            Icons.image,
-                            size: 64,
-                            color: AppColors.grey40,
-                          ),
-                ),
-                12.height,
-                _buildStatusChip(asset),
-                8.height,
-                _buildUsageStatus(asset),
-              ],
+      child: IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Image and status
+            Expanded(
+              child: Column(
+                children: [
+                  BaseContainer(
+                    width: double.infinity,
+                    height: 100,
+                    borderRadius: 8,
+                    color: AppColors.grey10,
+                    child:
+                        asset.hinhAnh != null
+                            ? Image.network(asset.hinhAnh!, fit: BoxFit.contain)
+                            : const Icon(
+                              Icons.image,
+                              size: 48,
+                              color: AppColors.grey40,
+                            ),
+                  ),
+                  12.height,
+                  _buildStatusChip(asset),
+                  12.height,
+                  _buildUsageStatus(asset),
+                ],
+              ),
             ),
-          ),
-          16.width,
-          // Depreciation Info
-          Expanded(
-            flex: 6,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildSummaryItem(
-                  "Nguyên giá",
-                  "${formatCurrency(asset.originalPriceValue)} / ${asset.thoiGianTinhKhauHao ?? '0'} năm",
-                ),
-                const Divider(height: 24),
-                _buildSummaryItem(
-                  "Tỷ lệ hao mòn năm",
-                  "${formatCurrency(asset.annualDepreciation)} / ${asset.depreciationRatio.toStringAsFixed(2)}%",
-                ),
-                const Divider(height: 24),
-                _buildSummaryItem(
-                  "Đã hao mòn (${asset.usageYears.toStringAsFixed(asset.usageYears % 1 == 0 ? 0 : 1)} năm)",
-                  "${formatCurrency(asset.accumulatedDepreciation)} / ${asset.accumulatedDepreciationRatio.toStringAsFixed(2)}%",
-                ),
-                const Divider(height: 24),
-                _buildSummaryItem(
-                  "Còn lại",
-                  formatCurrency(asset.remainingValue),
-                  isValueGreen: true,
-                ),
-              ],
+            16.width,
+            const VerticalDivider(width: 1, color: AppColors.grey20),
+            16.width,
+            // Depreciation Info
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildSummaryItem(
+                    "Nguyên giá",
+                    "${formatCurrency(asset.originalPriceValue)} / ${formatSmartNumber(asset.depreciationYearsValue)} năm",
+                  ),
+                  const Divider(height: 24, color: AppColors.grey20),
+                  _buildSummaryItem(
+                    "Tỷ lệ hao mòn năm",
+                    "${formatCurrency(asset.annualDepreciation)} / ${asset.depreciationRatio}%",
+                  ),
+                  const Divider(height: 24, color: AppColors.grey20),
+                  _buildSummaryItem(
+                    "Đã hao mòn (${formatSmartNumber(asset.usageYears)} năm)",
+                    "${formatCurrency(asset.accumulatedDepreciation)} / ${asset.accumulatedDepreciationRatio}%",
+                  ),
+                  const Divider(height: 24, color: AppColors.grey20),
+                  _buildSummaryItem(
+                    "Còn lại",
+                    formatCurrency(asset.remainingValue),
+                    isValueGreen: true,
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -270,9 +303,10 @@ class _AssetDetailPageState extends State<AssetDetailPage>
           Expanded(
             child: Text(
               "Đang sử dụng",
-              style: AppTypography.p6.copyWith(color: AppColors.text_primary),
+              style: AppTypography.p7.copyWith(color: AppColors.text_primary),
             ),
           ),
+          4.width,
           Transform.scale(
             scale: 0.8,
             child: Switch(
@@ -295,6 +329,10 @@ class _AssetDetailPageState extends State<AssetDetailPage>
     String value, {
     bool isValueGreen = false,
   }) {
+    final parts = value.split(" / ");
+    final mainValue = parts[0];
+    final subValue = parts.length > 1 ? " / ${parts[1]}" : "";
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -303,11 +341,26 @@ class _AssetDetailPageState extends State<AssetDetailPage>
           style: AppTypography.p7.copyWith(color: AppColors.text_tertiary),
         ),
         4.height,
-        Text(
-          value,
-          style: AppTypography.p4.copyWith(
-            color: isValueGreen ? AppColors.green60 : AppColors.text_primary,
-            fontWeight: FontWeight.bold,
+        RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: mainValue,
+                style: AppTypography.p4.copyWith(
+                  color:
+                      isValueGreen ? AppColors.green60 : AppColors.text_primary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              if (subValue.isNotEmpty)
+                TextSpan(
+                  text: subValue,
+                  style: AppTypography.p5.copyWith(
+                    color: AppColors.text_tertiary,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+            ],
           ),
         ),
       ],

@@ -105,7 +105,31 @@ String formatNumberV2(num? number, {int decimalDigits = 0}) {
     symbol: '',
     decimalDigits: decimalDigits,
   );
-  return formatter.format(number);
+  return formatter.format(number).trim().replaceAll('\u00A0', '');
+}
+
+String formatSmartNumber(num? number) {
+  if (number == null) return "0";
+  // For whole numbers, format with 0 decimal places immediately
+  if (number % 1 == 0) {
+    return formatNumberV2(number, decimalDigits: 0);
+  }
+
+  // For numbers with decimals, format with up to 2 decimal places
+  String formatted = formatNumberV2(number, decimalDigits: 2);
+
+  // vi_VN uses ',' as decimal separator and '.' as thousand separator
+  // We want to remove trailing zeros and the comma if unnecessary
+  if (formatted.contains(',')) {
+    // Remove trailing zeros
+    formatted = formatted.replaceAll(RegExp(r'0+$'), '');
+    // Remove trailing decimal separator if it's the last character
+    if (formatted.endsWith(',')) {
+      formatted = formatted.substring(0, formatted.length - 1);
+    }
+  }
+
+  return formatted;
 }
 
 String removeVietnameseTones(String str) {

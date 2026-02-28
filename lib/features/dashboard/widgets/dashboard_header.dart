@@ -3,12 +3,17 @@ import 'package:bpg_retail/core/constants/typography.dart';
 import 'package:bpg_retail/core/widgets/avatar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:bpg_retail/core/extension/init_ext.dart';
+import 'package:bpg_retail/core/injection/injection.dart';
+import 'package:bpg_retail/core/preferences/preferences.dart';
 
 class DashboardHeader extends StatelessWidget {
   const DashboardHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final preferences = getIt.get<Preferences>();
+    final user = preferences.getUserData;
+
     return Container(
       margin: const EdgeInsets.fromLTRB(16, 16, 16, 24),
       padding: const EdgeInsets.all(8),
@@ -18,10 +23,7 @@ class DashboardHeader extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const AvatarWidget(
-            url: '', // Replace with user avatar
-            size: 48,
-          ),
+          AvatarWidget(url: user.hinhAnh ?? '', size: 48),
           12.width,
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,10 +35,10 @@ class DashboardHeader extends StatelessWidget {
                 ),
               ),
               Text(
-                "Hoàng Tiến Thành", // Replace with dynamic data
+                user.hoVaTen ?? "Người dùng",
                 style: AppTypography.p4.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: AppColors.black,
+                  color: AppColors.blackAlpha70,
                 ),
               ),
             ],
