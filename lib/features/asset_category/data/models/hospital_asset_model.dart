@@ -112,7 +112,11 @@ class HospitalAssetModel {
           ? originalPriceValue / depreciationYearsValue
           : 0;
 
-  double get remainingValue => originalPriceValue - accumulatedDepreciation;
+  double get remainingValue =>
+      khauHaoConLai != null
+          ? double.tryParse(khauHaoConLai!) ??
+              (originalPriceValue - accumulatedDepreciation)
+          : (originalPriceValue - accumulatedDepreciation);
 
   double get depreciationRatio =>
       originalPriceValue > 0
@@ -125,21 +129,31 @@ class HospitalAssetModel {
       final startDate = DateTime.parse(ngayBatDauSuDung!);
       final now = DateTime.now();
 
-      // Calculate years as currentYear - startYear
-      double years = (now.year - startDate.year).toDouble();
-      if (years < 0) years = 0;
+      // Calculate age in full years
+      int years = now.year - startDate.year;
+      // Adjust if current month/day is before start month/day
+      if (now.month < startDate.month ||
+          (now.month == startDate.month && now.day < startDate.day)) {
+        years--;
+      }
+
+      double result = years.toDouble();
+      if (result < 0) result = 0;
 
       // Cap by total depreciation period
-      if (depreciationYearsValue > 0 && years > depreciationYearsValue) {
-        years = depreciationYearsValue;
+      if (depreciationYearsValue > 0 && result > depreciationYearsValue) {
+        result = depreciationYearsValue;
       }
-      return years;
+      return result;
     } catch (e) {
       return 0;
     }
   }
 
-  double get accumulatedDepreciation => annualDepreciation * usageYears;
+  double get accumulatedDepreciation =>
+      giaTriKhauHao != null
+          ? double.tryParse(giaTriKhauHao!) ?? (annualDepreciation * usageYears)
+          : (annualDepreciation * usageYears);
 
   double get accumulatedDepreciationRatio =>
       originalPriceValue > 0

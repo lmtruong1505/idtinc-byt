@@ -24,15 +24,18 @@ Widget chipCustomBadge({
                 borderRadius: 30.radius,
                 border: Border.all(
                   color: isActive ? color : Colors.transparent,
+                  width: isActive ? 1.5 : 1,
                 ),
               )
               : null,
       child: Container(
-        padding: padding ?? (6.padingHor + 2.5.padingVer),
+        padding: padding ?? (12.padingHor + 6.padingVer),
         decoration: BoxDecoration(
           color: color.withValues(alpha: 0.1),
           border:
-              isBorder ? Border.all(color: color.withValues(alpha: 0.2)) : null,
+              isBorder
+                  ? Border.all(color: color.withValues(alpha: 0.1), width: 1.5)
+                  : null,
           borderRadius: borderRadius ?? 20.radius,
         ),
         child: Row(

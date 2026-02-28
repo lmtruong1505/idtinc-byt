@@ -26,6 +26,7 @@ class AssetRepository {
     String search = '',
     String? khoa,
     String? trangThai,
+    String? loaiTaiSan,
     String? toChuc = '5',
     int? timTaiSanChinhId,
   }) async {
@@ -37,6 +38,8 @@ class AssetRepository {
         'page': page,
         if (khoa != null && khoa != 'all') 'khoa': khoa,
         if (trangThai != null && trangThai != 'Tất cả') 'trang_thai': trangThai,
+        if (loaiTaiSan != null && loaiTaiSan != 'all')
+          'loai_tai_san': loaiTaiSan,
         if (timTaiSanChinhId != null) 'tim_tai_san_chinh_id': timTaiSanChinhId,
       };
 

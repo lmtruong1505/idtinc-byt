@@ -15,10 +15,14 @@ class AssetCategoryCubit extends Cubit<AssetCategoryState> {
     String? search,
     String? khoa,
     String? trangThai,
+    String? loaiTaiSan,
   }) async {
-    final searchParam = search ?? state.search;
-    final khoaParam = khoa ?? state.khoa;
-    final trangThaiParam = trangThai ?? state.trangThai;
+    final searchParam = refresh ? (search ?? '') : (search ?? state.search);
+    final khoaParam = refresh ? khoa : (khoa ?? state.khoa);
+    final trangThaiParam =
+        refresh ? (trangThai ?? 'Tất cả') : (trangThai ?? state.trangThai);
+    final loaiTaiSanParam =
+        refresh ? loaiTaiSan : (loaiTaiSan ?? state.loaiTaiSan);
 
     if (refresh) {
       emit(
@@ -29,6 +33,7 @@ class AssetCategoryCubit extends Cubit<AssetCategoryState> {
           search: searchParam,
           khoa: khoaParam,
           trangThai: trangThaiParam,
+          loaiTaiSan: loaiTaiSanParam,
         ),
       );
     } else {
@@ -54,6 +59,7 @@ class AssetCategoryCubit extends Cubit<AssetCategoryState> {
       search: searchParam,
       khoa: khoaParam,
       trangThai: trangThaiParam,
+      loaiTaiSan: loaiTaiSanParam,
     );
 
     if (response.success == true) {

@@ -69,8 +69,20 @@ class AssetFilterCubit extends Cubit<AssetFilterState> {
     emit(state.copyWith(selectedStatus: status));
   }
 
-  void selectDeviceType(String? value) {
-    emit(state.copyWith(selectedDeviceType: value));
+  void selectAssetType(String? value) {
+    emit(state.copyWith(selectedAssetTypeId: value));
+  }
+
+  Future<void> getAssetTypes() async {
+    emit(state.copyWith(isLoadingAssetTypes: true));
+    final response = await _repository.getAssetTypes();
+    if (response.success == true && response.data != null) {
+      emit(
+        state.copyWith(assetTypes: response.data!, isLoadingAssetTypes: false),
+      );
+    } else {
+      emit(state.copyWith(isLoadingAssetTypes: false));
+    }
   }
 
   void updateSearchKeyword(String keyword) {
@@ -82,7 +94,7 @@ class AssetFilterCubit extends Cubit<AssetFilterState> {
       state.copyWith(
         selectedDepartment: null,
         selectedStatus: 'Tất cả',
-        selectedDeviceType: null,
+        selectedAssetTypeId: null,
       ),
     );
   }

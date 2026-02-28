@@ -17,5 +17,6 @@ class AssetCategoryState with _$AssetCategoryState {
     @Default('') String search,
     String? khoa,
     String? trangThai,
+    String? loaiTaiSan,
   }) = _AssetCategoryState;
 }

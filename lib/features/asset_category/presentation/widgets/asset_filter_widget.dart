@@ -4,14 +4,21 @@ import 'package:bpg_retail/core/constants/typography.dart';
 import 'package:bpg_retail/core/core.dart';
 import 'package:bpg_retail/core/extension/spacing_extension.dart';
 import 'package:bpg_retail/core/widgets/base_container.dart';
+import 'package:bpg_retail/core/widgets/fa_icon.dart';
 import 'package:bpg_retail/core/widgets/textfield/validate_textfield.dart';
 import 'package:flutter/material.dart';
 
 class AssetFilterWidget extends StatelessWidget {
   final VoidCallback? onFilterTap;
   final ValueChanged<String>? onSearchChanged;
+  final bool isFiltering;
 
-  const AssetFilterWidget({super.key, this.onFilterTap, this.onSearchChanged});
+  const AssetFilterWidget({
+    super.key,
+    this.onFilterTap,
+    this.onSearchChanged,
+    this.isFiltering = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -44,9 +51,7 @@ class AssetFilterWidget extends StatelessWidget {
               height: 48,
               isCircle: true,
               color: AppColors.greyE2.withOpacity(0.5),
-              child: const Center(
-                child: Icon(Icons.qr_code_scanner, color: AppColors.black),
-              ),
+              child: Center(child: FaIcon(iconCode: 'f029', size: 23)),
             ),
           ),
           12.width,
@@ -56,9 +61,16 @@ class AssetFilterWidget extends StatelessWidget {
               width: 48,
               height: 48,
               isCircle: true,
-              color: AppColors.greyE2.withOpacity(0.5),
-              child: const Center(
-                child: Icon(Icons.filter_list, color: AppColors.black),
+              color:
+                  isFiltering
+                      ? AppColors.green_1
+                      : AppColors.greyE2.withOpacity(0.5),
+              child: Center(
+                child: FaIcon(
+                  iconCode: 'f0b0',
+                  size: 23,
+                  color: isFiltering ? AppColors.white : null,
+                ),
               ),
             ),
           ),

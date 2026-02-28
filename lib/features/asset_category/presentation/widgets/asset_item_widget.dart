@@ -30,6 +30,7 @@ class AssetItemWidget extends StatelessWidget {
         margin: 8.padingVer + 8.padingHor,
         padding: const EdgeInsets.all(12),
         borderRadius: 12,
+        color: AppColors.white,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -96,7 +97,7 @@ class AssetItemWidget extends StatelessWidget {
                       4.height,
                       Text(
                         "${formatCurrency(double.tryParse(asset.nguyenGia ?? '0'))} (${asset.thoiGianTinhKhauHao ?? '0'} năm, từ ${convertDateFormat(asset.ngayBatDauSuDung ?? '')})",
-                        style: AppTypography.p6.copyWith(
+                        style: AppTypography.p9.copyWith(
                           color: AppColors.text_tertiary,
                         ),
                       ),
@@ -107,21 +108,21 @@ class AssetItemWidget extends StatelessWidget {
             ),
             12.height,
             // Progress Bar
-            BaseProgressBar(value: asset.depreciationRatio),
+            BaseProgressBar(value: asset.accumulatedDepreciationRatio),
             8.height,
             // Depreciation Info
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Đã hao mòn: ${formatCurrency(asset.annualDepreciation)}",
-                  style: AppTypography.p6.copyWith(
+                  "Đã hao mòn: ${formatCurrency(asset.accumulatedDepreciation)}",
+                  style: AppTypography.p9.copyWith(
                     color: AppColors.text_tertiary,
                   ),
                 ),
                 Text(
                   "Còn ${formatCurrency(asset.remainingValue)}",
-                  style: AppTypography.p6.copyWith(
+                  style: AppTypography.p9.copyWith(
                     color: AppColors.text_primary,
                     fontWeight: FontWeight.w600,
                   ),
@@ -145,7 +146,7 @@ class AssetItemWidget extends StatelessWidget {
                     Column(
                       children: [
                         Text(
-                          "${asset.soLuongBoTaiSan} tài sản đi kèm",
+                          "Đi kèm ${asset.soLuongBoTaiSan} tài sản",
                           style: AppTypography.p6.copyWith(
                             color: AppColors.text_tertiary,
                           ),
@@ -156,7 +157,7 @@ class AssetItemWidget extends StatelessWidget {
                 ),
               ),
             12.height,
-            const Divider(height: 1, color: AppColors.border_tertiary),
+            const Divider(height: 1, color: AppColors.grey20),
           ],
         ),
       ),

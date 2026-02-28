@@ -10,7 +10,7 @@ class BaseProgressBar extends StatelessWidget {
   const BaseProgressBar({
     super.key,
     required this.value,
-    this.height = 6,
+    this.height = 4,
     this.backgroundColor = AppColors.greyE2,
     this.progressColor,
   });

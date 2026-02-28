@@ -7,19 +7,40 @@ import 'package:bpg_retail/core/widgets/chip_custom.dart';
 import 'package:bpg_retail/core/widgets/dropdown_button.dart';
 import 'package:bpg_retail/features/asset_category/data/bloc/asset_filter_cubit.dart';
 import 'package:bpg_retail/features/asset_category/data/bloc/asset_filter_state.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AssetFilterBottomSheet extends StatelessWidget {
+class AssetFilterBottomSheet extends StatefulWidget {
   const AssetFilterBottomSheet({super.key, required this.cubit, this.onApply});
 
   final AssetFilterCubit cubit;
   final VoidCallback? onApply;
 
   @override
+  State<AssetFilterBottomSheet> createState() => _AssetFilterBottomSheetState();
+}
+
+class _AssetFilterBottomSheetState extends State<AssetFilterBottomSheet> {
+  final TextEditingController _searchController = TextEditingController();
+  bool _isDepartmentMenuOpen = false;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.cubit.getAssetTypes();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<AssetFilterCubit, AssetFilterState>(
-      bloc: cubit,
+      bloc: widget.cubit,
       builder: (context, state) {
         return SizedBox(
           height: MediaQuery.of(context).size.height * 0.9,
@@ -82,8 +103,116 @@ class AssetFilterBottomSheet extends StatelessWidget {
                                 ),
                               ],
                               onChanged: (value) {
-                                cubit.selectDepartment(value?.value);
+                                widget.cubit.selectDepartment(value?.value);
                               },
+                              buttonStyleData: ButtonStyleData(
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  color: AppColors.white,
+                                  borderRadius: BorderRadius.circular(4),
+                                  border:
+                                      _isDepartmentMenuOpen
+                                          ? Border.all(
+                                            color: AppColors.main,
+                                            width: 2,
+                                          )
+                                          : Border.all(
+                                            color: AppColors.grey_1,
+                                            width: 1.2,
+                                          ),
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                ),
+                                width: double.infinity,
+                              ),
+                              dropdownSearchData: DropdownSearchData(
+                                searchController: _searchController,
+                                searchInnerWidgetHeight: 64,
+                                searchInnerWidget: Container(
+                                  height: 64,
+                                  padding: const EdgeInsets.fromLTRB(
+                                    16,
+                                    16,
+                                    16,
+                                    8,
+                                  ),
+                                  decoration: const BoxDecoration(
+                                    border: Border(
+                                      bottom: BorderSide(
+                                        color: AppColors.border_2,
+                                        width: 1,
+                                      ),
+                                    ),
+                                  ),
+                                  child: TextFormField(
+                                    expands: true,
+                                    maxLines: null,
+                                    controller: _searchController,
+                                    decoration: InputDecoration(
+                                      isDense: true,
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                            horizontal: 12,
+                                            vertical: 8,
+                                          ),
+                                      hintText: 'Tìm kiếm',
+                                      hintStyle: AppTypography.p6,
+                                      prefixIcon: const Icon(
+                                        Icons.search,
+                                        size: 20,
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                        borderSide: const BorderSide(
+                                          color: AppColors.border_2,
+                                        ),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                        borderSide: const BorderSide(
+                                          color: AppColors.border_2,
+                                        ),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                        borderSide: const BorderSide(
+                                          color: AppColors.main,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                searchMatchFn: (item, searchValue) {
+                                  return item.value?.label
+                                          .toLowerCase()
+                                          .contains(
+                                            searchValue.toLowerCase(),
+                                          ) ??
+                                      false;
+                                },
+                              ),
+                              onMenuStateChange: (isOpen) {
+                                setState(() {
+                                  _isDepartmentMenuOpen = isOpen;
+                                });
+                                if (!isOpen) {
+                                  _searchController.clear();
+                                }
+                              },
+                              showDivider: true,
+                              dropdownStyleData: DropdownStyleData(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  color: AppColors.white,
+                                ),
+                                maxHeight: 400,
+                                offset: const Offset(0, 4),
+                              ),
+                              menuItemStyleData: const MenuItemStyleData(
+                                height: 48,
+                                padding: EdgeInsets.symmetric(horizontal: 16),
+                              ),
                             ),
                         16.height,
 
@@ -107,13 +236,14 @@ class AssetFilterBottomSheet extends StatelessWidget {
                                         horizontal: 12,
                                         vertical: 8,
                                       ),
+                                      isActive: isSelected,
                                       title: label,
                                       color:
                                           isSelected
-                                              ? AppColors.main
+                                              ? AppColors.green_1
                                               : AppColors.grey79,
                                       onTap: () {
-                                        cubit.selectStatus(
+                                        widget.cubit.selectStatus(
                                           stat.value ?? "Tất cả",
                                         );
                                       },
@@ -122,33 +252,37 @@ class AssetFilterBottomSheet extends StatelessWidget {
                             ),
                         16.height,
 
-                        // Loại thiết bị
-                        _buildSectionTitle("Loại thiết bị"),
+                        // Loại tài sản
+                        _buildSectionTitle("Loại tài sản"),
                         8.height,
-                        CustomDropdownButton(
-                          value: state.selectedDeviceType,
-                          hintText: "Công nghệ thông tin",
-                          items: [
-                            DropdownButtonModel(
-                              label: "Công nghệ thông tin",
-                              value: "it",
+                        state.isLoadingAssetTypes
+                            ? const Center(child: CircularProgressIndicator())
+                            : CustomDropdownButton(
+                              value: state.selectedAssetTypeId,
+                              hintText: "Chọn",
+                              items: [
+                                DropdownButtonModel(
+                                  label: "Tất cả",
+                                  value: "all",
+                                ),
+                                ...state.assetTypes.map(
+                                  (type) => DropdownButtonModel(
+                                    label: type.tenDanhMuc ?? "N/A",
+                                    value: type.id,
+                                  ),
+                                ),
+                              ],
+                              onChanged: (value) {
+                                widget.cubit.selectAssetType(value?.value);
+                              },
                             ),
-                            DropdownButtonModel(
-                              label: "Y tế",
-                              value: "medical",
-                            ),
-                          ],
-                          onChanged: (value) {
-                            cubit.selectDeviceType(value?.value);
-                          },
-                        ),
                         24.height,
 
                         // Xóa bộ lọc
                         CommonButton(
                           title: "Xóa bộ lọc",
                           onTap: () {
-                            cubit.clearFilter();
+                            widget.cubit.clearFilter();
                           },
                           buttonColor: AppColors.red_1.withValues(alpha: 0.1),
                           titleColor: AppColors.red_1,
@@ -181,7 +315,7 @@ class AssetFilterBottomSheet extends StatelessWidget {
                           title: "Lọc danh sách",
                           onTap: () {
                             Navigator.pop(context);
-                            onApply?.call();
+                            widget.onApply?.call();
                           },
                           buttonColor: AppColors.black,
                           titleColor: AppColors.white,
@@ -199,9 +333,12 @@ class AssetFilterBottomSheet extends StatelessWidget {
   }
 
   Widget _buildSectionTitle(String title) {
-    return Text(
-      title,
-      style: AppTypography.p5.copyWith(color: AppColors.grey79),
+    return Row(
+      children: [
+        Text(title, style: AppTypography.p5.copyWith(color: AppColors.grey79)),
+        8.width,
+        const Expanded(child: Divider(color: AppColors.grey_2, height: 1)),
+      ],
     );
   }
 }

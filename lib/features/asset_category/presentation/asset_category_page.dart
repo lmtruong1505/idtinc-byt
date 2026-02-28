@@ -10,9 +10,11 @@ import 'package:bpg_retail/core/widgets/base_container.dart';
 import 'package:bpg_retail/features/asset_category/data/bloc/asset_category_cubit.dart';
 import 'package:bpg_retail/features/asset_category/data/bloc/asset_category_state.dart';
 import 'package:bpg_retail/features/asset_category/data/bloc/asset_filter_cubit.dart';
+import 'package:bpg_retail/features/asset_category/data/bloc/asset_filter_state.dart';
 import 'package:bpg_retail/features/asset_category/presentation/widgets/asset_filter_bottom_sheet.dart';
 import 'package:bpg_retail/features/asset_category/presentation/widgets/asset_filter_widget.dart';
 import 'package:bpg_retail/features/asset_category/presentation/widgets/asset_item_widget.dart';
+import 'package:bpg_retail/core/widgets/common/scroll_to_top_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,6 +32,7 @@ class _AssetCategoryPageState extends State<AssetCategoryPage> {
   final Debouncer _searchDebouncer = Debouncer(
     delay: const Duration(milliseconds: 500),
   );
+  bool _showScrollToTop = false;
 
   @override
   void initState() {
@@ -46,9 +49,21 @@ class _AssetCategoryPageState extends State<AssetCategoryPage> {
   }
 
   void _onScroll() {
+    if (!_scrollController.hasClients) return;
+
     if (_scrollController.position.pixels >=
         _scrollController.position.maxScrollExtent - 200) {
       _categoryCubit.loadMore();
+    }
+
+    if (_scrollController.offset > 300 && !_showScrollToTop) {
+      setState(() {
+        _showScrollToTop = true;
+      });
+    } else if (_scrollController.offset <= 300 && _showScrollToTop) {
+      setState(() {
+        _showScrollToTop = false;
+      });
     }
   }
 
@@ -68,12 +83,16 @@ class _AssetCategoryPageState extends State<AssetCategoryPage> {
               final int count = state.pagination?.count ?? 0;
               return Text(
                 "Danh mục tài sản ($count)",
-                style: AppTypography.h3.copyWith(color: AppColors.black),
+                style: AppTypography.h3.copyWith(
+                  color: AppColors.text_primary,
+                  fontWeight: FontWeight.bold,
+                ),
               );
             },
           ),
           centerTitle: false,
           hasLeading: false,
+          titleSpacing: 16,
           trailingIcons: [
             Padding(
               padding: const EdgeInsets.only(right: 16),
@@ -86,20 +105,79 @@ class _AssetCategoryPageState extends State<AssetCategoryPage> {
                     _categoryCubit.getAssets(refresh: true);
                   }
                 },
-                child: const Icon(Icons.add, color: AppColors.black),
+                child: const Icon(
+                  Icons.add,
+                  color: AppColors.text_primary,
+                  size: 28,
+                ),
               ),
             ),
           ],
         ),
         body: Column(
           children: [
-            AssetFilterWidget(
-              onFilterTap: () => _showFilterBottomSheet(context),
-              onSearchChanged: (value) {
-                _searchDebouncer.run(() {
-                  _categoryCubit.getAssets(refresh: true, search: value);
-                  _filterCubit.updateSearchKeyword(value);
-                });
+            const Divider(height: 1, color: AppColors.grey20),
+            BlocBuilder<AssetCategoryCubit, AssetCategoryState>(
+              builder: (context, state) {
+                final bool isFiltering =
+                    state.search.isNotEmpty ||
+                    (state.khoa != null && state.khoa != 'all') ||
+                    (state.trangThai != null && state.trangThai != 'Tất cả') ||
+                    (state.loaiTaiSan != null && state.loaiTaiSan != 'all');
+
+                return AssetFilterWidget(
+                  isFiltering: isFiltering,
+                  onFilterTap: () => _showFilterBottomSheet(context),
+                  onSearchChanged: (value) {
+                    _searchDebouncer.run(() {
+                      _categoryCubit.getAssets(refresh: true, search: value);
+                      _filterCubit.updateSearchKeyword(value);
+                    });
+                  },
+                );
+              },
+            ),
+            BlocBuilder<AssetFilterCubit, AssetFilterState>(
+              builder: (context, filterState) {
+                if (filterState.searchKeyword.isEmpty) return const SizedBox();
+                return BlocBuilder<AssetCategoryCubit, AssetCategoryState>(
+                  builder: (context, categoryState) {
+                    final int count = categoryState.pagination?.count ?? 0;
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
+                      child: Row(
+                        children: [
+                          const Expanded(child: Divider()),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            child: RichText(
+                              text: TextSpan(
+                                style: AppTypography.p6.copyWith(
+                                  color: AppColors.text_tertiary,
+                                ),
+                                children: [
+                                  const TextSpan(text: "Có "),
+                                  TextSpan(
+                                    text: "$count",
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: AppColors.text_primary,
+                                    ),
+                                  ),
+                                  const TextSpan(text: " kết quả tìm kiếm"),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const Expanded(child: Divider()),
+                        ],
+                      ),
+                    );
+                  },
+                );
               },
             ),
             Expanded(
@@ -121,6 +199,18 @@ class _AssetCategoryPageState extends State<AssetCategoryPage> {
             ),
           ],
         ),
+        floatingActionButton: ScrollToTopButton(
+          show: _showScrollToTop,
+          onTap: () {
+            if (!_scrollController.hasClients) return;
+            _scrollController.animateTo(
+              0,
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeInOut,
+            );
+          },
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
     );
   }
@@ -166,6 +256,7 @@ class _AssetCategoryPageState extends State<AssetCategoryPage> {
                 refresh: true,
                 khoa: filterState.selectedDepartment,
                 trangThai: filterState.selectedStatus,
+                loaiTaiSan: filterState.selectedAssetTypeId,
               );
             },
           ),
