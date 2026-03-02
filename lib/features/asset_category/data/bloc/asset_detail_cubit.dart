@@ -23,15 +23,23 @@ class AssetDetailCubit extends BaseCubit<AssetDetailState> {
   }
 
   Future<void> toggleStatus(int id) async {
-    final response = await _assetRepository.toggleAssetStatus(id);
+    try {
+      final response = await _assetRepository.toggleAssetStatus(id);
 
-    if (response.success == true) {
-      navigator.showToast(response.message ?? "Cập nhật trạng thái thành công");
-      // Re-fetch details after successful toggle to get updated status label/value
-      await getAssetDetail(id);
-    } else {
-      navigator.showToast(response.message ?? "Cập nhật trạng thái thất bại");
-      await getAssetDetail(id);
+      if (response.success == true) {
+        navigator.showToast(
+          response.message ?? "Cập nhật trạng thái thành công",
+        );
+      } else {
+        navigator.showToast(response.message ?? "Cập nhật trạng thái thất bại");
+      }
+      // Silently re-fetch without emitting loading state to avoid UI rebuild
+      final detailResponse = await _assetRepository.getAssetDetail(id);
+      if (detailResponse.success == true && detailResponse.data != null) {
+        emit(AssetDetailState.success(detailResponse.data!));
+      }
+    } catch (e) {
+      navigator.showToast("Có lỗi xảy ra: ${e.toString()}");
     }
   }
 

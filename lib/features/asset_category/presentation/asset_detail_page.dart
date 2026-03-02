@@ -50,7 +50,10 @@ class _AssetDetailPageState extends State<AssetDetailPage>
   void initState() {
     super.initState();
     _detailCubit =
-        getIt.get<AssetDetailCubit>()..preferences = getIt.get<Preferences>();
+        getIt.get<AssetDetailCubit>()
+          ..navigator = getIt.get<AppNavigator>()
+          ..appCubit = getIt.get<AppCubit>()
+          ..preferences = getIt.get<Preferences>();
     _historyCubit = getIt.get<AssetLocationHistoryCubit>();
 
     _tabController = TabController(
@@ -334,6 +337,9 @@ class _AssetDetailPageState extends State<AssetDetailPage>
 
   Widget _buildUsageStatus(HospitalAssetModel asset) {
     final bool isUsing = asset.trangThai?.value == "DANG_SU_DUNG";
+    final bool isEnabled =
+        asset.trangThai?.value == "NHAN_ROI" ||
+        asset.trangThai?.value == "DANG_SU_DUNG";
     return BaseContainer(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       borderRadius: 12,
@@ -343,7 +349,12 @@ class _AssetDetailPageState extends State<AssetDetailPage>
           Expanded(
             child: Text(
               "Đang sử dụng",
-              style: AppTypography.p7.copyWith(color: AppColors.text_primary),
+              style: AppTypography.p7.copyWith(
+                color:
+                    isEnabled
+                        ? AppColors.text_primary
+                        : AppColors.text_tertiary,
+              ),
             ),
           ),
           4.width,
@@ -351,11 +362,14 @@ class _AssetDetailPageState extends State<AssetDetailPage>
             scale: 0.8,
             child: Switch(
               value: isUsing,
-              onChanged: (val) {
-                if (asset.id != null) {
-                  _detailCubit.toggleStatus(asset.id!);
-                }
-              },
+              onChanged:
+                  isEnabled
+                      ? (val) {
+                        if (asset.id != null) {
+                          _detailCubit.toggleStatus(asset.id!);
+                        }
+                      }
+                      : null,
               activeColor: AppColors.main,
             ),
           ),
