@@ -1,4 +1,4 @@
-import 'package:bpg_retail/core/data/models/value_label_model.dart';
+import 'package:tasa/core/data/models/value_label_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'asset_status_model.g.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:bpg_retail/core/extension/init_ext.dart';
+import 'package:tasa/core/extension/init_ext.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/typography.dart';

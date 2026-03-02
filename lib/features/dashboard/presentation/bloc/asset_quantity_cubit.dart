@@ -1,6 +1,6 @@
-import 'package:bpg_retail/core/utilities/enum.dart';
-import 'package:bpg_retail/features/asset_category/data/repositories/asset_repository.dart';
-import 'package:bpg_retail/features/dashboard/presentation/bloc/asset_quantity_state.dart';
+import 'package:tasa/core/utilities/enum.dart';
+import 'package:tasa/features/asset_category/data/repositories/asset_repository.dart';
+import 'package:tasa/features/dashboard/presentation/bloc/asset_quantity_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 

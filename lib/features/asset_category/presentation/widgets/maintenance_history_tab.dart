@@ -1,6 +1,6 @@
-import 'package:bpg_retail/core/configs/app_style/init_app_style.dart';
-import 'package:bpg_retail/core/constants/typography.dart';
-import 'package:bpg_retail/core/extension/spacing_extension.dart';
+import 'package:tasa/core/configs/app_style/init_app_style.dart';
+import 'package:tasa/core/constants/typography.dart';
+import 'package:tasa/core/extension/spacing_extension.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 

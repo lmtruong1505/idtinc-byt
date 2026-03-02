@@ -1,6 +1,6 @@
-import 'package:bpg_retail/core/core.dart';
+import 'package:tasa/core/core.dart';
 import 'package:flutter/material.dart';
-import 'package:bpg_retail/core/extension/init_ext.dart';
+import 'package:tasa/core/extension/init_ext.dart';
 
 class BtnIcon extends StatelessWidget {
   final double radius;

@@ -1,5 +1,5 @@
-import 'package:bpg_retail/core/configs/app_style/init_app_style.dart';
-import 'package:bpg_retail/core/widgets/buttons/label_button.dart';
+import 'package:tasa/core/configs/app_style/init_app_style.dart';
+import 'package:tasa/core/widgets/buttons/label_button.dart';
 import 'package:flutter/material.dart';
 
 class ScrollToTopButton extends StatelessWidget {

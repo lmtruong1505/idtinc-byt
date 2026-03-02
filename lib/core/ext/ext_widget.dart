@@ -1,5 +1,5 @@
-import 'package:bpg_retail/core/extension/init_ext.dart';
-import 'package:bpg_retail/core/style_app/color_app.dart';
+import 'package:tasa/core/extension/init_ext.dart';
+import 'package:tasa/core/style_app/color_app.dart';
 import 'package:flutter/material.dart';
 
 extension ExtWidget on Widget {

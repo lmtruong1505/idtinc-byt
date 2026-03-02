@@ -1,10 +1,10 @@
-import 'package:bpg_retail/core/configs/app_style/init_app_style.dart';
-import 'package:bpg_retail/core/constants/typography.dart';
-import 'package:bpg_retail/core/extension/spacing_extension.dart';
-import 'package:bpg_retail/core/widgets/dropdown_button.dart';
-import 'package:bpg_retail/features/dashboard/presentation/bloc/department_catalog_cubit.dart';
-import 'package:bpg_retail/features/dashboard/presentation/bloc/department_catalog_state.dart';
-import 'package:bpg_retail/gen/assets.gen.dart';
+import 'package:tasa/core/configs/app_style/init_app_style.dart';
+import 'package:tasa/core/constants/typography.dart';
+import 'package:tasa/core/extension/spacing_extension.dart';
+import 'package:tasa/core/widgets/dropdown_button.dart';
+import 'package:tasa/features/dashboard/presentation/bloc/department_catalog_cubit.dart';
+import 'package:tasa/features/dashboard/presentation/bloc/department_catalog_state.dart';
+import 'package:tasa/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -30,7 +30,7 @@ class _HospitalFilterState extends State<HospitalFilter> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Assets.images.logo.image(height: 60, width: 60),
+        Assets.images.logoTasa.image(height: 60, width: 60),
         16.height,
         Text(
           "Bệnh viện đa khoa huyện Quốc Oai",

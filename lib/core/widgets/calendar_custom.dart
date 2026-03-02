@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:bpg_retail/core/extension/init_ext.dart';
-import 'package:bpg_retail/core/widgets/buttons/icon_btn.dart';
-import 'package:bpg_retail/core/widgets/divider_custom.dart';
+import 'package:tasa/core/extension/init_ext.dart';
+import 'package:tasa/core/widgets/buttons/icon_btn.dart';
+import 'package:tasa/core/widgets/divider_custom.dart';
 import 'package:flutter/material.dart';
 
 import '../configs/app_style/init_app_style.dart';

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:bpg_retail/core/constants/colors.dart';
-import 'package:bpg_retail/core/constants/spacing.dart';
-import 'package:bpg_retail/core/constants/typography.dart';
-import 'package:bpg_retail/core/extension/init_ext.dart';
-import 'package:bpg_retail/core/widgets/common/title_required.dart';
+import 'package:tasa/core/constants/colors.dart';
+import 'package:tasa/core/constants/spacing.dart';
+import 'package:tasa/core/constants/typography.dart';
+import 'package:tasa/core/extension/init_ext.dart';
+import 'package:tasa/core/widgets/common/title_required.dart';
 
 class ValidateTextField extends StatefulWidget {
   const ValidateTextField({

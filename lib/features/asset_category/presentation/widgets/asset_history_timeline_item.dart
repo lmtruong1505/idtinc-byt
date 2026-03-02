@@ -1,9 +1,9 @@
-import 'package:bpg_retail/core/configs/app_style/init_app_style.dart';
-import 'package:bpg_retail/core/constants/typography.dart';
-import 'package:bpg_retail/core/extension/spacing_extension.dart';
-import 'package:bpg_retail/core/widgets/base_container.dart';
-import 'package:bpg_retail/core/widgets/dashed_line_widget.dart';
-import 'package:bpg_retail/features/asset_category/data/models/asset_history_event.dart';
+import 'package:tasa/core/configs/app_style/init_app_style.dart';
+import 'package:tasa/core/constants/typography.dart';
+import 'package:tasa/core/extension/spacing_extension.dart';
+import 'package:tasa/core/widgets/base_container.dart';
+import 'package:tasa/core/widgets/dashed_line_widget.dart';
+import 'package:tasa/features/asset_category/data/models/asset_history_event.dart';
 import 'package:flutter/material.dart';
 
 class AssetHistoryTimelineItem extends StatelessWidget {

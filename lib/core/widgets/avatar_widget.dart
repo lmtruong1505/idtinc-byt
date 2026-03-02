@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:bpg_retail/core/constants/colors.dart';
-import 'package:bpg_retail/core/utilities/assets.dart';
+import 'package:tasa/core/constants/colors.dart';
+import 'package:tasa/core/utilities/assets.dart';
 
 class AvatarWidget extends StatelessWidget {
   final String url;

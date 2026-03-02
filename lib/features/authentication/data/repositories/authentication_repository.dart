@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:bpg_retail/core/base/base_response.dart';
-import 'package:bpg_retail/core/configs/dio_config.dart';
-import 'package:bpg_retail/core/constants/api_constants.dart';
-import 'package:bpg_retail/features/authentication/data/models/auth_response.dart';
-import 'package:bpg_retail/features/authentication/data/services/authentication_service.dart';
+import 'package:tasa/core/base/base_response.dart';
+import 'package:tasa/core/configs/dio_config.dart';
+import 'package:tasa/core/constants/api_constants.dart';
+import 'package:tasa/features/authentication/data/models/auth_response.dart';
+import 'package:tasa/features/authentication/data/services/authentication_service.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton()

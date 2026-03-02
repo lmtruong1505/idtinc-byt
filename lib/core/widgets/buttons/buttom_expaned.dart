@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:bpg_retail/core/constants/colors.dart';
-import 'package:bpg_retail/core/extension/init_ext.dart';
+import 'package:tasa/core/constants/colors.dart';
+import 'package:tasa/core/extension/init_ext.dart';
 
 import '../../constants/typography.dart';
 import '../expanded_section.dart';

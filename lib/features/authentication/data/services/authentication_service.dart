@@ -1,5 +1,5 @@
-import 'package:bpg_retail/core/constants/api_constants.dart';
-import 'package:bpg_retail/core/configs/dio_config.dart';
+import 'package:tasa/core/constants/api_constants.dart';
+import 'package:tasa/core/configs/dio_config.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton()

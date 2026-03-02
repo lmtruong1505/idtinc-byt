@@ -1,4 +1,4 @@
-import 'package:bpg_retail/core/constants/colors.dart';
+import 'package:tasa/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class BaseProgressBar extends StatelessWidget {

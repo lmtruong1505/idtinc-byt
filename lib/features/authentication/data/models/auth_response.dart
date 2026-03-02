@@ -1,4 +1,4 @@
-import 'package:bpg_retail/features/authentication/data/models/user_model.dart';
+import 'package:tasa/features/authentication/data/models/user_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'auth_response.g.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:bpg_retail/core/constants/colors.dart';
-import 'package:bpg_retail/core/constants/typography.dart';
+import 'package:tasa/core/constants/colors.dart';
+import 'package:tasa/core/constants/typography.dart';
 
 class PinInputField extends StatefulWidget {
   final Function(String)? onDone;

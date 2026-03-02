@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:bpg_retail/core/extension/init_ext.dart';
+import 'package:tasa/core/extension/init_ext.dart';
 
 class DateTimeCustom {
   final now = DateTime.now();

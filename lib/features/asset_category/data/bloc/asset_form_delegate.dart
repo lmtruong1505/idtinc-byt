@@ -1,4 +1,4 @@
-import 'package:bpg_retail/features/asset_category/data/models/asset_type_model.dart';
+import 'package:tasa/features/asset_category/data/models/asset_type_model.dart';
 import 'create_asset_state.dart';
 
 /// Shared interface for cubits that provide form field updates

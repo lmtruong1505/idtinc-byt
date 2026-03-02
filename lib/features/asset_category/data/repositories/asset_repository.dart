@@ -1,17 +1,17 @@
-import 'package:bpg_retail/core/configs/dio_config.dart';
+import 'package:tasa/core/configs/dio_config.dart';
 import 'package:dio/dio.dart';
 import 'dart:io';
-import 'package:bpg_retail/core/constants/api_constants.dart';
-import 'package:bpg_retail/core/data/models/common_response.dart';
-import 'package:bpg_retail/features/asset_category/data/models/asset_status_count_model.dart';
-import 'package:bpg_retail/features/asset_category/data/models/asset_type_model.dart';
-import 'package:bpg_retail/features/asset_category/data/models/asset_location_model.dart';
-import 'package:bpg_retail/features/asset_category/data/models/department_model.dart';
-import 'package:bpg_retail/features/asset_category/data/models/hospital_asset_model.dart';
-import 'package:bpg_retail/features/asset_category/data/models/asset_overview_model.dart';
-import 'package:bpg_retail/features/asset_category/data/models/asset_depreciation_rate_model.dart';
-import 'package:bpg_retail/features/asset_category/data/models/asset_quantity_report_model.dart';
-import 'package:bpg_retail/features/asset_category/data/models/asset_status_ratio_model.dart';
+import 'package:tasa/core/constants/api_constants.dart';
+import 'package:tasa/core/data/models/common_response.dart';
+import 'package:tasa/features/asset_category/data/models/asset_status_count_model.dart';
+import 'package:tasa/features/asset_category/data/models/asset_type_model.dart';
+import 'package:tasa/features/asset_category/data/models/asset_location_model.dart';
+import 'package:tasa/features/asset_category/data/models/department_model.dart';
+import 'package:tasa/features/asset_category/data/models/hospital_asset_model.dart';
+import 'package:tasa/features/asset_category/data/models/asset_overview_model.dart';
+import 'package:tasa/features/asset_category/data/models/asset_depreciation_rate_model.dart';
+import 'package:tasa/features/asset_category/data/models/asset_quantity_report_model.dart';
+import 'package:tasa/features/asset_category/data/models/asset_status_ratio_model.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton()

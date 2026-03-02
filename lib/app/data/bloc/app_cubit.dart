@@ -1,10 +1,10 @@
 import 'dart:async';
-import 'package:bpg_retail/core/core.dart';
-import 'package:bpg_retail/app/data/bloc/app_state.dart';
-import 'package:bpg_retail/app/routes/router.gr.dart';
-import 'package:bpg_retail/core/base/base_cubit.dart';
-import 'package:bpg_retail/core/utilities/loading.dart';
-import 'package:bpg_retail/core/widgets/address_selection/bloc/address_selection_cubit.dart';
+import 'package:tasa/core/core.dart';
+import 'package:tasa/app/data/bloc/app_state.dart';
+import 'package:tasa/app/routes/router.gr.dart';
+import 'package:tasa/core/base/base_cubit.dart';
+import 'package:tasa/core/utilities/loading.dart';
+import 'package:tasa/core/widgets/address_selection/bloc/address_selection_cubit.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:injectable/injectable.dart';
 

@@ -1,5 +1,5 @@
-import 'package:bpg_retail/core/configs/app_style/init_app_style.dart';
-import 'package:bpg_retail/core/core.dart';
+import 'package:tasa/core/configs/app_style/init_app_style.dart';
+import 'package:tasa/core/core.dart';
 import 'package:flutter/material.dart';
 
 Widget chipCustomBadge({

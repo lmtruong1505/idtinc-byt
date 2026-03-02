@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:bpg_retail/core/configs/app_style/init_app_style.dart';
+import 'package:tasa/core/configs/app_style/init_app_style.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

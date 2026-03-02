@@ -1,9 +1,9 @@
-import 'package:bpg_retail/core/configs/app_style/init_app_style.dart';
-import 'package:bpg_retail/core/constants/typography.dart';
-import 'package:bpg_retail/core/extension/init_ext.dart';
-import 'package:bpg_retail/core/widgets/base_container.dart';
-import 'package:bpg_retail/core/widgets/buttons/common_button.dart';
-import 'package:bpg_retail/features/asset_category/data/models/hospital_asset_model.dart';
+import 'package:tasa/core/configs/app_style/init_app_style.dart';
+import 'package:tasa/core/constants/typography.dart';
+import 'package:tasa/core/extension/init_ext.dart';
+import 'package:tasa/core/widgets/base_container.dart';
+import 'package:tasa/core/widgets/buttons/common_button.dart';
+import 'package:tasa/features/asset_category/data/models/hospital_asset_model.dart';
 import 'package:flutter/material.dart';
 
 class AssetTechnicalSpecsBottomSheet extends StatelessWidget {

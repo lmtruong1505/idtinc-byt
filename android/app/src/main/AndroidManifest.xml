@@ -18,7 +18,7 @@ package="co.idtinc.bpg_retail">
 
 
     <application
-        android:label="BGP Retail"
+        android:label="Tasa"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         android:requestLegacyExternalStorage="true"

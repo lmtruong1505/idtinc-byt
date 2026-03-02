@@ -1,4 +1,4 @@
-import 'package:bpg_retail/features/asset_category/data/models/asset_location_model.dart';
+import 'package:tasa/features/asset_category/data/models/asset_location_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'asset_location_history_state.freezed.dart';

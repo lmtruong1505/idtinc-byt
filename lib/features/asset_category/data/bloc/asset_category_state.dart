@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:bpg_retail/features/asset_category/data/models/hospital_asset_model.dart';
-import 'package:bpg_retail/core/data/models/pagination_model.dart';
+import 'package:tasa/features/asset_category/data/models/hospital_asset_model.dart';
+import 'package:tasa/core/data/models/pagination_model.dart';
 
 part 'asset_category_state.freezed.dart';
 

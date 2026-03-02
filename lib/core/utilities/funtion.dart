@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/rendering.dart';
-import 'package:bpg_retail/core/constants/colors.dart';
+import 'package:tasa/core/constants/colors.dart';
 
 bool areListsEqual(List<int>? list1, List<int>? list2) {
   if (list1 == null || list2 == null) return false;

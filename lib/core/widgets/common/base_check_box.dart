@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:bpg_retail/core/constants/colors.dart';
+import 'package:tasa/core/constants/colors.dart';
 
 class BaseCheckbox extends StatelessWidget {
   const BaseCheckbox({

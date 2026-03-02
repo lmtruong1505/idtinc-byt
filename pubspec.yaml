@@ -1,5 +1,5 @@
-name: bpg_retail
-description: bpg_retail 
+name: tasa
+description: tasa 
 
 publish_to: 'none'
 
@@ -101,6 +101,13 @@ dev_dependencies:
   auto_route_generator: ^8.0.0
   build_runner: ^2.4.13
   flutter_gen_runner: ^5.8.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  android: "ic_launcher"
+  ios: true
+  image_path: "assets/images/logo_tasa.png"
+  min_sdk_android: 21 # android min sdk_version
 
 flutter_gen:
   output: lib/gen/

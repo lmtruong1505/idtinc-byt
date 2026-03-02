@@ -1,22 +1,22 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:bpg_retail/core/configs/app_style/init_app_style.dart';
-import 'package:bpg_retail/core/extension/init_ext.dart';
-import 'package:bpg_retail/core/widgets/common/scroll_to_top_button.dart';
-import 'package:bpg_retail/features/dashboard/widgets/dashboard_header.dart';
-import 'package:bpg_retail/features/dashboard/widgets/hospital_filter.dart';
-import 'package:bpg_retail/features/dashboard/widgets/overview_cards.dart';
-import 'package:bpg_retail/features/dashboard/widgets/depreciation_chart.dart';
-import 'package:bpg_retail/features/dashboard/widgets/liquidation_chart.dart';
-import 'package:bpg_retail/features/dashboard/widgets/asset_lists.dart';
+import 'package:tasa/core/configs/app_style/init_app_style.dart';
+import 'package:tasa/core/extension/init_ext.dart';
+import 'package:tasa/core/widgets/common/scroll_to_top_button.dart';
+import 'package:tasa/features/dashboard/widgets/dashboard_header.dart';
+import 'package:tasa/features/dashboard/widgets/hospital_filter.dart';
+import 'package:tasa/features/dashboard/widgets/overview_cards.dart';
+import 'package:tasa/features/dashboard/widgets/depreciation_chart.dart';
+import 'package:tasa/features/dashboard/widgets/liquidation_chart.dart';
+import 'package:tasa/features/dashboard/widgets/asset_lists.dart';
 import 'package:flutter/material.dart';
 
-import 'package:bpg_retail/core/injection/injection.dart';
-import 'package:bpg_retail/features/dashboard/presentation/bloc/department_catalog_cubit.dart';
-import 'package:bpg_retail/features/dashboard/presentation/bloc/department_catalog_state.dart';
-import 'package:bpg_retail/features/dashboard/presentation/bloc/asset_overview_cubit.dart';
-import 'package:bpg_retail/features/dashboard/presentation/bloc/depreciation_rate_cubit.dart';
-import 'package:bpg_retail/features/dashboard/presentation/bloc/asset_quantity_cubit.dart';
-import 'package:bpg_retail/features/dashboard/presentation/bloc/asset_status_ratio_cubit.dart';
+import 'package:tasa/core/injection/injection.dart';
+import 'package:tasa/features/dashboard/presentation/bloc/department_catalog_cubit.dart';
+import 'package:tasa/features/dashboard/presentation/bloc/department_catalog_state.dart';
+import 'package:tasa/features/dashboard/presentation/bloc/asset_overview_cubit.dart';
+import 'package:tasa/features/dashboard/presentation/bloc/depreciation_rate_cubit.dart';
+import 'package:tasa/features/dashboard/presentation/bloc/asset_quantity_cubit.dart';
+import 'package:tasa/features/dashboard/presentation/bloc/asset_status_ratio_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()

@@ -1,7 +1,7 @@
-import 'package:bpg_retail/core/base/base_cubit.dart';
-import 'package:bpg_retail/features/asset_category/data/models/hospital_asset_model.dart';
-import 'package:bpg_retail/features/asset_category/data/models/asset_type_model.dart';
-import 'package:bpg_retail/features/asset_category/data/repositories/asset_repository.dart';
+import 'package:tasa/core/base/base_cubit.dart';
+import 'package:tasa/features/asset_category/data/models/hospital_asset_model.dart';
+import 'package:tasa/features/asset_category/data/models/asset_type_model.dart';
+import 'package:tasa/features/asset_category/data/repositories/asset_repository.dart';
 import 'package:injectable/injectable.dart';
 
 import 'asset_form_delegate.dart';

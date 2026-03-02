@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:bpg_retail/core/constants/colors.dart';
-import 'package:bpg_retail/core/constants/typography.dart';
-import 'package:bpg_retail/core/injection/injection.dart';
-import 'package:bpg_retail/core/navigation/navigator.dart';
+import 'package:tasa/core/constants/colors.dart';
+import 'package:tasa/core/constants/typography.dart';
+import 'package:tasa/core/injection/injection.dart';
+import 'package:tasa/core/navigation/navigator.dart';
 
 class AppBarBackButton extends StatelessWidget {
   AppBarBackButton({this.onTap});

@@ -1,5 +1,5 @@
 import 'package:injectable/injectable.dart';
-import 'package:bpg_retail/core/env/env.dart';
+import 'package:tasa/core/env/env.dart';
 
 @injectable
 class Api {

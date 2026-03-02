@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:bpg_retail/core/configs/app_style/init_app_style.dart';
-import 'package:bpg_retail/core/dialog/dialog_noti.dart';
-import 'package:bpg_retail/core/widgets/buttons/label_button.dart';
-import 'package:bpg_retail/gen/assets.gen.dart';
+import 'package:tasa/core/configs/app_style/init_app_style.dart';
+import 'package:tasa/core/dialog/dialog_noti.dart';
+import 'package:tasa/core/widgets/buttons/label_button.dart';
+import 'package:tasa/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:highlight_text/highlight_text.dart';
 import 'package:toastification/toastification.dart';

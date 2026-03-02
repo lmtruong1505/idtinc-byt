@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:bpg_retail/core/constants/colors.dart';
-import 'package:bpg_retail/core/utilities/assets.dart';
-import 'package:bpg_retail/core/utilities/screens.dart';
+import 'package:tasa/core/constants/colors.dart';
+import 'package:tasa/core/utilities/assets.dart';
+import 'package:tasa/core/utilities/screens.dart';
 import 'package:flutter/material.dart';
 
 class BaseScaffold extends StatelessWidget {

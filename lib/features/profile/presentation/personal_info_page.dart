@@ -1,15 +1,15 @@
-import 'package:bpg_retail/core/constants/colors.dart';
-import 'package:bpg_retail/core/constants/typography.dart';
-import 'package:bpg_retail/core/extension/spacing_extension.dart';
-import 'package:bpg_retail/core/injection/injection.dart';
-import 'package:bpg_retail/core/preferences/preferences.dart';
-import 'package:bpg_retail/core/widgets/base_container.dart';
-import 'package:bpg_retail/core/widgets/buttons/common_button.dart';
-import 'package:bpg_retail/core/widgets/buttons/dashed_button.dart';
-import 'package:bpg_retail/core/widgets/fa_icon.dart';
-import 'package:bpg_retail/gen/assets.gen.dart';
+import 'package:tasa/core/constants/colors.dart';
+import 'package:tasa/core/constants/typography.dart';
+import 'package:tasa/core/extension/spacing_extension.dart';
+import 'package:tasa/core/injection/injection.dart';
+import 'package:tasa/core/preferences/preferences.dart';
+import 'package:tasa/core/widgets/base_container.dart';
+import 'package:tasa/core/widgets/buttons/common_button.dart';
+import 'package:tasa/core/widgets/buttons/dashed_button.dart';
+import 'package:tasa/core/widgets/fa_icon.dart';
+import 'package:tasa/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
-import 'package:bpg_retail/app/data/bloc/app_cubit.dart';
+import 'package:tasa/app/data/bloc/app_cubit.dart';
 
 class PersonalInfoPage extends StatelessWidget {
   const PersonalInfoPage({super.key});
@@ -169,7 +169,7 @@ class PersonalInfoPage extends StatelessWidget {
                       ],
                     ),
                     32.height,
-                    Assets.images.logo.image(height: 60, width: 60),
+                    Assets.images.logoTasa.image(height: 60, width: 60),
                     16.height,
                     Text(
                       "Bệnh viện đa khoa huyện Quốc Oai",

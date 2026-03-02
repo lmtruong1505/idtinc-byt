@@ -1,5 +1,5 @@
-import 'package:bpg_retail/core/extension/init_ext.dart';
-import 'package:bpg_retail/gen/assets.gen.dart';
+import 'package:tasa/core/extension/init_ext.dart';
+import 'package:tasa/gen/assets.gen.dart';
 import 'package:flutter/widgets.dart';
 
 class HeaderAuthForm extends StatelessWidget {
@@ -16,7 +16,10 @@ class HeaderAuthForm extends StatelessWidget {
       children: [
         paddingTop.height,
         isPaddingTop?.height ?? 190.height,
-        Assets.images.logo.image(width: width ?? 198, height: height ?? 100),
+        Assets.images.logoTasa.image(
+          width: width ?? 198,
+          height: height ?? 100,
+        ),
       ],
     );
   }

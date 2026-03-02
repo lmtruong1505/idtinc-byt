@@ -3,9 +3,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:bpg_retail/core/configs/dio_config.dart';
-import 'package:bpg_retail/core/extension/init_ext.dart';
-import 'package:bpg_retail/core/injection/injection.dart';
+import 'package:tasa/core/configs/dio_config.dart';
+import 'package:tasa/core/extension/init_ext.dart';
+import 'package:tasa/core/injection/injection.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import 'update_app_dialog.dart';

@@ -1,13 +1,13 @@
 import 'dart:math';
 
-import 'package:bpg_retail/core/configs/app_style/init_app_style.dart';
-import 'package:bpg_retail/core/extension/spacing_extension.dart';
-import 'package:bpg_retail/core/widgets/base_container.dart';
+import 'package:tasa/core/configs/app_style/init_app_style.dart';
+import 'package:tasa/core/extension/spacing_extension.dart';
+import 'package:tasa/core/widgets/base_container.dart';
 import 'package:flutter/material.dart';
-import 'package:bpg_retail/core/utilities/enum.dart';
-import 'package:bpg_retail/core/ext/ext_num.dart';
-import 'package:bpg_retail/features/dashboard/presentation/bloc/asset_overview_cubit.dart';
-import 'package:bpg_retail/features/dashboard/presentation/bloc/asset_overview_state.dart';
+import 'package:tasa/core/utilities/enum.dart';
+import 'package:tasa/core/ext/ext_num.dart';
+import 'package:tasa/features/dashboard/presentation/bloc/asset_overview_cubit.dart';
+import 'package:tasa/features/dashboard/presentation/bloc/asset_overview_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LiquidationChartWidget extends StatelessWidget {

@@ -2,15 +2,15 @@ import 'package:auto_route/auto_route.dart';
 import 'package:camera/camera.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:bpg_retail/core/constants/colors.dart';
-import 'package:bpg_retail/core/constants/typography.dart';
-import 'package:bpg_retail/core/extension/init_ext.dart';
-import 'package:bpg_retail/core/injection/injection.dart';
-import 'package:bpg_retail/core/navigation/navigator.dart';
-import 'package:bpg_retail/core/utilities/image_utils.dart';
-import 'package:bpg_retail/core/widgets/camera_float_button.dart';
-import 'package:bpg_retail/core/widgets/identity_card_widget.dart';
-import 'package:bpg_retail/core/widgets/kyc_camera_preview.dart';
+import 'package:tasa/core/constants/colors.dart';
+import 'package:tasa/core/constants/typography.dart';
+import 'package:tasa/core/extension/init_ext.dart';
+import 'package:tasa/core/injection/injection.dart';
+import 'package:tasa/core/navigation/navigator.dart';
+import 'package:tasa/core/utilities/image_utils.dart';
+import 'package:tasa/core/widgets/camera_float_button.dart';
+import 'package:tasa/core/widgets/identity_card_widget.dart';
+import 'package:tasa/core/widgets/kyc_camera_preview.dart';
 
 @RoutePage()
 class KycCameraIdentityScreen extends StatefulWidget {

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:image_cropper/image_cropper.dart';
-import 'package:bpg_retail/core/widgets/select_image_widget_V2.dart';
+import 'package:tasa/core/widgets/select_image_widget_V2.dart';
 
 class BottomSheetService {
   static FutureOr showBottomSheetSelectImage(

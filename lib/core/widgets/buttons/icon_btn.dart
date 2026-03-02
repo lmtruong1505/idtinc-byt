@@ -1,6 +1,6 @@
-import 'package:bpg_retail/core/configs/app_style/init_app_style.dart';
-import 'package:bpg_retail/core/extension/init_ext.dart';
-import 'package:bpg_retail/core/style_app/init_style.dart';
+import 'package:tasa/core/configs/app_style/init_app_style.dart';
+import 'package:tasa/core/extension/init_ext.dart';
+import 'package:tasa/core/style_app/init_style.dart';
 import 'package:flutter/material.dart';
 
 Widget IconBtn({

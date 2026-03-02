@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:bpg_retail/gen/assets.gen.dart';
+import 'package:tasa/gen/assets.gen.dart';
 
 class ImageLogoLgDefault extends StatelessWidget {
   const ImageLogoLgDefault({super.key, this.width, this.height});

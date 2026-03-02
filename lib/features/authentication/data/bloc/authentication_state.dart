@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:bpg_retail/core/utilities/enum.dart';
+import 'package:tasa/core/utilities/enum.dart';
 
 part 'authentication_state.freezed.dart';
 

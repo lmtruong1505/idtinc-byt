@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:bpg_retail/core/base/base_state.dart';
-import 'package:bpg_retail/core/constants/colors.dart';
-import 'package:bpg_retail/core/constants/spacing.dart';
-import 'package:bpg_retail/core/constants/typography.dart';
-import 'package:bpg_retail/core/utilities/screens.dart';
-import 'package:bpg_retail/core/widgets/address_selection/bloc/address_selection_cubit.dart';
-import 'package:bpg_retail/core/widgets/address_selection/bloc/address_selection_state.dart';
-import 'package:bpg_retail/core/widgets/address_selection/models/address_selection_model.dart';
-import 'package:bpg_retail/core/widgets/base/base_loading.dart';
-import 'package:bpg_retail/core/widgets/buttons/extra_button.dart';
-import 'package:bpg_retail/core/widgets/textfield/validate_textfield.dart';
+import 'package:tasa/core/base/base_state.dart';
+import 'package:tasa/core/constants/colors.dart';
+import 'package:tasa/core/constants/spacing.dart';
+import 'package:tasa/core/constants/typography.dart';
+import 'package:tasa/core/utilities/screens.dart';
+import 'package:tasa/core/widgets/address_selection/bloc/address_selection_cubit.dart';
+import 'package:tasa/core/widgets/address_selection/bloc/address_selection_state.dart';
+import 'package:tasa/core/widgets/address_selection/models/address_selection_model.dart';
+import 'package:tasa/core/widgets/base/base_loading.dart';
+import 'package:tasa/core/widgets/buttons/extra_button.dart';
+import 'package:tasa/core/widgets/textfield/validate_textfield.dart';
 
 class AddressSelection extends StatefulWidget {
   const AddressSelection({

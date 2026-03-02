@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:bpg_retail/core/constants/colors.dart';
-import 'package:bpg_retail/core/extension/init_ext.dart';
-import 'package:bpg_retail/core/extension/string_extension.dart';
-import 'package:bpg_retail/gen/assets.gen.dart';
+import 'package:tasa/core/constants/colors.dart';
+import 'package:tasa/core/extension/init_ext.dart';
+import 'package:tasa/core/extension/string_extension.dart';
+import 'package:tasa/gen/assets.gen.dart';
 
 import 'base/base_loading.dart';
 

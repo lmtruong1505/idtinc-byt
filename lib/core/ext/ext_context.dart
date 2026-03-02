@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:bpg_retail/core/configs/app_style/init_app_style.dart';
-import 'package:bpg_retail/core/dialog/dialog_message.dart';
-import 'package:bpg_retail/core/extension/init_ext.dart';
+import 'package:tasa/core/configs/app_style/init_app_style.dart';
+import 'package:tasa/core/dialog/dialog_message.dart';
+import 'package:tasa/core/extension/init_ext.dart';
 import 'package:flutter/material.dart';
 
 extension extContext on BuildContext {

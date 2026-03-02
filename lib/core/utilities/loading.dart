@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:bpg_retail/core/constants/colors.dart';
+import 'package:tasa/core/constants/colors.dart';
 
 void showLoading() {
   EasyLoading.show(dismissOnTap: false, maskType: EasyLoadingMaskType.black);

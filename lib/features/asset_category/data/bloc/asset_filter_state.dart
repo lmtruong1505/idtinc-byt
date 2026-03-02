@@ -1,6 +1,6 @@
-import 'package:bpg_retail/features/asset_category/data/models/asset_status_count_model.dart';
-import 'package:bpg_retail/features/asset_category/data/models/asset_type_model.dart';
-import 'package:bpg_retail/features/asset_category/data/models/department_model.dart';
+import 'package:tasa/features/asset_category/data/models/asset_status_count_model.dart';
+import 'package:tasa/features/asset_category/data/models/asset_type_model.dart';
+import 'package:tasa/features/asset_category/data/models/department_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'asset_filter_state.freezed.dart';

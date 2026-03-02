@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:bpg_retail/core/constants/colors.dart';
-import 'package:bpg_retail/core/constants/spacing.dart';
-import 'package:bpg_retail/core/constants/typography.dart';
+import 'package:tasa/core/constants/colors.dart';
+import 'package:tasa/core/constants/spacing.dart';
+import 'package:tasa/core/constants/typography.dart';
 
 class CommonButton extends StatelessWidget {
   final String title;

@@ -1,11 +1,11 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:bpg_retail/app/data/bloc/app_cubit.dart';
-import 'package:bpg_retail/app/data/bloc/localization_cubit.dart';
-import 'package:bpg_retail/app/routes/router.dart';
-import 'package:bpg_retail/app/routes/router.gr.dart';
-import 'package:bpg_retail/core/base/base_state.dart';
-import 'package:bpg_retail/core/injection/injection.dart';
-import 'package:bpg_retail/core/utilities/localization_helper.dart';
+import 'package:tasa/app/data/bloc/app_cubit.dart';
+import 'package:tasa/app/data/bloc/localization_cubit.dart';
+import 'package:tasa/app/routes/router.dart';
+import 'package:tasa/app/routes/router.gr.dart';
+import 'package:tasa/core/base/base_state.dart';
+import 'package:tasa/core/injection/injection.dart';
+import 'package:tasa/core/utilities/localization_helper.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

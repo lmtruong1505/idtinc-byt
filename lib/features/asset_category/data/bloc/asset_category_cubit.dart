@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:bpg_retail/features/asset_category/data/models/hospital_asset_model.dart';
-import 'package:bpg_retail/features/asset_category/data/repositories/asset_repository.dart';
+import 'package:tasa/features/asset_category/data/models/hospital_asset_model.dart';
+import 'package:tasa/features/asset_category/data/repositories/asset_repository.dart';
 import 'asset_category_state.dart';
 
 @injectable

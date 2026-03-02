@@ -1,12 +1,12 @@
 import 'dart:io';
-import 'package:bpg_retail/core/configs/app_style/init_app_style.dart';
-import 'package:bpg_retail/core/extension/init_ext.dart';
-import 'package:bpg_retail/core/extension/spacing_extension.dart';
-import 'package:bpg_retail/core/constants/typography.dart';
-import 'package:bpg_retail/core/widgets/fa_icon.dart';
+import 'package:tasa/core/configs/app_style/init_app_style.dart';
+import 'package:tasa/core/extension/init_ext.dart';
+import 'package:tasa/core/extension/spacing_extension.dart';
+import 'package:tasa/core/constants/typography.dart';
+import 'package:tasa/core/widgets/fa_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:bpg_retail/core/utilities/image_utils.dart';
+import 'package:tasa/core/utilities/image_utils.dart';
 import 'package:dotted_border/dotted_border.dart';
 
 class AssetImagePickerWidget extends StatelessWidget {

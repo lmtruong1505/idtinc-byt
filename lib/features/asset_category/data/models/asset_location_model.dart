@@ -1,4 +1,4 @@
-import 'package:bpg_retail/features/authentication/data/models/user_model.dart';
+import 'package:tasa/features/authentication/data/models/user_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'asset_location_model.freezed.dart';

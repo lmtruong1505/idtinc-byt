@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:bpg_retail/core/check_version/check_vesion.dart';
-import 'package:bpg_retail/core/constants/colors.dart';
-import 'package:bpg_retail/core/constants/typography.dart';
-import 'package:bpg_retail/core/extension/init_ext.dart';
-import 'package:bpg_retail/core/utilities/launch_url.dart';
-import "package:bpg_retail/core/widgets/buttons/main_button.dart";
+import 'package:tasa/core/check_version/check_vesion.dart';
+import 'package:tasa/core/constants/colors.dart';
+import 'package:tasa/core/constants/typography.dart';
+import 'package:tasa/core/extension/init_ext.dart';
+import 'package:tasa/core/utilities/launch_url.dart';
+import "package:tasa/core/widgets/buttons/main_button.dart";
 
 class UpdateAppDialog extends StatelessWidget {
   final ModelVersion version;

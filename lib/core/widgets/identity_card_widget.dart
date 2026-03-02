@@ -1,11 +1,11 @@
 import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:bpg_retail/core/constants/colors.dart';
-import 'package:bpg_retail/core/constants/typography.dart';
-import 'package:bpg_retail/core/extension/init_ext.dart';
-import 'package:bpg_retail/core/extension/string_extension.dart';
-import 'package:bpg_retail/core/widgets/cache_image_network_widget.dart';
+import 'package:tasa/core/constants/colors.dart';
+import 'package:tasa/core/constants/typography.dart';
+import 'package:tasa/core/extension/init_ext.dart';
+import 'package:tasa/core/extension/string_extension.dart';
+import 'package:tasa/core/widgets/cache_image_network_widget.dart';
 
 class IdentityCardWidget extends StatelessWidget {
   final ImageIdentityTypeEnum type;

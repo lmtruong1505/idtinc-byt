@@ -6,9 +6,9 @@ import 'package:image/image.dart' as img;
 import 'package:image_cropper/image_cropper.dart';
 // import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:bpg_retail/core/extension/init_ext.dart';
-import 'package:bpg_retail/core/utilities/dialog_utils.dart';
-import 'package:bpg_retail/core/widgets/toast/toast.dart';
+import 'package:tasa/core/extension/init_ext.dart';
+import 'package:tasa/core/utilities/dialog_utils.dart';
+import 'package:tasa/core/widgets/toast/toast.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class ImageUtils {

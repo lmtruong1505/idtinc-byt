@@ -1,5 +1,5 @@
-import 'package:bpg_retail/core/utilities/enum.dart';
-import 'package:bpg_retail/features/asset_category/data/models/asset_status_ratio_model.dart';
+import 'package:tasa/core/utilities/enum.dart';
+import 'package:tasa/features/asset_category/data/models/asset_status_ratio_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'asset_status_ratio_state.freezed.dart';

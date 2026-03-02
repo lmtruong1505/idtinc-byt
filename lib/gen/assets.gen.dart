@@ -830,6 +830,10 @@ class $AssetsImagesGen {
   AssetGenImage get logoAbsc1 =>
       const AssetGenImage('assets/images/logo_absc_1.png');
 
+  /// File path: assets/images/logo_tasa.png
+  AssetGenImage get logoTasa =>
+      const AssetGenImage('assets/images/logo_tasa.png');
+
   /// File path: assets/images/nuoc-rau-cau.png
   AssetGenImage get nuocRauCau =>
       const AssetGenImage('assets/images/nuoc-rau-cau.png');
@@ -939,6 +943,7 @@ class $AssetsImagesGen {
         logo,
         logoAbsc,
         logoAbsc1,
+        logoTasa,
         nuocRauCau,
         placeHolderImage,
         rank0,

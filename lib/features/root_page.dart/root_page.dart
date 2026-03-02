@@ -1,17 +1,17 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:bpg_retail/app/routes/router.gr.dart';
-import 'package:bpg_retail/core/widgets/base_container.dart';
-import 'package:bpg_retail/features/asset_category/presentation/asset_category_page.dart';
-import 'package:bpg_retail/features/dashboard/dashboard_page.dart';
-import 'package:bpg_retail/features/profile/presentation/personal_info_page.dart';
+import 'package:tasa/app/routes/router.gr.dart';
+import 'package:tasa/core/widgets/base_container.dart';
+import 'package:tasa/features/asset_category/presentation/asset_category_page.dart';
+import 'package:tasa/features/dashboard/dashboard_page.dart';
+import 'package:tasa/features/profile/presentation/personal_info_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:bpg_retail/app/data/bloc/app_state.dart';
-import 'package:bpg_retail/core/base/index_cubit.dart';
-import 'package:bpg_retail/core/constants/colors.dart';
-import 'package:bpg_retail/core/constants/typography.dart';
-import 'package:bpg_retail/core/extension/init_ext.dart';
-import 'package:bpg_retail/core/utilities/assets.dart';
+import 'package:tasa/app/data/bloc/app_state.dart';
+import 'package:tasa/core/base/index_cubit.dart';
+import 'package:tasa/core/constants/colors.dart';
+import 'package:tasa/core/constants/typography.dart';
+import 'package:tasa/core/extension/init_ext.dart';
+import 'package:tasa/core/utilities/assets.dart';
 
 import '../../app/data/bloc/app_cubit.dart';
 

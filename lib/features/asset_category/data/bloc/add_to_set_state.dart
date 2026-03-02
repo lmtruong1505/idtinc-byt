@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:bpg_retail/features/asset_category/data/models/asset_type_model.dart';
+import 'package:tasa/features/asset_category/data/models/asset_type_model.dart';
 import 'create_asset_state.dart';
 
 part 'add_to_set_state.freezed.dart';

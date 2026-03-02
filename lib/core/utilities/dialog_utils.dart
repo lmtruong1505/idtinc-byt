@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:math';
-import 'package:bpg_retail/core/constants/constanst.dart';
+import 'package:tasa/core/constants/constanst.dart';
 
-import 'package:bpg_retail/core/extension/init_ext.dart';
-import 'package:bpg_retail/core/utilities/assets.dart';
-import 'package:bpg_retail/core/utilities/screens.dart';
+import 'package:tasa/core/extension/init_ext.dart';
+import 'package:tasa/core/utilities/assets.dart';
+import 'package:tasa/core/utilities/screens.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/widget.dart';

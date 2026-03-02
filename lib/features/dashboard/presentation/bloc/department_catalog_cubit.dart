@@ -1,8 +1,8 @@
-import 'package:bpg_retail/core/base/base_cubit.dart';
-import 'package:bpg_retail/core/utilities/enum.dart';
-import 'package:bpg_retail/features/asset_category/data/models/department_model.dart';
-import 'package:bpg_retail/features/asset_category/data/repositories/asset_repository.dart';
-import 'package:bpg_retail/features/dashboard/presentation/bloc/department_catalog_state.dart';
+import 'package:tasa/core/base/base_cubit.dart';
+import 'package:tasa/core/utilities/enum.dart';
+import 'package:tasa/features/asset_category/data/models/department_model.dart';
+import 'package:tasa/features/asset_category/data/repositories/asset_repository.dart';
+import 'package:tasa/features/dashboard/presentation/bloc/department_catalog_state.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable

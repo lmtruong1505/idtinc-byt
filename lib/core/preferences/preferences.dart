@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:bpg_retail/core/constants/preference_keys.dart';
-import 'package:bpg_retail/features/authentication/data/models/login_model.dart';
-import 'package:bpg_retail/features/authentication/data/models/remember_account.dart';
-import 'package:bpg_retail/features/authentication/data/models/user_model.dart';
+import 'package:tasa/core/constants/preference_keys.dart';
+import 'package:tasa/features/authentication/data/models/login_model.dart';
+import 'package:tasa/features/authentication/data/models/remember_account.dart';
+import 'package:tasa/features/authentication/data/models/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:injectable/injectable.dart';
 
