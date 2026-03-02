@@ -1,4 +1,3 @@
-import 'package:bpg_retail/features/asset_category/data/models/hospital_asset_model.dart';
 import 'package:bpg_retail/features/authentication/data/models/user_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

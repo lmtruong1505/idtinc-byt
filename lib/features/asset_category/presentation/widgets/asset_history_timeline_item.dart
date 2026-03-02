@@ -2,6 +2,7 @@ import 'package:bpg_retail/core/configs/app_style/init_app_style.dart';
 import 'package:bpg_retail/core/constants/typography.dart';
 import 'package:bpg_retail/core/extension/spacing_extension.dart';
 import 'package:bpg_retail/core/widgets/base_container.dart';
+import 'package:bpg_retail/core/widgets/dashed_line_widget.dart';
 import 'package:bpg_retail/features/asset_category/data/models/asset_history_event.dart';
 import 'package:flutter/material.dart';
 
@@ -31,22 +32,38 @@ class AssetHistoryTimelineItem extends StatelessWidget {
     );
   }
 
+  Color get _lineColor {
+    switch (event.type) {
+      case AssetEventType.initial:
+      case AssetEventType.transfer:
+        return AppColors.blue30;
+      case AssetEventType.transferRejected:
+      case AssetEventType.disposePending:
+      case AssetEventType.disposed:
+        return AppColors.red30;
+      case AssetEventType.transferPending:
+        return AppColors.grey30;
+    }
+  }
+
   Widget _buildTimelineColumn() {
     return SizedBox(
-      width: 48,
+      width: 60,
       child: Column(
         children: [
           _buildEventIcon(),
           if (!isLast)
             Expanded(
-              child: Container(
-                width: 1,
-                // Using a solid line or implementing a custom dashed painter if strictly needed.
-                // Using solid light blue/red based on type for simplicity unless dashed is mandatory.
-                // Mockup shows dashed line color matching the icon color subtly.
-                color: event.isWarning ? AppColors.red60 : AppColors.blue60,
-                // We'll use a basic solid line or specialized dashed widget if available in base.
-                // Assuming basic container for now.
+              child: SizedBox.expand(
+                child: CustomPaint(
+                  painter: DashedLinePainter(
+                    axis: Axis.vertical,
+                    // color: _lineColor,
+                    color:
+                        event.isWarning ? AppColors.grey20 : AppColors.blue60,
+                    strokeWidth: 1.5,
+                  ),
+                ),
               ),
             ),
         ],
@@ -56,53 +73,69 @@ class AssetHistoryTimelineItem extends StatelessWidget {
 
   Widget _buildEventIcon() {
     IconData iconData;
-    Color bgColor;
+    Color mainColor;
     Color borderColor;
 
     switch (event.type) {
       case AssetEventType.initial:
         iconData = Icons.south_east;
-        bgColor = AppColors.blue60;
+        mainColor = AppColors.blue60;
         borderColor = AppColors.blue20;
         break;
       case AssetEventType.transfer:
         iconData = Icons.swap_horiz;
-        bgColor = AppColors.blue60;
+        mainColor = AppColors.blue60;
         borderColor = AppColors.blue20;
         break;
       case AssetEventType.transferRejected:
         iconData = Icons.close;
-        bgColor = AppColors.red60;
+        mainColor = AppColors.red60;
         borderColor = AppColors.red20;
         break;
       case AssetEventType.transferPending:
-        iconData = Icons.pending_outlined;
-        bgColor = AppColors.grey60;
+        iconData = Icons.autorenew;
+        mainColor = AppColors.grey60;
         borderColor = AppColors.grey20;
         break;
       case AssetEventType.disposePending:
-        iconData = Icons.north_west;
-        bgColor = AppColors.red60;
-        borderColor = AppColors.red20;
-        break;
       case AssetEventType.disposed:
         iconData = Icons.north_west;
-        bgColor = AppColors.red60;
+        mainColor = AppColors.red60;
         borderColor = AppColors.red20;
         break;
     }
 
     return Container(
-      width: 48,
-      height: 48,
+      width: 60,
+      height: 60,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border: Border.all(color: borderColor, width: 2),
+        border: Border.all(color: borderColor.withOpacity(0.4), width: 1),
       ),
       padding: const EdgeInsets.all(4),
       child: Container(
-        decoration: BoxDecoration(shape: BoxShape.circle, color: bgColor),
-        child: Icon(iconData, color: AppColors.white, size: 20),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(color: borderColor, width: 2),
+        ),
+        padding: const EdgeInsets.all(6),
+        child: Container(
+          decoration: BoxDecoration(shape: BoxShape.circle, color: mainColor),
+          padding: const EdgeInsets.all(7),
+          child: Container(
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
+            ),
+            child: Center(
+              child: Icon(
+                iconData,
+                color: mainColor, // icon cùng màu viền
+                size: 18,
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -150,7 +183,9 @@ class AssetHistoryTimelineItem extends StatelessWidget {
                         ),
                         4.width,
                         Text(
-                          "Đang ở đây",
+                          event.type == AssetEventType.disposed
+                              ? "Đã thanh lý"
+                              : "Đang ở đây",
                           style: AppTypography.p7.copyWith(
                             color: AppColors.red60,
                             fontWeight: FontWeight.w600,
@@ -190,80 +225,84 @@ class AssetHistoryTimelineItem extends StatelessWidget {
                 ),
               ),
             ],
-            16.height,
-            BaseContainer(
-              width: double.infinity,
-              padding: const EdgeInsets.all(12),
-              borderRadius: 4,
-              color: AppColors.grey10,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            if (event.type != AssetEventType.disposed &&
+                event.type != AssetEventType.disposePending) ...[
+              16.height,
+              BaseContainer(
+                width: double.infinity,
+                padding: const EdgeInsets.all(12),
+                borderRadius: 4,
+                color: AppColors.grey10,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Người được giao",
+                      style: AppTypography.p7.copyWith(
+                        color: AppColors.text_tertiary,
+                      ),
+                    ),
+                    4.height,
+                    Text(
+                      (event.assigneeName == null ||
+                              event.assigneeName!.isEmpty)
+                          ? "Không có thông tin"
+                          : event.assigneeName!,
+                      style: AppTypography.h6.copyWith(
+                        color: AppColors.text_primary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              if (event.assigneeRole != null &&
+                  event.assigneeRole!.isNotEmpty) ...[
+                4.height,
+                Text(
+                  event.assigneeRole!,
+                  style: AppTypography.p6.copyWith(
+                    color: AppColors.text_tertiary,
+                  ),
+                ),
+              ],
+              16.height,
+              Row(
                 children: [
-                  Text(
-                    "Người được giao",
-                    style: AppTypography.p7.copyWith(
-                      color: AppColors.text_tertiary,
+                  Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: AppColors.orange20, width: 1.5),
+                    ),
+                    child: const Icon(
+                      Icons.warning_amber_rounded,
+                      color: AppColors.orange60,
+                      size: 14,
                     ),
                   ),
-                  4.height,
-                  Text(
-                    (event.assigneeName == null || event.assigneeName!.isEmpty)
-                        ? "Không có thông tin"
-                        : event.assigneeName!,
-                    style: AppTypography.h6.copyWith(
-                      color: AppColors.text_primary,
-                      fontWeight: FontWeight.bold,
+                  8.width,
+                  RichText(
+                    text: TextSpan(
+                      style: AppTypography.p6.copyWith(
+                        color: AppColors.text_tertiary,
+                      ),
+                      children: [
+                        const TextSpan(text: "Ghi nhận "),
+                        TextSpan(
+                          text: "${event.incidentsCount}",
+                          style: AppTypography.p6.copyWith(
+                            color: AppColors.text_primary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const TextSpan(text: " sự cố"),
+                      ],
                     ),
                   ),
                 ],
               ),
-            ),
-            if (event.assigneeRole != null &&
-                event.assigneeRole!.isNotEmpty) ...[
-              4.height,
-              Text(
-                event.assigneeRole!,
-                style: AppTypography.p6.copyWith(
-                  color: AppColors.text_tertiary,
-                ),
-              ),
             ],
-            16.height,
-            Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: AppColors.orange20, width: 1.5),
-                  ),
-                  child: const Icon(
-                    Icons.warning_amber_rounded,
-                    color: AppColors.orange60,
-                    size: 14,
-                  ),
-                ),
-                8.width,
-                RichText(
-                  text: TextSpan(
-                    style: AppTypography.p6.copyWith(
-                      color: AppColors.text_tertiary,
-                    ),
-                    children: [
-                      const TextSpan(text: "Ghi nhận "),
-                      TextSpan(
-                        text: "${event.incidentsCount}",
-                        style: AppTypography.p6.copyWith(
-                          color: AppColors.text_primary,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const TextSpan(text: " sự cố"),
-                    ],
-                  ),
-                ),
-              ],
-            ),
           ],
         ),
       ),

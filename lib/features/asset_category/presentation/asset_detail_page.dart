@@ -23,6 +23,8 @@ import 'widgets/asset_set_bottom_sheet.dart';
 import 'widgets/maintenance_history_tab.dart';
 
 import 'package:bpg_retail/features/asset_category/data/bloc/asset_location_history_cubit.dart';
+import 'package:bpg_retail/features/asset_category/data/bloc/asset_location_history_state.dart';
+import 'package:bpg_retail/features/asset_category/data/models/asset_location_model.dart';
 
 @RoutePage()
 class AssetDetailPage extends StatefulWidget {
@@ -157,28 +159,28 @@ class _AssetDetailPageState extends State<AssetDetailPage>
 
   Widget _buildContent(HospitalAssetModel asset) {
     return Expanded(
-      child: Column(
-        children: [
-          _buildTabs(),
-          Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: [
-                _buildAssetHistory(asset),
-                BlocProvider.value(
-                  value: _historyCubit,
-                  child: const AssetTransferHistoryTab(),
-                ),
-                MaintenanceHistoryTab(
-                  onCreateNew: () {
-                    // TODO: Navigate to create maintenance record
-                  },
-                ),
-              ],
+      child: BlocProvider.value(
+        value: _historyCubit,
+        child: Column(
+          children: [
+            _buildTabs(),
+            Expanded(
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  _buildAssetHistory(asset),
+                  const AssetTransferHistoryTab(),
+                  MaintenanceHistoryTab(
+                    onCreateNew: () {
+                      // TODO: Navigate to create maintenance record
+                    },
+                  ),
+                ],
+              ),
             ),
-          ),
-          _buildConditionalBottomAction(asset),
-        ],
+            _buildConditionalBottomAction(asset),
+          ],
+        ),
       ),
     );
   }
@@ -200,7 +202,45 @@ class _AssetDetailPageState extends State<AssetDetailPage>
         unselectedLabelStyle: AppTypography.p5,
         tabs: [
           const Tab(text: "Lý lịch tài sản"),
-          const Tab(text: "Lịch sử điều chuyển và thanh lý"),
+          Tab(
+            child: BlocBuilder<
+              AssetLocationHistoryCubit,
+              AssetLocationHistoryState
+            >(
+              builder: (context, state) {
+                final count = state.maybeWhen(
+                  success: (data) => data.length,
+                  orElse: () => 0,
+                );
+                return Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text("Lịch sử điều chuyển và thanh lý tài sản"),
+                    if (count > 0) ...[
+                      8.width,
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 6,
+                          vertical: 2,
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppColors.grey20,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(
+                          '$count',
+                          style: AppTypography.p7.copyWith(
+                            color: AppColors.text_tertiary,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ],
+                );
+              },
+            ),
+          ),
           const Tab(text: "Lịch sử bảo dưỡng"),
         ],
       ),
@@ -466,7 +506,7 @@ class _AssetDetailPageState extends State<AssetDetailPage>
 
   Widget _buildDetailRow(String label, String value, {String? subValue}) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -605,65 +645,95 @@ class _AssetDetailPageState extends State<AssetDetailPage>
   Widget _buildConditionalBottomAction(HospitalAssetModel asset) {
     if (_tabController.index == 1) {
       // Transfer/Dispose History Tab Action Bar
-      return Container(
-        padding: const EdgeInsets.fromLTRB(16, 12, 16, 32),
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 10,
-              offset: const Offset(0, -5),
+      return BlocBuilder<AssetLocationHistoryCubit, AssetLocationHistoryState>(
+        builder: (context, state) {
+          final historyData = state.maybeWhen(
+            success: (data) => data,
+            orElse: () => <AssetLocationModel>[],
+          );
+
+          final bool isLiquidated = historyData.any(
+            (e) =>
+                e.loaiViTri?.value == "VI_TRI_THANH_LY" &&
+                e.phieuThanhLy?.trangThai == "DA_THANH_LY",
+          );
+
+          final bool isHistoryEmpty = historyData.isEmpty;
+          final bool isEnabled = !isHistoryEmpty && !isLiquidated;
+
+          return Container(
+            padding: const EdgeInsets.fromLTRB(12, 8, 12, 12),
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.05),
+                  blurRadius: 10,
+                  offset: const Offset(0, -5),
+                ),
+              ],
             ),
-          ],
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: GestureDetector(
-                onTap: () {
-                  // TODO: Handle Transfer
-                },
-                child: BaseContainer(
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  borderRadius: 24,
-                  color: AppColors.grey10,
-                  child: Center(
-                    child: Text(
-                      "Điều chuyển",
-                      style: AppTypography.p5.copyWith(
-                        color: AppColors.text_primary,
-                        fontWeight: FontWeight.bold,
+            child: Row(
+              children: [
+                Expanded(
+                  child: GestureDetector(
+                    onTap:
+                        isEnabled
+                            ? () {
+                              // TODO: Handle Transfer
+                            }
+                            : null,
+                    child: BaseContainer(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      borderRadius: 24,
+                      color: isEnabled ? AppColors.grey10 : AppColors.grey20,
+                      child: Center(
+                        child: Text(
+                          "Điều chuyển",
+                          style: AppTypography.p5.copyWith(
+                            color:
+                                isEnabled
+                                    ? AppColors.text_primary
+                                    : AppColors.text_tertiary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ),
-            16.width,
-            Expanded(
-              child: GestureDetector(
-                onTap: () {
-                  // TODO: Handle Dispose
-                },
-                child: BaseContainer(
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  borderRadius: 24,
-                  color: AppColors.red10,
-                  child: Center(
-                    child: Text(
-                      "Thanh lý",
-                      style: AppTypography.p5.copyWith(
-                        color: AppColors.red60,
-                        fontWeight: FontWeight.bold,
+                16.width,
+                Expanded(
+                  child: GestureDetector(
+                    onTap:
+                        isEnabled
+                            ? () {
+                              // TODO: Handle Dispose
+                            }
+                            : null,
+                    child: BaseContainer(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      borderRadius: 24,
+                      color: isEnabled ? AppColors.red10 : AppColors.grey20,
+                      child: Center(
+                        child: Text(
+                          "Thanh lý",
+                          style: AppTypography.p5.copyWith(
+                            color:
+                                isEnabled
+                                    ? AppColors.red60
+                                    : AppColors.text_tertiary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
+          );
+        },
       );
     }
 
