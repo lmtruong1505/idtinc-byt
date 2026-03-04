@@ -15,6 +15,7 @@ import 'package:tasa/features/asset_category/presentation/widgets/asset_filter_b
 import 'package:tasa/features/asset_category/presentation/widgets/asset_filter_widget.dart';
 import 'package:tasa/features/asset_category/presentation/widgets/asset_item_widget.dart';
 import 'package:tasa/core/widgets/common/scroll_to_top_button.dart';
+import 'package:tasa/core/widgets/base/base_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -186,7 +187,7 @@ class _AssetCategoryPageState extends State<AssetCategoryPage> {
                 builder: (context, state) {
                   if (state.status == AssetLoadStatus.loading &&
                       state.assets.isEmpty) {
-                    return const Center(child: CircularProgressIndicator());
+                    return const BaseLoading();
                   }
 
                   if (state.assets.isEmpty) {
@@ -229,11 +230,9 @@ class _AssetCategoryPageState extends State<AssetCategoryPage> {
           if (index < state.assets.length) {
             return AssetItemWidget(asset: state.assets[index]);
           }
-          return const Center(
-            child: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: CircularProgressIndicator(),
-            ),
+          return const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: BaseLoading(),
           );
         },
       ),
