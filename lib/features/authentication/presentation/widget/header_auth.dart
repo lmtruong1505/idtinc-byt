@@ -16,7 +16,8 @@ class HeaderAuthForm extends StatelessWidget {
       children: [
         paddingTop.height,
         isPaddingTop?.height ?? 190.height,
-        Assets.images.logoTasa.image(
+        Image.asset(
+          'assets/images/TASA_logo.png',
           width: width ?? 198,
           height: height ?? 100,
         ),

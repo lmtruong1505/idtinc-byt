@@ -30,7 +30,7 @@ class _HospitalFilterState extends State<HospitalFilter> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Assets.images.logoTasa.image(height: 60, width: 60),
+        Image.asset('assets/images/TASA_logo.png', height: 60, width: 60),
         16.height,
         Text(
           "Bệnh viện đa khoa huyện Quốc Oai",

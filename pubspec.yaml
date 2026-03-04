@@ -106,7 +106,7 @@ dev_dependencies:
 flutter_launcher_icons:
   android: "ic_launcher"
   ios: true
-  image_path: "assets/images/logo_tasa.png"
+  image_path: "assets/images/TASA_iconapp.png"
   min_sdk_android: 21 # android min sdk_version
 
 flutter_gen:

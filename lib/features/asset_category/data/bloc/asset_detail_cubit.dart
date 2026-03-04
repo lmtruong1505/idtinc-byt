@@ -1,5 +1,7 @@
 import 'package:tasa/core/base/base_cubit.dart';
+import 'package:tasa/core/utilities/loading.dart';
 import 'package:tasa/features/asset_category/data/repositories/asset_repository.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:injectable/injectable.dart';
 import 'asset_detail_state.dart';
 
@@ -24,6 +26,7 @@ class AssetDetailCubit extends BaseCubit<AssetDetailState> {
 
   Future<void> toggleStatus(int id) async {
     try {
+      showLoading();
       final response = await _assetRepository.toggleAssetStatus(id);
 
       if (response.success == true) {
@@ -40,6 +43,8 @@ class AssetDetailCubit extends BaseCubit<AssetDetailState> {
       }
     } catch (e) {
       navigator.showToast("Có lỗi xảy ra: ${e.toString()}");
+    } finally {
+      EasyLoading.dismiss();
     }
   }
 

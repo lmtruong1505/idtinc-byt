@@ -638,6 +638,14 @@ class $AssetsImagesGen {
   AssetGenImage get frame1000014072 =>
       const AssetGenImage('assets/images/Frame 1000014072.png');
 
+  /// File path: assets/images/TASA_iconapp.png
+  AssetGenImage get tASAIconapp =>
+      const AssetGenImage('assets/images/TASA_iconapp.png');
+
+  /// File path: assets/images/TASA_logo.png
+  AssetGenImage get tASALogo =>
+      const AssetGenImage('assets/images/TASA_logo.png');
+
   /// File path: assets/images/avatar_user.jpeg
   AssetGenImage get avatarUser =>
       const AssetGenImage('assets/images/avatar_user.jpeg');
@@ -894,6 +902,8 @@ class $AssetsImagesGen {
   /// List of all assets
   List<dynamic> get values => [
         frame1000014072,
+        tASAIconapp,
+        tASALogo,
         avatarUser,
         backgroundPng,
         backgroundSvg,

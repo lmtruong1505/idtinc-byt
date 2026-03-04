@@ -169,7 +169,11 @@ class PersonalInfoPage extends StatelessWidget {
                       ],
                     ),
                     32.height,
-                    Assets.images.logoTasa.image(height: 60, width: 60),
+                    Image.asset(
+                      'assets/images/TASA_logo.png',
+                      height: 60,
+                      width: 60,
+                    ),
                     16.height,
                     Text(
                       "Bệnh viện đa khoa huyện Quốc Oai",
